@@ -1,0 +1,56 @@
+<div class="table-viewport margin-t-3">
+	<div class="styled-table">
+        <table class="table" *ngIf="tableModel.body">
+            <ng-content select=".add-button"></ng-content>
+            <thead class="head">
+                <tr class="row">
+                    <th class="cell sortable last-hide-edit"
+                        (click)="onSortRows(th)"
+                        [class.asc]="currentSorting[th.key] === 'ASC'"
+                        [class.desc]="currentSorting[th.key] === 'DESC'"
+                        [class.loading]="th.loading"
+                        *ngFor="let th of tableModel.header">
+                        <div class="content" [title]="th.display | translate">{{ th.display | translate }}</div>
+						<div *ngIf="th.sortable" class="sort-items">
+							<div class="loader"><div class="spinner"></div></div>
+                            <div class="arrows"></div>
+                        </div>
+                    </th>
+                    <th class="cell show-on-edit"></th>
+                </tr>
+            </thead>
+            <tbody class="body">
+                <tr class="row" *ngFor="let tr of tableModel.body | filter:filteredStatus:'data'">
+                    <td class="cell" *ngFor="let td of tr.data">
+                        <!-- <div class="loader"><span class="spinner"></span></div> -->
+                        {{ td }}
+                    </td>
+                
+                    <td class="cell actions-holder">
+						<a 
+                            *ngFor="let action of tr.extraActions"
+							(click)="onExtraActionRow(action.key, tr)"
+							class="bold-link action">{{ action.description | translate }}</a>
+						<button 
+                            *ngFor="let action of tr.extraActions"
+							type="button" 
+							(click)="onExtraActionRow(tr, action)"
+							[title]="action.description | translate"
+							[disabled]="action.disabled"
+							class="action show-on-edit action-btn icon-btn text-info {{ action.classes }}"></button>
+						<button 
+							type="button" 
+                            (click)="onModifiersRow(tr)"							
+                            [title]="'share.table.modify'| translate"
+							class="action show-on-edit action-btn icon-btn icon-edit text-info"></button>
+						<button 
+							type="button" 
+							(click)="onDeleteRow(tr)"
+							[title]="'share.table.delete' | translate "
+							class="action show-on-edit action-btn icon-btn icon-delete text-error"></button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

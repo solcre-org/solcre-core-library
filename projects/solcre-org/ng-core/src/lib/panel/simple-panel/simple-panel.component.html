@@ -1,0 +1,110 @@
+<div class="edit-available edit-view">
+   <div class="panel-content hideOnInternalModal">
+      		<!-- SHOW WHEN LOADING-->
+		<div class="wrapper section">
+            <app-loader></app-loader>
+      </div>
+      <div *ngIf="!globalLoading" class="wrapper">
+         <div class="section">
+            <p class="subtitle display-inline-block margin-r-4">
+               {{ tableModel.title | translate}}
+            </p>
+                  <!-- ADD ITEM -->
+               <a class="bold-link" 
+                     (click)="onShowAdd()"
+                     >{{ "share.simplePanel.add"  | translate}}</a>
+               
+               <app-table 
+               *ngIf="tableModel" 
+               [tableModel]="tableModel"
+               (onDelete)="onDelete($event)"
+               (onUpdate)="onUpdate($event)"
+               (onSort)="onSort($event)"
+               (onExtraActionClick)="onExtraActionClick($event)">
+            </app-table>
+
+            <!-- PLACEHOLDER -->
+				<app-placeholder 
+               [text]="placeHolderText"
+               [large]="true"
+               (onAdd)="onShowAdd()"
+               *ngIf="isEmpty">
+            </app-placeholder>
+         </div>
+      </div>
+      <div class="footer fixed-bottom"> 
+			<div class="fixed-holder holder">
+            
+            <div class="content desktop">
+					<div class="wrapper align-m">
+						<div class="align">
+                     <app-pager
+                        [(loading)]="pagerLoading"
+                        *ngIf="apiHalPagerModel.totalItems"
+                        [pager]="apiHalPagerModel" 
+                        (onChange)="onChangePage($event)">
+                     </app-pager>
+					   </div> 
+					</div> 
+            </div> <!-- content desktop -->
+            
+            <div class="content mobile">
+               <div class="align-m">
+                  <div class="align">
+                     <app-pager
+                     *ngIf="apiHalPagerModel.totalItems"
+                     [pager]="apiHalPagerModel" 
+                     (onChange)="onChangePage($event)">
+                     </app-pager>
+                  </div>
+               </div>
+            </div> <!-- Content mobile -->
+			</div> 
+		</div>       
+   </div> <!-- Panel-content -->
+   <app-modal
+      [(state)]="showForm"
+      internal="true">
+      <div class="holder" *ngIf="showForm">
+         <div class="modal-head align-m">
+            <div class="align">
+               <button 
+                  (click)="onHideForm()"
+                  type="button"
+                  class="link cancel">
+                  {{ "share.simplePanel.cancel"  | translate }}
+               </button>
+
+               <p class="text">
+                  <span *ngIf="!showSave">{{ "share.simplePanel.addNew" | translate }}</span>
+                  <span *ngIf="showSave">{{ "share.simplePanel.modify" | translate }}</span>
+               </p>
+
+               <button *ngIf="!showSave" class="link confirm"
+                  [class.loading]="primaryFormLoading" 
+                  type="button" 
+                  (click)="onSave()">
+                  {{ "share.simplePanel.add" | translate }}</button>
+               <button *ngIf="showSave" class="link confirm"
+                  [class.loading]="primaryFormLoading" 
+                  type="button" 
+                  (click)="onSave()">
+                  {{ "share.simplePanel.save" | translate }}</button>
+            </div> <!-- align -->
+
+         </div> <!-- modal-head -->
+
+         <div class="scrollable wrapper section">
+            <form *ngIf="showForm" [formGroup]="primaryForm" (ngSubmit)="onSave()">
+               <ng-content select=".primary-form"></ng-content>
+            </form>
+         </div>
+      </div>
+      <div class="overlay" (click)="onHideForm()"></div>
+
+   </app-modal>
+   <app-dialog
+      [(loading)]="dialogLoading"
+      [(isActive)]="dialogActive">
+   </app-dialog>
+</div>

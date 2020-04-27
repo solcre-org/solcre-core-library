@@ -1,0 +1,8 @@
+.modal {
+    background: transparent;
+    margin: auto;
+}
+
+.isActive {
+    display: block;
+}

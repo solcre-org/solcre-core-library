@@ -1,0 +1,22 @@
+<div class="popup xs internal align-m" [class.active]="isActive">
+	<div class="holder align">
+		<div class="confirm-box">
+			<p *ngIf="model" class="text bold">
+				{{ model.message | translate}} <br class="hidden-mobile">
+			</p>
+			<div class="btns margin-t-6">
+				<button class="btn filled-btn error"
+					[class.loading]="loading"
+					(click)="onConfirm()">
+					{{ "share.dialog.accept" | translate }}
+				</button>
+				<button class="btn filled-btn"
+					*ngIf="isCancel" 
+					(click)="onCancel()">
+					{{ "share.dialog.cancel" | translate }}
+				</button>
+			</div>
+		</div>
+	</div>
+	<div class="overlay" (click)="onCancel()"></div>
+</div>

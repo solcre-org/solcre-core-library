@@ -1,0 +1,18 @@
+<div class="pager" [class.loading]="loading" *ngIf="range.length > 1">
+  <a class="arrow prev" 
+	(click)="onPrev()"
+	[title]="'Pager.descPrev' | translate"
+    [class.disabled]="(first === current)"></a>
+
+  <!-- GENERATE EACH ITEM IN RANGE -->
+  <ng-container *ngFor="let r of range">
+      <a (click)="onPage(r)" *ngIf="r && (r !== current)">{{ r }}</a>
+      <span class="current" *ngIf="r === current">{{ r }}</span>
+      <span class="ellipsis" *ngIf="!r">...</span>
+  </ng-container>
+  
+  <a class="arrow next"
+	  (click)="onNext()"
+	  [title]="'Pager.descNext' | translate"
+    [class.disabled]="last === current"></a>
+</div> <!-- .pager -->

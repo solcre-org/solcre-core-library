@@ -1,0 +1,27 @@
+<div class="input-holder required">
+    <ng-content></ng-content>
+    <label 
+        *ngIf="control.hasError('required') && control.touched" 
+        class="error"
+        for="{{ inputId }}">
+        {{ "ErrorMessages.requiredField" | translate }}
+    </label>
+    <label 
+        *ngIf="control.hasError('email') && control.touched" 
+        class="error"
+        for="{{ inputId }}">
+        {{ "ErrorMessages.invalidField" | translate }}
+    </label>
+    <label 
+        *ngIf="control.hasError('maxlength') && control.touched" 
+        class="error"
+        for="{{ inputId }}">
+        {{ "ErrorMessages.maxLengthField" | translate }}
+    </label>
+    <label 
+        *ngIf="control.hasError('passwordConfirmationNotEquals') && control.touched" 
+        class="error"
+        for="{{inputId}}">
+        {{ "ErrorMessages.passwordConfirmationNotEquals" | translate }}
+    </label>
+</div>

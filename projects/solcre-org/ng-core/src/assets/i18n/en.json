@@ -1,0 +1,50 @@
+{
+    "auth": {
+        "login": {
+            "user": "User@domain.com",
+            "password": "Password",
+            "enter": "Enter"
+        }
+    }, 
+    "users": {
+        "headers": {
+            "name": "Name",
+            "description": "Description"
+        }, 
+        "userGroup": {
+            "title": "Groups",
+            "name": "Enter group name"
+        },
+        "permission": {
+            "title": "Permissions",
+            "name": "Enter permission name",
+            "description": "Enter permission description"
+        }
+    },
+    "share": {
+        "simplePanel": {
+            "add": "Add", 
+            "cancel": "Cancel",
+            "save": "Save"
+        },
+        "table": {
+            "modify": "Modify", 
+            "delete": "Delete",
+            "filter": "Filter on this table"
+        },
+        "dialog": {
+            "message": "Are you sure you want to delete the item: ",
+            "accept": "Accept",
+            "cancel": "Cancel"
+        }
+    },
+    "common": {
+        "add": "Add",
+        "cancel": "Cancel",
+        "save": "Save",
+        "next": "Next",
+        "prev": "Previous",
+        "spanish": "Spanish",
+        "english": "English"
+    }
+}

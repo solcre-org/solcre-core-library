@@ -1,0 +1,21 @@
+ <!-- @component start -->
+	<!--
+		@comment start
+		.lg to englarge size
+		@comment end
+	-->
+	<div class="empty-placeholder" [class.lg]="large">
+            <div class="holder">
+                <div class="icon icon-warning"></div>
+                <p class="text" *ngIf="editMode && !text">{{ "Placeholder.textEdit" | translate }}</p>
+                <p class="text" *ngIf="!editMode && !text">{{ "Placeholder.textNoEdit" | translate }}</p>
+                <p class="text" *ngIf="text">{{ text | translate }}</p>
+                <div class="links">
+                    <button 
+                        (click)="onAddClick()"
+                        type="button" 
+                        class="link bold-link">{{ "common.add" | translate }}</button>
+                </div> <!-- .links -->
+            </div> <!-- .holder -->
+        </div> <!-- .empty-placeholder -->
+    <!-- @component end -->
