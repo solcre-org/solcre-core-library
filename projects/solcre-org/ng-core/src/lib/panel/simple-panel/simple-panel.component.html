@@ -25,10 +25,10 @@
 
             <!-- PLACEHOLDER -->
 				<app-placeholder 
-               [text]="placeHolderText"
-               [large]="true"
-               (onAdd)="onShowAdd()"
-               *ngIf="isEmpty">
+				[text]="'placeholder.empty' | translate"
+				[large]="true"
+				(onAdd)="onShowAdd()"
+				*ngIf="isEmpty">
             </app-placeholder>
          </div>
       </div>

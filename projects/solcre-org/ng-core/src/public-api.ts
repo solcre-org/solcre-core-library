@@ -15,3 +15,4 @@ export * from './lib/table/table-row-action.model';
 export * from './lib/table/table-row.model';
 export * from './lib/table/table.model';
 export * from './lib/api/data-base-model.interface';
+export * from './lib/api/api-config.interface';

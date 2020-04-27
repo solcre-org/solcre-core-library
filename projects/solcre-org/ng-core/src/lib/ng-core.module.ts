@@ -4,7 +4,6 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
-import { SolcreAuthModule } from 'ng-solcre-auth';
 
 import { FilterPipe } from './fiter.pipe';
 import { ApiService } from './api/api.service';
@@ -42,7 +41,6 @@ import { PlaceholderComponent } from './panel/placeholder/placeholder.component'
         ReactiveFormsModule,
         FormsModule,
         CommonModule,
-        SolcreAuthModule
     ],
     exports: [
         FilterPipe,

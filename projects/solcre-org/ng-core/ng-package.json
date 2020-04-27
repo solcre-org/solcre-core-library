@@ -6,7 +6,6 @@
   },
   "whitelistedNonPeerDependencies": [
 	"@ngx-translate/core",
-	"@ngx-translate/http-loader",
-	"ng-solcre-auth"
+	"@ngx-translate/http-loader"
   ]
 }

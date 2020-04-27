@@ -4,39 +4,50 @@ import { Observable } from "rxjs";
 import { map } from "rxjs/operators";
 
 import { ApiResponseModel } from "./api-response.model";
-import { SolcreAuthService } from "ng-solcre-auth";
-import { environment } from "../environment";
-// import { FormUtility } from '../utilities/form.utility';
+import { ApiConfigInterface } from './api-config.interface';
 
 @Injectable({
 	providedIn: "root"
 })
 export class ApiService {
-
+	// Models
+	private accessToken: string;
+	private config: ApiConfigInterface;
 
 	//Service constructor
 	constructor(
-		private authService: SolcreAuthService,
-		private httpClient: HttpClient) { }
+		private httpClient: HttpClient) { 
+		this.config = {};
+	}
 
+	//Setters
+	public setAccessToken(accessToken: string): void {
+		this.accessToken = accessToken;
+	}
 
+	public setConfig(config: ApiConfigInterface): void {
+		this.config = config;
+	}
 
 	//Fetch
 	public fetchData(uri: string, params?: any): Observable<ApiResponseModel> {
-		//Check cache of observables
+		//Header json
+		const headers: any = {}
+
+		//Check access token to add access token header
+		if(this.accessToken){
+			headers['Authorization'] = 'Bearer ' + this.accessToken;
+		}
 
 		//Get options
 		const httpOptions = {
-			headers: new HttpHeaders({
-				'Authorization': 'Bearer ' + this.getAccessToken(),
-				'Accept': "application/vnd.columnis.v2+json"
-			}),
+			headers: new HttpHeaders(headers),
 			params: params
 		};
 
 		//Do request
 		return this.httpClient
-			.get(environment.apiURL + uri, httpOptions)
+			.get(this.config.apiUrl + uri, httpOptions)
 			.pipe(
 				//Map response
 				map((response: any) => {
@@ -47,19 +58,22 @@ export class ApiService {
 
 	//Fetch
 	public getObj(uri: string, id?: any): Observable<ApiResponseModel> {
-		//Check cache of observables
+		//Header json
+		const headers: any = {}
+
+		//Check access token to add access token header
+		if(this.accessToken){
+			headers['Authorization'] = 'Bearer ' + this.accessToken;
+		}
 
 		//Get options
 		const httpOptions = {
-			headers: new HttpHeaders({
-				'Authorization': 'Bearer ' + this.getAccessToken(),
-				'Accept': "application/vnd.columnis.v2+json"
-			})
+			headers: new HttpHeaders(headers)
 		};
 
 		//Do request
 		return this.httpClient
-			.get(environment.apiURL + uri + (id ? '/' + id : ''), httpOptions)
+			.get(this.config.apiUrl + uri + (id ? '/' + id : ''), httpOptions)
 			.pipe(
 				//Map response
 				map((response: any) => {
@@ -71,16 +85,21 @@ export class ApiService {
 
 	//Update an object using PATCH
 	public partialUpdateObj(uri: string, id: any, obj: any): Observable<ApiResponseModel> {
+		//Header json
+		const headers: any = {}
+
+		//Check access token to add access token header
+		if(this.accessToken){
+			headers['Authorization'] = 'Bearer ' + this.accessToken;
+		}
+
 		//Post options
 		const httpOptions = {
-			headers: new HttpHeaders({
-				'Authorization': 'Bearer ' + this.getAccessToken(),
-				'Accept': "application/vnd.columnis.v2+json"
-			})
+			headers: new HttpHeaders(headers)
 		};
 
 		//Url
-		const url: string = environment.apiURL + uri + '/' + id;
+		const url: string = this.config.apiUrl + uri + '/' + id;
 
 		//Do request
 		return this.httpClient
@@ -96,16 +115,21 @@ export class ApiService {
 
 	//Delete an object using DELETE
 	public deleteObj(uri: string, id?: any): Observable<boolean> {
+		//Header json
+		const headers: any = {}
+
+		//Check access token to add access token header
+		if(this.accessToken){
+			headers['Authorization'] = 'Bearer ' + this.accessToken;
+		}
+
 		//Post options
 		const httpOptions = {
-			headers: new HttpHeaders({
-				'Authorization': 'Bearer ' + this.getAccessToken(),
-				'Accept': "application/vnd.columnis.v2+json"
-			})
+			headers: new HttpHeaders(headers)
 		};
 
 		//Url
-		const url: string = environment.apiURL + uri + (id ? '/' + id : '');
+		const url: string = this.config.apiUrl + uri + (id ? '/' + id : '');
 
 		//Do request
 		return this.httpClient
@@ -119,16 +143,21 @@ export class ApiService {
 			);
 	}
 	public partialUpdateList(uri: string, data: any[]): Observable<ApiResponseModel> {
+		//Header json
+		const headers: any = {}
+
+		//Check access token to add access token header
+		if(this.accessToken){
+			headers['Authorization'] = 'Bearer ' + this.accessToken;
+		}
+
 		//Post options
 		const httpOptions = {
-			headers: new HttpHeaders({
-				'Authorization': 'Bearer ' + this.getAccessToken(),
-				'Accept': "application/vnd.columnis.v2+json"
-			})
+			headers: new HttpHeaders(headers)
 		};
 
 		//Url
-		const url: string = environment.apiURL + uri;
+		const url: string = this.config.apiUrl + uri;
 
 		//Do request
 		return this.httpClient
@@ -143,26 +172,23 @@ export class ApiService {
 			);
 	}
 
-	private getAccessToken(): string {
-		if (!this.authService.getAccessToken()) {
-			return;
-
-		}
-		return this.authService.getAccessToken();
-	}
-
 	//Create an object with POST
 	public createObj(uri: string, obj: any): Observable<ApiResponseModel> {
+		//Header json
+		const headers: any = {}
+
+		//Check access token to add access token header
+		if(this.accessToken){
+			headers['Authorization'] = 'Bearer ' + this.accessToken;
+		}
+
 		//Post options
 		const httpOptions = {
-			headers: new HttpHeaders({
-				'Authorization': 'Bearer ' + this.getAccessToken(),
-				'Accept': "application/vnd.columnis.v2+json"
-			})
+			headers: new HttpHeaders(headers)
 		};
 
 		//Url
-		const url: string = environment.apiURL + uri;
+		const url: string = this.config.apiUrl + uri;
 
 		//check form data
 		// if(FormUtility.needFormData(obj)){
@@ -180,98 +206,23 @@ export class ApiService {
 				}));
 	}
 
-	/*public downloadFile(uri: string, params: any, type: string, fileName:string ): Observable<Blob>{
-		//Do request
-		return this.httpClient
-			.get(this.environmentService.getApiUrl() + uri, {
-				headers: new HttpHeaders({
-					'Authorization': 'Bearer ' + this.authService.getAccessToken().token
-				}),
-				params: params,
-				responseType: 'blob'
-			})
-			//.retry(this.environmentService.getHttpRetryTimes())
-			.map((response: any) => {
-				//Return api response model
-				return new Blob([response], {
-					type: type
-				});
-			}).do((response: Blob) => {
-				saveAs(response, fileName)
-			});
-	}
-​
-	public getObj(uri: string, id?: any): Observable<ApiResponseModel>{
-		//Get options
-		const httpOptions = {
-			headers: new HttpHeaders({
-				'Authorization': 'Bearer ' + this.authService.getAccessToken().token
-			})
-		};
-​
-		//Parse uri
-		const parsedUri: string = this.environmentService.getApiUrl() + uri + ( id ? '/' + id : '' );
-​
-		//Do request
-		return this.httpClient
-			.get(parsedUri, httpOptions)
-			//.retry(this.environmentService.getHttpRetryTimes())
-			.map((response: any) => {
-				//Return api response model
-				return this.parseSingleResponse(response);
-			});
-	}
-​
-	//Save obj
-	public saveObj(uri: string, obj: any): Observable<ApiResponseModel>{
-		//Check object if
-		if(obj.id){
-			return this.updateObj(uri, obj);
-		}
-		return this.createObj(uri, obj);
-	}
-​
-	//Create an object with POST
-	public createObj(uri: string, obj): Observable<ApiResponseModel>{
-		//Post options
-		const httpOptions = {
-			headers: new HttpHeaders({
-				'Authorization': 'Bearer ' + this.authService.getAccessToken().token
-			})
-		};
-​
-		//Url
-		const url: string = this.environmentService.getApiUrl() + uri;
-​
-		//check form data
-		if(FormUtility.needFormData(obj)){
-			obj = FormUtility.jsonToFormData(obj);
-		}
-​
-		//Do request
-		return this.httpClient
-			.post(url, obj, httpOptions)
-			//.retry(this.environmentService.getHttpRetryTimes())
-			.map((response: any) => {
-				//Return api response model
-				return this.parseSingleResponse(response);
-			});
-	}
-		*/
-
-
 	//Update an object using PUT
 	public updateObj(uri: string, obj: any): Observable<ApiResponseModel> {
+		//Header json
+		const headers: any = {}
+
+		//Check access token to add access token header
+		if(this.accessToken){
+			headers['Authorization'] = 'Bearer ' + this.accessToken;
+		}
+
 		//Post options
 		const httpOptions = {
-			headers: new HttpHeaders({
-				'Authorization': 'Bearer ' + this.getAccessToken(),
-				'Accept': "application/vnd.columnis.v2+json"
-			})
+			headers: new HttpHeaders(headers)
 		};
 
 		//Url
-		const url: string = environment.apiURL + uri + '/' + obj.id;
+		const url: string = this.config.apiUrl + uri + '/' + obj.id;
 
 		//Do request
 		return this.httpClient
@@ -282,52 +233,6 @@ export class ApiService {
 					return this.parseSingleResponse(response);
 				}));
 	}
-
-	/*
-​
-	public partialUpdateList(uri: string, data: any[]): Observable<ApiResponseModel>{
-		//Post options
-		const httpOptions = {
-			headers: new HttpHeaders({
-				'Authorization': 'Bearer ' + this.authService.getAccessToken().token
-			})
-		};
-​
-		//Url
-		const url: string = this.environmentService.getApiUrl() + uri;
-​
-		//Do request
-		return this.httpClient
-			.patch(url, data, httpOptions)
-			//.retry(this.environmentService.getHttpRetryTimes())
-			.map((response: any) => {
-				//Return api response model
-				return this.parseCollectionResponse(response);
-			});
-	}
-​
-	public deleteList(uri: string, data: any): Observable<boolean>{
-		//Post options
-		const httpOptions = {
-			headers: new HttpHeaders({
-				'Authorization': 'Bearer ' + this.authService.getAccessToken().token
-			}),
-			body: data
-		};
-​
-		//Url
-		const url: string = this.environmentService.getApiUrl() + uri;
-​
-		//Do request
-		return this.httpClient
-			.delete(url, httpOptions)
-			//.retry(this.environmentService.getHttpRetryTimes())
-			.map((response: any) => {
-				return true;
-			});
-	}
-​
-	*/
 
 	//Parse collection response
 	private parseCollectionResponse(response: any): ApiResponseModel {
