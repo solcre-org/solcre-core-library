@@ -39,6 +39,7 @@ export * from './lib/structure/toasts/toasts.service';
 export * from './lib/structure/toasts/toasts.component';
 export * from './lib/structure/loader/loader.component';
 export * from './lib/structure/loader/loader.service';
+export * from './lib/structure/viewport/viewport.directive';
 
 export * from './lib/utilities/array.utility';
 export * from './lib/utilities/form.utility';

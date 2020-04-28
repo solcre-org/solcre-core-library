@@ -18,6 +18,7 @@ import { NavbarComponent } from './structure/navbar/navbar.component';
 import { CanEnterPipe } from './structure/navbar/can-enter.pipe';
 import { ToastsComponent } from './structure/toasts/toasts.component';
 import { FilterPipe } from './panel/filter/fiter.pipe';
+import { ViewportDirective } from './structure/viewport/viewport.directive';
 
 @NgModule({
     declarations: [
@@ -33,7 +34,8 @@ import { FilterPipe } from './panel/filter/fiter.pipe';
 		HeaderComponent,
 		NavbarComponent,
 		CanEnterPipe,
-		ToastsComponent
+		ToastsComponent,
+		ViewportDirective
     ],
     imports: [
         TranslateModule,
@@ -54,7 +56,8 @@ import { FilterPipe } from './panel/filter/fiter.pipe';
 		HeaderComponent,
 		NavbarComponent,
 		CanEnterPipe,
-		ToastsComponent
+		ToastsComponent,
+		ViewportDirective
     ],
     providers: []
 })
