@@ -10,7 +10,7 @@ import { ApiResponseModel } from '../../api/api-response.model';
 import { ApiService } from '../../api/api.service';
 import { DialogService } from '../dialog/dialog.service';
 import { DialogModel } from '../dialog/dialog.model';
-import { LoaderService } from '../../loader/loader.service';
+import { LoaderService } from '../../structure/loader/loader.service';
 import { ApiHalPagerModel } from '../../api/api-hal-pager.model';
 import { DataBaseModelInterface } from '../../api/data-base-model.interface';
 import { UiEventsService } from '../../ui-events.service';

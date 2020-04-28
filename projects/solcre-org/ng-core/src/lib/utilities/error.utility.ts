@@ -20,7 +20,7 @@ export class ErrorUtility {
 				default:
 					//Check error .detail
 					if (error.error) {
-						if (error.error.error_code && !this.mustIgnoreErrorCode(error.error.error_code)) {
+						if (error.error.error_code/* && !this.mustIgnoreErrorCode(error.error.error_code)*/) {
 							errorMessage.message = "errors.api." + error.error.error_code;
 						} else if (error.error.detail) {
 							errorMessage.message = error.error.detail;
@@ -77,9 +77,5 @@ export class ErrorUtility {
 				};
 			}
 		}
-	}
-
-	static mustIgnoreErrorCode(errorCode: string): boolean {
-		return ([].indexOf(errorCode) > -1);
 	}
 }
