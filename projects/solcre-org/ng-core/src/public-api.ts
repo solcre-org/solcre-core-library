@@ -15,8 +15,12 @@ export * from './lib/panel/dialog/dialog.service';
 export * from './lib/panel/dialog/dialog.component';
 export * from './lib/panel/simple-panel/simple-panel-options.model';
 
+export * from './lib/api/pager/pager.component';
 export * from './lib/api/data-base-model.interface';
 export * from './lib/api/api-config.interface';
+export * from './lib/api/api-hal-pager.model';
+export * from './lib/api/api-response.model';
+export * from './lib/api/api.service';
 
 export * from './lib/structure/header/header.component';
 export * from './lib/structure/navbar/navbar.component';
