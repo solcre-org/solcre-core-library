@@ -28,6 +28,9 @@ export * from './lib/structure/navbar/can-enter.pipe';
 export * from './lib/structure/navbar/menu-item.model';
 export * from './lib/structure/navbar/navbar.service';
 
+export * from './lib/utilities/array.utility';
+export * from './lib/utilities/form.utility';
+
 export * from './lib/loader/loader.service';
 
 export * from './lib/ng-core.module';
