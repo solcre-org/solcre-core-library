@@ -41,7 +41,6 @@ export class SimplePanelComponent implements OnInit {
 	showSave: boolean = false;
 	globalLoading: boolean = true;
 	placeHolderText: string;
-	domainCode: string;
 	isEmpty: boolean = false;
 	column: TableHeaderModel;
 
@@ -97,7 +96,7 @@ export class SimplePanelComponent implements OnInit {
 					};
 				};
 
-				this.apiService.fetchData(this.domainCode + this.simplePanelOptions.URI, params).subscribe((response: ApiResponseModel) => {
+				this.apiService.fetchData(this.getUri(), params).subscribe((response: ApiResponseModel) => {
 					this.pagerLoading = false;
 					if (response.hasCollectionResponse()) {
 						this.apiHalPagerModel = response.pager;
@@ -186,7 +185,7 @@ export class SimplePanelComponent implements OnInit {
 		}
 		if (rowToAdd) {
 			let json: any = rowToAdd.toJSON();
-			this.apiService.createObj(this.domainCode + this.simplePanelOptions.URI, json).subscribe((response: ApiResponseModel) => {
+			this.apiService.createObj(this.getUri(), json).subscribe((response: ApiResponseModel) => {
 				this.primaryFormLoading = false;
 				this.showForm = false;
 				if (response.hasSingleResponse()) {
@@ -224,7 +223,7 @@ export class SimplePanelComponent implements OnInit {
 		if (rowToAdd) {
 			let json: any = rowToAdd.toJSON();
 			//save the model
-			this.apiService.updateObj(this.domainCode + this.simplePanelOptions.URI, json).subscribe((response: any) => {
+			this.apiService.updateObj(this.getUri(), json).subscribe((response: any) => {
 				this.loaderService.start();
 				this.primaryFormLoading = false;
 				if (response.hasSingleResponse()) {
@@ -265,7 +264,7 @@ export class SimplePanelComponent implements OnInit {
 				this.dialogService.open(new DialogModel(message + row.data[1] + "?", () => {
 					// this.loaderService.start();
 					//Delete the usergroup
-					this.apiService.deleteObj(this.domainCode + this.simplePanelOptions.URI, row.id).subscribe((response: any) => {
+					this.apiService.deleteObj(this.getUri(), row.id).subscribe((response: any) => {
 						this.tableModel.removeRow(row.id);
 						this.dialogService.close();
 						this.loaderService.done();
@@ -293,4 +292,13 @@ export class SimplePanelComponent implements OnInit {
 
 	}
 
+	// Private methods
+	private getUri(): string {
+		let uri: string = this.simplePanelOptions.URI;
+
+		if(this.simplePanelOptions.clientCode){
+			uri = '/' + this.simplePanelOptions.clientCode + this.simplePanelOptions.URI;
+		}
+		return uri;
+	}
 }
