@@ -1,0 +1,110 @@
+<nav class="nav" [class.active]="state">
+	<!-- CLOSE -->
+	<div class="overlay" (click)="onCloseNav()"></div>
+	<div class="top">
+		<button type=button class="close-btn" (click)="onCloseNav()"><span></span></button>
+		<a routerLink="/">
+			<h1 class="logo eva"></h1>
+		</a>
+	</div>
+
+	<div class="level level-1" 
+      [class.show]="!activeMenulevels[0]" 
+	  [class.lastActive]="!currentMenuId">
+	  
+      <ul class="menu scrollable mobile">
+		  <li class="item" 
+		  	[class.disabled]="!parentMenu.canEnter"
+		 	 *ngFor="let parentMenu of menu">
+			  <a class="link align-m" 
+                [class.active]="activeMenulevels[0] && parentMenu.id == activeMenulevels[0].id"
+                (click)="onOpenMenuItem(parentMenu, 0)"><!--
+                  --><span class="icon {{ parentMenu.icon }}"></span><!--
+                  --><span class="align">{{ parentMenu.display | translate }}</span>
+              </a>
+		  </li>
+		  
+		  <li class="item">
+			  <a class="link align-m"
+                (click)="onLogout()"><!--
+                  --><span class="icon icon-menu-config"></span><!--
+                  --><span class="align">{{ "nav.logout" | translate }}</span>
+              </a>
+          </li>
+	  </ul> <!-- .scrollable -->
+	  
+      <ul class="menu scrollable desktop">
+		  <li class="item" 
+			*ngFor="let parentMenu of menu" 
+			(keyup)="onKeyup($event, parentMenu, 0, false)"
+			[class.disabled]="!parentMenu.canEnter"
+			tabindex="1">
+			  <a class="link align-m" 
+				[class.active]="activeMenulevels[0] && parentMenu.id == activeMenulevels[0].id"
+				(click)="onOpenMenuItem(parentMenu, 0, true)"
+                (mouseenter)="onHoverMenuItem(parentMenu, 0)"><!--
+                  --><span class="icon {{ parentMenu.icon }}"></span><!--
+                  --><span class="align">{{ parentMenu.display | translate }}</span>
+              </a>
+		  </li>
+		  
+		  <li class="item">
+			<a class="link align-m"
+			  (click)="onLogout()"><!--
+				--><span class="icon icon-menu-config"></span><!--
+				--><span class="align">{{ "nav.logout" | translate }}</span>
+			</a>
+		</li>
+	  </ul> <!-- .scrollable -->
+  </div> <!-- .level -->
+
+	<div class="level show level-{{ i+2 }}"
+		*ngFor="let level of activeMenulevels; let i=index"
+		[class.lastActive]="level && level.id==currentMenuId">
+
+		<div class="back-bar mobile wrapper align-m"><!--
+			--><div class="align">
+
+				<div class="breadcrumb light">
+					<button type="button" class="back-btn" (click)="onMenuLevelBack(i)"></button>
+					<ul class="list">
+						<li class="item active">
+							{{ level.display | translate }}
+						</li>
+					</ul>
+				</div> <!-- .breadcrumb -->
+
+			</div> <!-- .align -->
+		</div> <!-- .back-bar -->
+		<ul class="menu scrollable mobile">
+
+			<li class="item" *ngFor="let child of level.childs | canEnter">
+				<a class="link" 
+					[class.arrow]="!child.canNavigate"
+					[class.active]="activeMenulevels[i + 1] && child.id == activeMenulevels[i + 1].id"
+					(click)="onOpenMenuItem(child, i + 1)">
+					<span *ngIf="!child.skipTranslate">{{ child.display | translate }}</span>
+					<span *ngIf="child.skipTranslate">{{ child.display }}</span>
+				</a>
+			</li>
+		</ul> <!-- .scrollable -->
+
+		<ul class="menu scrollable desktop">
+
+				<li class="item" 
+					*ngFor="let child of level.childs | canEnter"
+					(keyup)="onKeyup($event, child, i + 1, false)"
+					tabindex="{{ i+2 }}">
+					<a class="link" 
+						[class.arrow]="!child.canNavigate"
+						[class.active]="(activeMenulevels[i + 1] && child.id == activeMenulevels[i + 1].id) || (child.id === currentMenuId)"
+						(click)="onOpenMenuItem(child, i, true)"
+						(mouseenter)="onHoverMenuItem(child, i + 1)">
+						<span *ngIf="!child.skipTranslate">{{ child.display | translate }}</span>
+						<span *ngIf="child.skipTranslate">{{ child.display }}</span>
+					</a>
+				</li>
+			</ul> <!-- .scrollable -->
+	</div> <!-- .level -->
+
+</nav> <!-- .nav -->

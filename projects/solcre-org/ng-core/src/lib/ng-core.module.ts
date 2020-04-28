@@ -17,6 +17,9 @@ import { LoaderService } from './loader/loader.service';
 import { ModalComponent } from './panel/modal/modal.component';
 import { InputHolderComponent } from './input-holder/input-holder.component';
 import { PlaceholderComponent } from './panel/placeholder/placeholder.component';
+import { HeaderComponent } from './structure/header/header.component';
+import { NavbarComponent } from './structure/navbar/navbar.component';
+import { CanEnterPipe } from './structure/navbar/can-enter.pipe';
 
 @NgModule({
     declarations: [
@@ -28,16 +31,13 @@ import { PlaceholderComponent } from './panel/placeholder/placeholder.component'
         InputHolderComponent,
         LoaderComponent,
         DialogComponent,
-        PlaceholderComponent,
+		PlaceholderComponent,
+		HeaderComponent,
+		NavbarComponent,
+		CanEnterPipe
     ],
     imports: [
-        TranslateModule.forRoot({
-            loader: {
-                provide: TranslateLoader,
-                useFactory: HttpLoaderFactory,
-                deps: [HttpClient]
-            }
-        }),
+        TranslateModule,
         ReactiveFormsModule,
         FormsModule,
         CommonModule,
@@ -51,14 +51,12 @@ import { PlaceholderComponent } from './panel/placeholder/placeholder.component'
         InputHolderComponent,
         LoaderComponent,
         DialogComponent,
-        PlaceholderComponent
+		PlaceholderComponent,
+		HeaderComponent,
+		NavbarComponent,
+		CanEnterPipe
     ],
-    providers: [
-        ApiService,
-        DialogService,
-        LoaderService
-    ]
-
+    providers: []
 })
 export class NgCoreModule {
 

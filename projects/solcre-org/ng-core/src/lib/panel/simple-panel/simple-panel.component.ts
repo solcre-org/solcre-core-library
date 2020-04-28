@@ -20,7 +20,7 @@ import { TableHeaderModel } from '../../table/table-header.model';
 	selector: 'app-simple-panel',
 	templateUrl: './simple-panel.component.html',
 	styles: ['./simple-panel.component.css'],
-	providers: [DialogService]
+	providers: [DialogService, LoaderService]
 })
 export class SimplePanelComponent implements OnInit {
 	// Inputs
