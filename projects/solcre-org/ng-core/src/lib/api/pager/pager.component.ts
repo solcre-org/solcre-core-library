@@ -3,7 +3,7 @@ import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { ApiHalPagerModel } from '../api-hal-pager.model';
 
 @Component({
-	selector: 'app-pager',
+	selector: 'ng-solcre-pager',
 	templateUrl: './pager.component.html',
 	styles: ['./pager.component.scss']
 })

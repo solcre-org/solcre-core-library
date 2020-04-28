@@ -6,7 +6,7 @@ import { CountryModel } from '../../others/countries/country.model';
 
 
 @Component({
-	selector: 'countries-select',
+	selector: 'ng-solcre-countries-select',
 	templateUrl: './countries-select.component.html',
 	styleUrls: ['./countries-select.component.css']
 })

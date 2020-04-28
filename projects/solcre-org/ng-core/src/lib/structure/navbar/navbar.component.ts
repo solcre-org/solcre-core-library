@@ -6,7 +6,7 @@ import { MenuItemModel } from './menu-item.model';
 import { UiEventsService } from '../../ui-events.service';
 
 @Component({
-	selector: 'app-navbar',
+	selector: 'ng-solcre-navbar',
 	templateUrl: './navbar.component.html',
 	styleUrls: ['./navbar.component.css']
 })

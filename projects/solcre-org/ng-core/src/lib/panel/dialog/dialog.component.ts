@@ -4,7 +4,7 @@ import { DialogService } from './dialog.service';
 
 
 @Component({
-  selector: 'app-dialog',
+  selector: 'ng-solcre-dialog',
   templateUrl: './dialog.component.html',
   styles: ['./dialog.component.css']
 })

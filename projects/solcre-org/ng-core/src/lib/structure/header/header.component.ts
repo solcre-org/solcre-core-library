@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core';
 import { NavbarService } from '../navbar/navbar.service';
 
 @Component({
-	selector: 'app-header',
+	selector: 'ng-solcre-header',
 	templateUrl: './header.component.html',
 	styleUrls: ['./header.component.css']
 })

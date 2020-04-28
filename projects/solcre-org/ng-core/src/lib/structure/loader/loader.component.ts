@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { LoaderService } from './loader.service';
 
 @Component({
-  selector: 'app-loader',
+  selector: 'ng-solcre-loader',
   templateUrl: './loader.component.html',
   styles: ['./loader.component.css']
 })

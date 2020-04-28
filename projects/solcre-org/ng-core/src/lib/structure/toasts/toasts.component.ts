@@ -4,7 +4,7 @@ import { ToastsService } from './toasts.service';
 import { ToastPositions } from './toast-position.enum';
 
 @Component({
-  selector: 'app-toasts',
+  selector: 'ng-solcre-toasts',
   templateUrl: './toasts.component.html',
   styleUrls: ['./toasts.component.css'],
   host: {'class': 'component'}

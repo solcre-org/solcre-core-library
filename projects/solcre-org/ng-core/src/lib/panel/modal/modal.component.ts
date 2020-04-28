@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
-  selector: 'app-modal',
+  selector: 'ng-solcre-modal',
   templateUrl: './modal.component.html',
   styles: ['./modal.component.css']
 })

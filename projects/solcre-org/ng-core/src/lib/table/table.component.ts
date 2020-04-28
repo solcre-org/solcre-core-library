@@ -7,7 +7,7 @@ import { TableHeaderModel } from './table-header.model';
 import { TableSortEnum } from './table-sort.enum';
 
 @Component({
-  selector: 'app-table',
+  selector: 'ng-solcre-table',
   templateUrl: './table.component.html',
   styles: ['./table.component.css']
 })

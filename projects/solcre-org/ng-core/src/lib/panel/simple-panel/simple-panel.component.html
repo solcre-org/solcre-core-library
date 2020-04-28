@@ -2,7 +2,7 @@
    <div class="panel-content hideOnInternalModal">
       		<!-- SHOW WHEN LOADING-->
 		<div class="wrapper section">
-            <app-loader></app-loader>
+            <ng-solcre-loader></ng-solcre-loader>
       </div>
       <div *ngIf="!globalLoading" class="wrapper">
          <div class="section">
@@ -14,22 +14,22 @@
                      (click)="onShowAdd()"
                      >{{ "share.simplePanel.add"  | translate}}</a>
                
-               <app-table 
+               <ng-solcre-table 
                *ngIf="tableModel" 
                [tableModel]="tableModel"
                (onDelete)="onDelete($event)"
                (onUpdate)="onUpdate($event)"
                (onSort)="onSort($event)"
                (onExtraActionClick)="onExtraActionClick($event)">
-            </app-table>
+            </ng-solcre-table>
 
             <!-- PLACEHOLDER -->
-				<app-placeholder 
+				<ng-solcre-placeholder 
 				[text]="'placeholder.empty' | translate"
 				[large]="true"
 				(onAdd)="onShowAdd()"
 				*ngIf="isEmpty">
-            </app-placeholder>
+            </ng-solcre-placeholder>
          </div>
       </div>
       <div class="footer fixed-bottom"> 
@@ -38,12 +38,12 @@
             <div class="content desktop">
 					<div class="wrapper align-m">
 						<div class="align">
-                     <app-pager
+                     <ng-solcre-pager
                         [(loading)]="pagerLoading"
                         *ngIf="apiHalPagerModel.totalItems"
                         [pager]="apiHalPagerModel" 
                         (onChange)="onChangePage($event)">
-                     </app-pager>
+                     </ng-solcre-pager>
 					   </div> 
 					</div> 
             </div> <!-- content desktop -->
@@ -51,18 +51,18 @@
             <div class="content mobile">
                <div class="align-m">
                   <div class="align">
-                     <app-pager
+                     <ng-solcre-pager
                      *ngIf="apiHalPagerModel.totalItems"
                      [pager]="apiHalPagerModel" 
                      (onChange)="onChangePage($event)">
-                     </app-pager>
+                     </ng-solcre-pager>
                   </div>
                </div>
             </div> <!-- Content mobile -->
 			</div> 
 		</div>       
    </div> <!-- Panel-content -->
-   <app-modal
+   <ng-solcre-modal
       [(state)]="showForm"
       internal="true">
       <div class="holder" *ngIf="showForm">
@@ -102,9 +102,9 @@
       </div>
       <div class="overlay" (click)="onHideForm()"></div>
 
-   </app-modal>
-   <app-dialog
+   </ng-solcre-modal>
+   <ng-solcre-dialog
       [(loading)]="dialogLoading"
       [(isActive)]="dialogActive">
-   </app-dialog>
+   </ng-solcre-dialog>
 </div>

@@ -17,7 +17,7 @@ import { UiEventsService } from '../../ui-events.service';
 import { TableHeaderModel } from '../../table/table-header.model';
 
 @Component({
-	selector: 'app-simple-panel',
+	selector: 'ng-solcre-simple-panel',
 	templateUrl: './simple-panel.component.html',
 	styles: ['./simple-panel.component.css'],
 	providers: [DialogService, LoaderService]

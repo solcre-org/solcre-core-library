@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
-  selector: 'app-placeholder',
+  selector: 'ng-solcre-placeholder',
   templateUrl: './placeholder.component.html',
   styles: ['./placeholder.component.css'],
   host: {'class': 'component'}
