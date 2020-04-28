@@ -1,0 +1,30 @@
+<div class="toasts" [attr.data-position]="position">
+	<div 
+		*ngFor="let toast of toasts"
+		[attr.data-position]="toast.position"
+		[attr.data-status]="toast.status"
+		[attr.data-mode]="toast.mode"
+		[attr.data-with-icon]="toast.withIcon"
+		[class.show]="toast.show"
+		class="toast">
+		<p class="text">{{ toast.text | translate:toast.params }}</p>
+
+		<button
+			*ngIf="toast.status != 'not-loading' && toast.status != 'success-with-undo'" 
+			type="button" 
+			class="close-btn" 
+			(click)="onCloseToast(toast)">
+			<span></span>
+		</button>
+		<button 
+			*ngIf="toast.status == 'not-loading'"
+			class="refresh-btn" 
+			(click)="onRefreshToast(toast)"
+			type="button"></button>
+		<button 
+			*ngIf="toast.status == 'success-with-undo'"
+			class="undo-btn" 
+			(click)="onActionToast(toast)"
+			type="button"></button>
+	</div>
+</div>
