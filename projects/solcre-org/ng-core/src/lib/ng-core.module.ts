@@ -19,6 +19,7 @@ import { CanEnterPipe } from './structure/navbar/can-enter.pipe';
 import { ToastsComponent } from './structure/toasts/toasts.component';
 import { FilterPipe } from './panel/filter/fiter.pipe';
 import { ViewportDirective } from './structure/viewport/viewport.directive';
+import { CountriesSelectComponent } from './forms/countries-select/countries-select.component';
 
 @NgModule({
     declarations: [
@@ -35,7 +36,8 @@ import { ViewportDirective } from './structure/viewport/viewport.directive';
 		NavbarComponent,
 		CanEnterPipe,
 		ToastsComponent,
-		ViewportDirective
+		ViewportDirective,
+		CountriesSelectComponent
     ],
     imports: [
         TranslateModule,
@@ -57,7 +59,8 @@ import { ViewportDirective } from './structure/viewport/viewport.directive';
 		NavbarComponent,
 		CanEnterPipe,
 		ToastsComponent,
-		ViewportDirective
+		ViewportDirective,
+		CountriesSelectComponent
     ],
     providers: []
 })

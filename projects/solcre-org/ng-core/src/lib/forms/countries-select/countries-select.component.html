@@ -1,0 +1,9 @@
+<div [formGroup]="form">
+	<select 
+		[formControlName]="controlName">
+		<option [value]="null">{{ placeholder }}}</option>
+		<option 
+			*ngFor="let country of countries"
+			[value]="country.id">{{ country.name }}}</option>
+	</select>
+</div>
