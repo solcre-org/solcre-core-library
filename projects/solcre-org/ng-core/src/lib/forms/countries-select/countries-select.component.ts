@@ -14,6 +14,7 @@ export class CountriesSelectComponent implements OnInit {
 	//Inputs
 	@Input() form: FormGroup;
 	@Input() placeholder: string;
+	@Input() hasErrors: boolean;
 	@Input() controlName: string;
 
 	// Models

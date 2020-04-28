@@ -18,6 +18,7 @@ export * from './lib/panel/placeholder/placeholder.component';
 
 export * from './lib/forms/input-holder/input-holder.component';
 export * from './lib/forms/countries-select/countries-select.component';
+export * from './lib/forms/timezones-select/timezones-select.component';
 
 export * from './lib/api/pager/pager.component';
 export * from './lib/api/data-base-model.interface';
@@ -49,6 +50,8 @@ export * from './lib/utilities/error.utility';
 
 export * from './lib/others/countries/country.model';
 export * from './lib/others/countries/country.service';
+export * from './lib/others/timezones/timezone.model';
+export * from './lib/others/timezones/timezone.service';
 
 export * from './lib/ng-core.module';
 export * from './lib/ui-events.service';

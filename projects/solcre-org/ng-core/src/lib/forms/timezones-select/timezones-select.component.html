@@ -6,7 +6,7 @@
 		[formControlName]="controlName">
 		<option [value]="null">{{ placeholder }}</option>
 		<option 
-			*ngFor="let country of countries"
-			[value]="country.id">{{ country.name }}</option>
+			*ngFor="let timezone of timezones"
+			[value]="timezone.id">{{ timezone.name }}</option>
 	</select>
 </div>

@@ -10,24 +10,27 @@ export class CountryService {
 
 	constructor() {
 		this.countries = {};
+
+		// Load countries
+		this.loadCountries();
 	}
 
-	//Parse countries to memory
-	public loadCountries(): void {
-		//For ech country
+	// Parse countries to memory
+	private loadCountries(): void {
+		// For ech country
 		Countries.forEach((c: any) => {
 			let country: CountryModel = new CountryModel(c.code, c.display);
 
-			//Push to array
+			// Push to array
 			this.countries[c.code] = country;
 		});
 	}
 
-	//Find country by code
+	// Find country by code
 	public findCountry(code: string): CountryModel {
 		let result: CountryModel = null;
 
-		//Find
+		// Find
 		if (this.countries[code] instanceof CountryModel) {
 			result = this.countries[code];
 		}
@@ -38,7 +41,7 @@ export class CountryService {
 	public findCountryName(code: string): string {
 		let result: string = '';
 
-		//Find
+		// Find
 		if (this.countries[code] instanceof CountryModel) {
 			result = this.countries[code].name;
 		}
@@ -46,14 +49,14 @@ export class CountryService {
 		return result;
 	}
 
-	//Get all countries
+	// Get all countries
 	public getCountries(): CountryModel[] {
 		return Object.values(this.countries);
 	}
 
 	public getCountriesSorted(): CountryModel[] {
 		return this.getCountries().sort((a: CountryModel, b: CountryModel) => {
-			//First sort by Y
+			// First sort by Y
 			if (a.name < b.name) {
 				return -1;
 			}
@@ -65,13 +68,13 @@ export class CountryService {
 		});;
 	}
 
-	//Filter countries
+	// Filter countries
 	public filterContries(filter: string[]): CountryModel[] {
 		let countries: CountryModel[] = [];
 
-		//Filter
+		// Filter
 		for (let id in this.countries) {
-			//Check index
+			// Check index
 			if (filter.indexOf(id) > -1) {
 				countries.push(this.countries[id]);
 			}

@@ -4,24 +4,24 @@
         *ngIf="control.hasError('required') && control.touched" 
         class="error"
         for="{{ inputId }}">
-        {{ "ErrorMessages.requiredField" | translate }}
+        {{ "errors.requiredField" | translate }}
     </label>
     <label 
         *ngIf="control.hasError('email') && control.touched" 
         class="error"
         for="{{ inputId }}">
-        {{ "ErrorMessages.invalidField" | translate }}
+        {{ "errors.invalidField" | translate }}
     </label>
     <label 
         *ngIf="control.hasError('maxlength') && control.touched" 
         class="error"
         for="{{ inputId }}">
-        {{ "ErrorMessages.maxLengthField" | translate }}
+        {{ "errors.maxLengthField" | translate }}
     </label>
     <label 
         *ngIf="control.hasError('passwordConfirmationNotEquals') && control.touched" 
         class="error"
         for="{{inputId}}">
-        {{ "ErrorMessages.passwordConfirmationNotEquals" | translate }}
+        {{ "errors.passwordConfirmationNotEquals" | translate }}
     </label>
 </div>
