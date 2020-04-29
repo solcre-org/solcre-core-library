@@ -3,9 +3,9 @@ import { TableRowActionModel } from './table-row-action.model';
 
 export class TableRowModel {
     constructor(
-        public id?: number,
+		public id?: number,
+		public reference?: string,
         public model?: DataBaseModelInterface,
         public data?: string[],
-        public extraActions?: TableRowActionModel[]) 
-        {}
+        public extraActions?: TableRowActionModel[]) {}
 }

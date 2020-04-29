@@ -1,4 +1,6 @@
-<div class="input-holder required">
+<div
+	[class.required]="required"
+	class="input-holder">
     <ng-content></ng-content>
     <label 
         *ngIf="control.hasError('required') && control.touched" 

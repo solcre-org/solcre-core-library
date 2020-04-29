@@ -1,110 +1,122 @@
 <div class="edit-available edit-view">
-   <div class="panel-content hideOnInternalModal">
-      		<!-- SHOW WHEN LOADING-->
-		<div class="wrapper section">
-            <ng-solcre-loader></ng-solcre-loader>
-      </div>
-      <div *ngIf="!globalLoading" class="wrapper">
-         <div class="section">
-            <p class="subtitle display-inline-block margin-r-4">
-               {{ tableModel.title | translate}}
-            </p>
-                  <!-- ADD ITEM -->
-               <a class="bold-link" 
-                     (click)="onShowAdd()"
-                     >{{ "share.simplePanel.add"  | translate}}</a>
-               
-               <ng-solcre-table 
-               *ngIf="tableModel" 
-               [tableModel]="tableModel"
-               (onDelete)="onDelete($event)"
-               (onUpdate)="onUpdate($event)"
-               (onSort)="onSort($event)"
-               (onExtraActionClick)="onExtraActionClick($event)">
-            </ng-solcre-table>
 
-            <!-- PLACEHOLDER -->
+	<!-- PANEL CONTENT -->
+	<div class="panel-content hideOnInternalModal">
+
+		<!-- SHOW WHEN LOADING-->
+		<div *ngIf="loader.global" class="wrapper section">
+			<ng-solcre-loader></ng-solcre-loader>
+		</div>
+
+		<!-- SHOW WHEN NOT LOADING-->
+		<div *ngIf="!loader.global" class="wrapper">
+			<div class="section">
+				<!-- SUBTITLE -->
+				<p class="subtitle display-inline-block margin-r-4">
+					{{ tableModel.title | translate}}
+				</p>
+
+				<!-- ADD ITEM -->
+				<a class="bold-link" (click)="onAddRow()">{{ "share.simplePanel.add"  | translate}}</a>
+
+				<!-- TABLE -->
+				<ng-solcre-table 
+					*ngIf="tableModel" 
+					[tableModel]="tableModel" 
+					(onDelete)="onDeleteRow($event)"
+					(onUpdate)="onUpdateRow($event)" 
+					(onSort)="onSort($event)"
+					(onExtraActionClick)="onExtraActionClick($event)">
+				</ng-solcre-table>
+
+				<!-- PLACEHOLDER -->
 				<ng-solcre-placeholder 
-				[text]="'placeholder.empty' | translate"
-				[large]="true"
-				(onAdd)="onShowAdd()"
-				*ngIf="isEmpty">
-            </ng-solcre-placeholder>
-         </div>
-      </div>
-      <div class="footer fixed-bottom"> 
+					*ngIf="tableModel && !tableModel.body.length"
+					[text]="'placeholder.empty' | translate" 
+					[large]="true" 
+					(onAdd)="onAddRow()">
+				</ng-solcre-placeholder>
+			</div>
+		</div>
+
+		<!-- FOOTER -->
+		<div class="footer fixed-bottom">
 			<div class="fixed-holder holder">
-            
-            <div class="content desktop">
+
+				<div class="content desktop">
 					<div class="wrapper align-m">
 						<div class="align">
-                     <ng-solcre-pager
-                        [(loading)]="pagerLoading"
-                        *ngIf="apiHalPagerModel.totalItems"
-                        [pager]="apiHalPagerModel" 
-                        (onChange)="onChangePage($event)">
-                     </ng-solcre-pager>
-					   </div> 
-					</div> 
-            </div> <!-- content desktop -->
-            
-            <div class="content mobile">
-               <div class="align-m">
-                  <div class="align">
-                     <ng-solcre-pager
-                     *ngIf="apiHalPagerModel.totalItems"
-                     [pager]="apiHalPagerModel" 
-                     (onChange)="onChangePage($event)">
-                     </ng-solcre-pager>
-                  </div>
-               </div>
-            </div> <!-- Content mobile -->
-			</div> 
-		</div>       
-   </div> <!-- Panel-content -->
-   <ng-solcre-modal
-      [(state)]="showForm"
-      internal="true">
-      <div class="holder" *ngIf="showForm">
-         <div class="modal-head align-m">
-            <div class="align">
-               <button 
-                  (click)="onHideForm()"
-                  type="button"
-                  class="link cancel">
-                  {{ "share.simplePanel.cancel"  | translate }}
-               </button>
+							<ng-solcre-pager
+								*ngIf="apiHalPagerModel.totalItems" 
+								[(loading)]="loader.pager" 
+								[pager]="apiHalPagerModel" 
+								(onChange)="onChangePage($event)">
+							</ng-solcre-pager>
+						</div>
+					</div>
+				</div> <!-- content desktop -->
 
-               <p class="text">
-                  <span *ngIf="!showSave">{{ "share.simplePanel.addNew" | translate }}</span>
-                  <span *ngIf="showSave">{{ "share.simplePanel.modify" | translate }}</span>
-               </p>
+				<div class="content mobile">
+					<div class="align-m">
+						<div class="align">
+							<ng-solcre-pager 
+								*ngIf="apiHalPagerModel.totalItems" 
+								[pager]="apiHalPagerModel"
+								(onChange)="onChangePage($event)">
+							</ng-solcre-pager>
+						</div>
+					</div>
+				</div> <!-- Content mobile -->
+			</div>
+		</div>
+	</div> <!-- Panel-content -->
 
-               <button *ngIf="!showSave" class="link confirm"
-                  [class.loading]="primaryFormLoading" 
-                  type="button" 
-                  (click)="onSave()">
-                  {{ "share.simplePanel.add" | translate }}</button>
-               <button *ngIf="showSave" class="link confirm"
-                  [class.loading]="primaryFormLoading" 
-                  type="button" 
-                  (click)="onSave()">
-                  {{ "share.simplePanel.save" | translate }}</button>
-            </div> <!-- align -->
+	<!-- PRIMARY MODAL -->
+	<ng-solcre-modal 
+		[(state)]="showForm" 
+		internal="true">
 
-         </div> <!-- modal-head -->
+		<div class="holder" *ngIf="showForm">
 
-         <div class="scrollable wrapper section">
-            <form *ngIf="showForm" [formGroup]="primaryForm" (ngSubmit)="onSave()">
-               <ng-content select=".primary-form"></ng-content>
-            </form>
-         </div>
-      </div>
-      <div class="overlay" (click)="onHideForm()"></div>
+			<div class="modal-head align-m">
+				<div class="align">
+					<button (click)="onHideForm()" type="button" class="link cancel">
+						{{ "share.simplePanel.cancel"  | translate }}
+					</button>
 
-   </ng-solcre-modal>
-   <ng-solcre-dialog
-      [(loading)]="dialogLoading"
-      [(isActive)]="dialogActive">
-   </ng-solcre-dialog>
+					<p class="text">
+						<span *ngIf="!updateMode">{{ "share.simplePanel.addNew" | translate }}</span>
+						<span *ngIf="updateMode">{{ "share.simplePanel.modify" | translate }}</span>
+					</p>
+
+					<button 
+						*ngIf="!updateMode" 
+						class="link confirm" 
+						[class.loading]="loader.primaryModal" 
+						type="button"
+						(click)="onSave()">
+						{{ "share.simplePanel.add" | translate }}</button>
+					<button 
+						*ngIf="updateMode" 
+						class="link confirm" 
+						[class.loading]="loader.primaryModal" 
+						type="button"
+						(click)="onSave()">
+						{{ "share.simplePanel.save" | translate }}</button>
+				</div> <!-- align -->
+
+			</div> <!-- modal-head -->
+
+			<div class="scrollable wrapper section">
+				<form *ngIf="showForm" [formGroup]="primaryForm" (ngSubmit)="onSave()">
+					<ng-content select=".primary-form"></ng-content>
+				</form>
+			</div>
+		</div>
+		<div class="overlay" (click)="onHideForm()"></div>
+
+	</ng-solcre-modal>
+
+	<!-- CONFIRM DIALOG -->
+	<ng-solcre-dialog></ng-solcre-dialog>
 </div>

@@ -1,4 +1,4 @@
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, AbstractControl } from '@angular/forms';
 
 export class FormUtility {
 
@@ -50,4 +50,9 @@ export class FormUtility {
 			}
 		});
 	}
+
+	static validatePasswordConfirmation(control: AbstractControl): {[key: string]: any}  {
+		const equals = control.value ? control.value === control.root.value.password : true;
+		return !equals ? {'passwordConfirmationNotEquals': {value: control.value}} : null;
+	};
 }

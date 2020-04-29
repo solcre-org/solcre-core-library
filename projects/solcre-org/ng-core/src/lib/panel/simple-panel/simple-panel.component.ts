@@ -2,6 +2,7 @@ import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { FormGroup } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
+import { Observable } from 'rxjs';
 
 import { TableModel } from '../../table/table.model';
 import { TableRowModel } from '../../table/table-row.model';
@@ -10,19 +11,23 @@ import { ApiResponseModel } from '../../api/api-response.model';
 import { ApiService } from '../../api/api.service';
 import { DialogService } from '../dialog/dialog.service';
 import { DialogModel } from '../dialog/dialog.model';
-import { LoaderService } from '../../structure/loader/loader.service';
 import { ApiHalPagerModel } from '../../api/api-hal-pager.model';
 import { DataBaseModelInterface } from '../../api/data-base-model.interface';
 import { UiEventsService } from '../../ui-events.service';
 import { TableHeaderModel } from '../../table/table-header.model';
+import { SimplePanelLoadersModel } from './simple-panel-loaders.model';
+import { ToastsService } from '../../structure/toasts/toasts.service';
+import { ArrayUtility } from '../../utilities/array.utility';
+import { FormUtility } from '../../utilities/form.utility';
 
 @Component({
 	selector: 'ng-solcre-simple-panel',
 	templateUrl: './simple-panel.component.html',
 	styles: ['./simple-panel.component.css'],
-	providers: [DialogService, LoaderService]
+	providers: [DialogService]
 })
 export class SimplePanelComponent implements OnInit {
+
 	// Inputs
 	@Input() tableModel: TableModel;
 	@Input() simplePanelOptions: SimplePanelOptions;
@@ -32,250 +37,168 @@ export class SimplePanelComponent implements OnInit {
 
 	// Outputs
 	@Output() onExtraAction: EventEmitter<any> = new EventEmitter();
+	@Output() onBeforeSend: EventEmitter<any> = new EventEmitter();
 
 	// Models
 	apiHalPagerModel: ApiHalPagerModel = new ApiHalPagerModel(1);
 	currentSorting: any = {};
 	currentKeySorting: string; // clicked column
 	showForm: boolean = false;
-	showSave: boolean = false;
-	globalLoading: boolean = true;
+	updateMode: boolean = false;
 	placeHolderText: string;
-	isEmpty: boolean = false;
-	column: TableHeaderModel;
 
-	//Loaders 
-	pagerLoading: boolean;
-	primaryFormLoading: boolean;
-	dialogLoading: boolean;
-	dialogActive: boolean;
+	// Loaders 
+	loader: SimplePanelLoadersModel;
 
+	// Inject services
 	constructor(
 		private apiService: ApiService,
 		private dialogService: DialogService,
-		private loaderService: LoaderService,
+		private toastsService: ToastsService,
 		private translateService: TranslateService,
 		private uiEvents: UiEventsService) { }
 
-	ngOnInit() {
+	// On component init
+	ngOnInit(): void {
+		// Init vars
+		this.loader = new SimplePanelLoadersModel();
+
 		// Fetch rows
 		this.onGetRows();
 	}
 
+	onGetRows() {
+		// Must pass options
+		if (this.simplePanelOptions instanceof SimplePanelOptions) {
+			// Start loading
+			this.loader.global = true;
+
+			// Set the query paramaters and uri
+			const queryParams: any = this.resolveQueryParams();
+			const uri: string = this.getUri();
+
+			// Clear body
+			this.tableModel.removeBody();
+
+			// Do request
+			this.apiService.fetchData(uri, queryParams).subscribe(
+				(response: ApiResponseModel) => {
+					// Control response
+					if (response.hasCollectionResponse()) {
+						this.apiHalPagerModel = response.pager;
+
+						// Map 
+						ArrayUtility.each(response.data, (json: any) => {
+							// Send each row to the corresponding model
+							this.tableModel.addRow(
+								this.onParseRow(response)
+							);
+						});
+					}
+
+					// Stop all loadings
+					this.loader.clear();
+				},
+				(error: HttpErrorResponse) => {
+					// Stop all loadings
+					this.loader.clear();
+
+					// Display toasts
+					this.toastsService.showHttpError(error);
+				}
+			);
+		} else {
+			// Console warning to devs
+			console.warn("simplePanelOptions is not defined.")
+		}
+	}
+
+	// Custom events
 	onChangePage(page: number) {
-		this.globalLoading = true;
-		this.pagerLoading = true;
-		this.loaderService.start();
+		// Start loading pager
+		this.loader.pager = true;
+
 		//Save the new page number 
 		this.apiHalPagerModel.currentPage = page;
-		this.tableModel.removeBody();
+
+		// Do fetch
 		this.onGetRows();
 	}
 
-	onGetRows() {
-		this.isEmpty = false;
-		//set the query paramaters 
-		let params: any = {};
-		if (this.simplePanelOptions instanceof SimplePanelOptions) {
-			if (this.apiHalPagerModel.totalPages == 1) { //If is one page -> basicSort
-				this.tableModel.basicSort(this.currentKeySorting, this.currentSorting[this.currentKeySorting]);
-				if (this.tableModel.body.length == 0) {
-					this.isEmpty = true;
-				}
-				this.loaderService.done();
-			} else {
-				this.tableModel.removeBody();
-				if (this.currentKeySorting) {
-					params = {
-						page: this.apiHalPagerModel.currentPage,
-						["sort[" + this.currentKeySorting + "]"]: this.currentSorting[this.currentKeySorting]
-					};
-				} else {
-					params = {
-						page: this.apiHalPagerModel.currentPage
-					};
-				};
-
-				this.apiService.fetchData(this.getUri(), params).subscribe((response: ApiResponseModel) => {
-					this.pagerLoading = false;
-					if (response.hasCollectionResponse()) {
-						this.apiHalPagerModel = response.pager;
-						response.data.forEach((response: any) => {
-
-							// Send each row to the corresponding model
-							let row: TableRowModel = this.onParseRow(response);
-							this.tableModel.addRow(row);
-						});
-
-					}
-					if (this.tableModel.body.length == 0) {
-						this.isEmpty = true;
-					}
-					this.globalLoading = false;
-					if (this.column) {
-						this.column.loading = false;
-					}
-					this.loaderService.done();
-				})
-			}
-		}
-	}
-
 	onSave() {
-		//if null -> is a new row
-		if (this.primaryForm.value.id == null) {
-			if (!this.primaryForm.valid) { //If input is empty show the input holder
-				Object.keys(this.primaryForm.controls).forEach(field => {
-					const control = this.primaryForm.get(field);
-					control.markAsTouched();
-				});
+		// Control form is valid
+		if (this.primaryForm.valid) {
+			// Controls if is a new obj or update it
+			if (this.primaryForm.value.id == null) {
+				// Do add obj
+				this.addObj(this.primaryForm.value);
 			} else {
-				this.primaryFormLoading = true;
-				this.onAdd(this.primaryForm.value);
-
+				// Do update
+				this.updateObj(this.primaryForm.value);
 			}
-			//else is modified row
 		} else {
-			if (!this.primaryForm.valid) {
-				Object.keys(this.primaryForm.controls).forEach(field => {
-					const control = this.primaryForm.get(field);
-					control.markAsTouched();
-				});
-			} else {
-				this.primaryFormLoading = true;
-				this.onUpdateRow(this.primaryForm.value);
-			}
+			// Trigger form validations
+			FormUtility.validateAllFormFields(this.primaryForm);
 		}
 	}
 
-	onShowAdd() {
-		this.uiEvents.internalModalStateChange.emit(true);
-		this.showForm = true;
-	}
-
-	onHideForm() {
-		this.uiEvents.internalModalStateChange.emit(false);
-
-		//check if the user change the input values
-		if (this.primaryForm.dirty) {
-			let warning: string;
-			//get the translate message and save in let
-			this.translateService.get('share.dialog.warning').subscribe(response => {
-				warning = response;
-			});
-			this.dialogService.open(new DialogModel(warning, () => {
-				this.primaryForm.reset();
-				this.showForm = false;
-				this.showSave = false;
-				this.dialogActive = false;
-				this.dialogLoading = false;
-			}));
-		} else {
-			this.primaryForm.reset();
-			this.showForm = false;
-			this.showSave = false;
-		}
-	}
-
-	onAdd(model: any) {
-		this.loaderService.start();
-		let rowToAdd: DataBaseModelInterface;
-		if (model) {
-			rowToAdd = this.onGetDataBaseModel(model);
-		}
-		if (rowToAdd) {
-			let json: any = rowToAdd.toJSON();
-			this.apiService.createObj(this.getUri(), json).subscribe((response: ApiResponseModel) => {
-				this.primaryFormLoading = false;
-				this.showForm = false;
-				if (response.hasSingleResponse()) {
-					let row: TableRowModel = this.onParseRow(response.data);
-					this.tableModel.addRow(row);
-				}
-				this.uiEvents.internalModalStateChange.emit(false);
-				this.loaderService.done();
-			},
-				(error: HttpErrorResponse) => {
-					this.dialogService.open(new DialogModel(error.error.detail));
-					this.loaderService.done();
-					this.primaryFormLoading = false;
-				});
-		}
+	onAddRow(): void {
+		// Clear form
 		this.primaryForm.reset();
+
+		// Emmit ui events
+		this.uiEvents.internalModalStateChange.emit(true);
+
+		// Open modal
+		this.showForm = true;
 	}
 
-	onUpdate(row: TableRowModel) {
+	onUpdateRow(row: TableRowModel) {
 		this.uiEvents.internalModalStateChange.emit(true);
 		this.showForm = true;
-		this.showSave = true;
+		this.updateMode = true;
 		//parse the fields to input.
 		if (row instanceof TableRowModel) {
 			this.primaryForm.patchValue(row.model);
 		}
 	}
 
-	onUpdateRow(model: any) {
-		let rowToAdd: DataBaseModelInterface;
-		//Parse inputs value to model to update
-		if (model) {
-			rowToAdd = this.onGetDataBaseModel(model);
-		}
-		if (rowToAdd) {
-			let json: any = rowToAdd.toJSON();
-			//save the model
-			this.apiService.updateObj(this.getUri(), json).subscribe((response: any) => {
-				this.loaderService.start();
-				this.primaryFormLoading = false;
-				if (response.hasSingleResponse()) {
-					let newRow: TableRowModel = this.onParseRow(response.data);
-					let row: TableRowModel = this.tableModel.findRow(model.id);
-					if (row instanceof TableRowModel) {
-						this.showForm = false;
-
-						//update the data and model 
-						row.data = newRow.data;
-						row.model = newRow.model;
-						this.tableModel.updateRow(row);
-						this.loaderService.done();
-
-					}
-				}
-			},
-				(error: HttpErrorResponse) => {
-					this.dialogService.open(new DialogModel(error.error.detail));
-					this.loaderService.done();
-				})
-		}
-		this.primaryForm.reset();
-		// this.loaderService.done();
-	}
-
-	onDelete(row: TableRowModel) {
+	onDeleteRow(row: TableRowModel) {
 		//Open dialog
 		if (row instanceof TableRowModel) {
-			let message: string;
 			//get the translate message and save in let
-			this.translateService.get('share.dialog.message').subscribe(response => {
-				message = response;
-			});
+			let message: string = this.translateService.instant('share.dialog.message');
 
-			let dialog =
-				//row.data[1] is the name 
-				this.dialogService.open(new DialogModel(message + row.data[1] + "?", () => {
-					// this.loaderService.start();
-					//Delete the usergroup
-					this.apiService.deleteObj(this.getUri(), row.id).subscribe((response: any) => {
-						this.tableModel.removeRow(row.id);
-						this.dialogService.close();
-						this.loaderService.done();
-					},
-						(error: HttpErrorResponse) => {
-							this.dialogService.close(); //close the old dialog
-							this.dialogService.open(new DialogModel(error.error.detail)); //open the error dialog
-							this.loaderService.done();
-						}
-					)
-				}));
+			// Open dialog
+			this.dialogService.open(new DialogModel(message + row.reference + "?", () => {
+				// Remove object
+				this.deleteObj(row);
+			}));
+		}
+	}
+
+	// Hide modal
+	onHideForm(): void {
+		// Check if the user change the input values
+		if (this.primaryForm.dirty) {
+			// Open dialog before close
+			this.dialogService.open(
+				new DialogModel('share.dialog.warning', () => {
+					// Clear vars
+					this.showForm = false;
+					this.updateMode = false;
+
+					// Emit event
+					this.uiEvents.internalModalStateChange.emit(false);
+				})
+			);
+		} else {
+			// Clear vars
+			this.showForm = false;
+			this.updateMode = false;
+
+			// Emit event
+			this.uiEvents.internalModalStateChange.emit(false);
 		}
 	}
 
@@ -284,21 +207,174 @@ export class SimplePanelComponent implements OnInit {
 	}
 
 	onSort(event: { column: TableHeaderModel, value: string }): void {
-		// this.loaderService.start();
+		// Load sortings
 		this.currentKeySorting = event.column.key;
 		this.currentSorting[event.column.key] = event.value;
-		this.column = event.column;
-		this.onGetRows();
 
+		// Check page counts
+		if (this.apiHalPagerModel.totalPages == 1) {
+			this.sortTableInMemory();
+		} else {
+			this.onGetRows();
+		}
 	}
 
 	// Private methods
 	private getUri(): string {
 		let uri: string = this.simplePanelOptions.URI;
 
-		if(this.simplePanelOptions.clientCode){
+		if (this.simplePanelOptions.clientCode) {
 			uri = '/' + this.simplePanelOptions.clientCode + this.simplePanelOptions.URI;
 		}
 		return uri;
+	}
+
+	private sortTableInMemory(): void {
+		// Sort
+		this.tableModel.basicSort(this.currentKeySorting, this.currentSorting[this.currentKeySorting]);
+
+		// Stop all loadings
+		this.loader.clear();
+	}
+
+	private resolveQueryParams(): any {
+		// Init var with default paras
+		const queryParams: any = Object.assign(
+			{ "page": this.apiHalPagerModel.currentPage },
+			this.simplePanelOptions.defaultQueryParams
+		);
+
+		// Load sorting
+		if (this.currentKeySorting) {
+			queryParams["sort[" + this.currentKeySorting + "]"] = this.currentSorting[this.currentKeySorting];
+		}
+		return queryParams;
+	}
+
+	private addObj(model: any): void {
+		// Get model
+		let rowToAdd: DataBaseModelInterface = this.onGetDataBaseModel(model);
+
+		// Chek value
+		if (rowToAdd) {
+			const json: any = rowToAdd.toJSON();
+			const uri: string = this.getUri();
+
+			// Emit event if parent need to modify json
+			this.onBeforeSend.emit(json);
+
+			// Start modal loader
+			this.loader.primaryModal = true;
+
+			// Do request
+			this.apiService.createObj(uri, json).subscribe(
+				(response: ApiResponseModel) => {
+					// Stop modal loader
+					this.loader.primaryModal = false;
+
+					// Check response
+					if (response.hasSingleResponse()) {
+						// Add to tablemodel
+						this.tableModel.addRow(
+							this.onParseRow(response.data)
+						);
+					}
+
+					// Call hide modal
+					this.onHideForm();
+				},
+				(error: HttpErrorResponse) => {
+					// Display toasts
+					this.toastsService.showHttpError(error);
+
+					// Stop modal loader
+					this.loader.primaryModal = false;
+				}
+			);
+		}
+	}
+
+	private updateObj(model: any) {
+		// Get model
+		let rowToAdd: DataBaseModelInterface = this.onGetDataBaseModel(model);
+
+		// Chek value
+		if (rowToAdd) {
+			const json: any = rowToAdd.toJSON();
+			const uri: string = this.getUri();
+
+			// Emit event if parent need to modify json
+			this.onBeforeSend.emit(json);
+
+			// Start modal loader
+			this.loader.primaryModal = true;
+
+			// Detect method to update
+			let observer: Observable<ApiResponseModel>;
+
+			// Check must update with patch?
+			if (this.simplePanelOptions.updateWithPatch) {
+				observer = this.apiService.partialUpdateObj(uri, json.id, json);
+			} else {
+				observer = this.apiService.partialUpdateObj(uri, json.id, json);
+			}
+
+			// Do request
+			observer.subscribe(
+				(response: any) => {
+					// Check response
+					if (response.hasSingleResponse()) {
+						// Parse row
+						let newRow: TableRowModel = this.onParseRow(response.data);
+						// Find previous row
+						let row: TableRowModel = this.tableModel.findRow(model.id);
+
+						if (row instanceof TableRowModel) {
+							//update the data and model 
+							row.data = newRow.data;
+							row.model = newRow.model;
+
+							// Update to table model
+							this.tableModel.updateRow(row);
+							
+							// Close modal
+							this.onHideForm();
+						}
+					}
+
+					// Stop all loadings
+					this.loader.clear();
+				},
+				(error: HttpErrorResponse) => {
+					// Display toasts
+					this.toastsService.showHttpError(error);
+
+					// Stop modal loader
+					this.loader.primaryModal = false;
+				}
+			);
+		}
+		this.primaryForm.reset();
+	}
+
+	private deleteObj(rowId: any): void {
+		const uri: string = this.getUri();
+		//Delete the usergroup
+		this.apiService.deleteObj(uri, rowId).subscribe(
+			(response: any) => {
+				// Remove from table model
+				this.tableModel.removeRow(rowId);
+
+				// Close dialog
+				this.dialogService.close();
+			},
+			(error: HttpErrorResponse) => {
+				// Display toasts
+				this.toastsService.showHttpError(error);
+
+				// Stop modal loader
+				this.loader.primaryModal = false;
+			}
+		);
 	}
 }
