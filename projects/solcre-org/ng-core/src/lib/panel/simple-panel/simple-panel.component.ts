@@ -33,7 +33,7 @@ export class SimplePanelComponent implements OnInit {
 	@Input() simplePanelOptions: SimplePanelOptions;
 	@Input() primaryForm: FormGroup;
 	@Input() onParseRow: (row: any) => TableRowModel;
-	@Input() onGetJSON: (json: any) => any;
+	@Input() onGetJSON: (json: any, row: TableRowModel) => any;
 
 	// Outputs
 	@Output() onExtraAction: EventEmitter<any> = new EventEmitter();
@@ -47,6 +47,7 @@ export class SimplePanelComponent implements OnInit {
 	showForm: boolean = false;
 	updateMode: boolean = false;
 	placeHolderText: string;
+	activeRow: TableRowModel; // Current active row editing
 
 	// Loaders 
 	loader: SimplePanelLoadersModel;
@@ -132,10 +133,10 @@ export class SimplePanelComponent implements OnInit {
 			// Controls if is a new obj or update it
 			if (this.primaryForm.value.id == null) {
 				// Do add obj
-				this.addObj(this.primaryForm.value);
+				this.addObj(this.primaryForm.value, null);
 			} else {
 				// Do update
-				this.updateObj(this.primaryForm.value);
+				this.updateObj(this.primaryForm.value, this.activeRow);
 			}
 		} else {
 			// Trigger form validations
@@ -167,6 +168,9 @@ export class SimplePanelComponent implements OnInit {
 		//parse the fields to input.
 		if (row instanceof TableRowModel) {
 			const json: any = row.model.toJSON();
+
+			// Load active row
+			this.activeRow = row;
 
 			// Emit on before open
 			this.onBeforeOpen.emit(json);
@@ -213,6 +217,7 @@ export class SimplePanelComponent implements OnInit {
 					// Clear vars
 					this.showForm = false;
 					this.updateMode = false;
+					this.activeRow = null;
 
 					// Emit event
 					this.uiEvents.internalModalStateChange.emit(false);
@@ -222,6 +227,7 @@ export class SimplePanelComponent implements OnInit {
 			// Clear vars
 			this.showForm = false;
 			this.updateMode = false;
+			this.activeRow = null;
 
 			// Emit event
 			this.uiEvents.internalModalStateChange.emit(false);
@@ -277,10 +283,10 @@ export class SimplePanelComponent implements OnInit {
 		return queryParams;
 	}
 
-	private addObj(model: any): void {
+	private addObj(model: any, row: TableRowModel): void {
 		// Chek value
 		if (model) {
-			const json: any = this.onGetJSON(model) || model;
+			const json: any = this.onGetJSON(model, row) || model;
 			const uri: string = this.getUri();
 
 			// Emit event if parent need to modify json
@@ -317,10 +323,10 @@ export class SimplePanelComponent implements OnInit {
 		}
 	}
 
-	private updateObj(model: any) {
+	private updateObj(model: any, row: TableRowModel) {
 		// Chek value
 		if (model) {
-			const json: any = this.onGetJSON(model) || model;
+			const json: any = this.onGetJSON(model, row) || model;
 			const uri: string = this.getUri();
 
 			// Emit event if parent need to modify json
