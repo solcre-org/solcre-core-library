@@ -33,10 +33,11 @@ export class SimplePanelComponent implements OnInit {
 	@Input() simplePanelOptions: SimplePanelOptions;
 	@Input() primaryForm: FormGroup;
 	@Input() onParseRow: (row: any) => TableRowModel;
-	@Input() onGetDataBaseModel: (json: any) => DataBaseModelInterface;
+	@Input() onGetJSON: (json: any) => any;
 
 	// Outputs
 	@Output() onExtraAction: EventEmitter<any> = new EventEmitter();
+	@Output() onBeforeOpen: EventEmitter<any> = new EventEmitter();
 	@Output() onBeforeSend: EventEmitter<any> = new EventEmitter();
 
 	// Models
@@ -143,23 +144,48 @@ export class SimplePanelComponent implements OnInit {
 	}
 
 	onAddRow(): void {
+		const json: any = {};
+
 		// Clear form
 		this.primaryForm.reset();
+
+		// Emit on before open
+		this.onBeforeOpen.emit(json);
 
 		// Emmit ui events
 		this.uiEvents.internalModalStateChange.emit(true);
 
 		// Open modal
 		this.showForm = true;
+		this.updateMode = false;
+
+		// Patch default values
+		this.primaryForm.patchValue(json);
 	}
 
 	onUpdateRow(row: TableRowModel) {
-		this.uiEvents.internalModalStateChange.emit(true);
-		this.showForm = true;
-		this.updateMode = true;
 		//parse the fields to input.
 		if (row instanceof TableRowModel) {
-			this.primaryForm.patchValue(row.model);
+			const json: any = row.model.toJSON();
+
+			// Emit on before open
+			this.onBeforeOpen.emit(json);
+
+			// Clear form
+			this.primaryForm.reset();
+
+			// Emmit ui events
+			this.uiEvents.internalModalStateChange.emit(true);
+
+			// Open modal with update mode
+			this.showForm = true;
+			this.updateMode = true;
+
+			// Patch form
+			this.primaryForm.patchValue(json);
+		} else {
+			// Dev warning
+			console.warn("Row is not instanceof TableRowModel");
 		}
 	}
 
@@ -252,12 +278,9 @@ export class SimplePanelComponent implements OnInit {
 	}
 
 	private addObj(model: any): void {
-		// Get model
-		let rowToAdd: DataBaseModelInterface = this.onGetDataBaseModel(model);
-
 		// Chek value
-		if (rowToAdd) {
-			const json: any = rowToAdd.toJSON();
+		if (model) {
+			const json: any = this.onGetJSON(model) || model;
 			const uri: string = this.getUri();
 
 			// Emit event if parent need to modify json
@@ -295,12 +318,9 @@ export class SimplePanelComponent implements OnInit {
 	}
 
 	private updateObj(model: any) {
-		// Get model
-		let rowToAdd: DataBaseModelInterface = this.onGetDataBaseModel(model);
-
 		// Chek value
-		if (rowToAdd) {
-			const json: any = rowToAdd.toJSON();
+		if (model) {
+			const json: any = this.onGetJSON(model) || model;
 			const uri: string = this.getUri();
 
 			// Emit event if parent need to modify json
