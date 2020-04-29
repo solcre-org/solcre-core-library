@@ -1,0 +1,12 @@
+<div class="select" [formGroup]="form">
+	<select 
+		class="input"
+		[class.error]="hasErrors"
+		[class.placeholder]="!form.get(controlName).value"
+		[formControlName]="controlName">
+		<option [value]="null">{{ placeholder }}</option>
+		<option 
+			*ngFor="let model of models"
+			[value]="models[modelIdKey]">{{ models[modelDisplayKey] }}</option>
+	</select>
+</div>

@@ -385,7 +385,7 @@ export class SimplePanelComponent implements OnInit {
 						ArrayUtility.each(response.data, (json: any) => {
 							// Send each row to the corresponding model
 							this.tableModel.addRow(
-								this.onParseRow(response)
+								this.onParseRow(json)
 							);
 						});
 					}
@@ -421,6 +421,9 @@ export class SimplePanelComponent implements OnInit {
 				// Wait remote data at the same time with fetchrows
 				this.remoteDataService.process().subscribe( null, null,
 					() => {
+						// Emit event
+						this.onRemoteData.emit(this.remoteDataService.getData());
+
 						// On complete start fetch
 						this.fetchRows();
 					}

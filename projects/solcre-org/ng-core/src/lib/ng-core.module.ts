@@ -21,6 +21,7 @@ import { FilterPipe } from './panel/filter/fiter.pipe';
 import { ViewportDirective } from './structure/viewport/viewport.directive';
 import { CountriesSelectComponent } from './forms/countries-select/countries-select.component';
 import { TimezonesSelectComponent } from './forms/timezones-select/timezones-select.component';
+import { SelectComponent } from './forms/select/select.component';
 
 @NgModule({
     declarations: [
@@ -39,7 +40,8 @@ import { TimezonesSelectComponent } from './forms/timezones-select/timezones-sel
 		ToastsComponent,
 		ViewportDirective,
 		CountriesSelectComponent,
-		TimezonesSelectComponent
+		TimezonesSelectComponent,
+		SelectComponent
     ],
     imports: [
         TranslateModule,
@@ -63,7 +65,8 @@ import { TimezonesSelectComponent } from './forms/timezones-select/timezones-sel
 		ToastsComponent,
 		ViewportDirective,
 		CountriesSelectComponent,
-		TimezonesSelectComponent
+		TimezonesSelectComponent,
+		SelectComponent
     ],
     providers: []
 })
