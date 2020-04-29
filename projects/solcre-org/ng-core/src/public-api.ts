@@ -9,6 +9,8 @@ export * from './lib/table/table.model';
 
 export * from './lib/panel/simple-panel/simple-panel.component';
 export * from './lib/panel/simple-panel/simple-panel-options.model';
+export * from './lib/panel/simple-panel/remote-data/remote-data.model';
+export * from './lib/panel/simple-panel/remote-data/remote-data.service';
 export * from './lib/panel/dialog/dialog.service';
 export * from './lib/panel/dialog/dialog.model';
 export * from './lib/panel/dialog/dialog.component';
@@ -40,7 +42,6 @@ export * from './lib/structure/toasts/toast.model';
 export * from './lib/structure/toasts/toasts.service';
 export * from './lib/structure/toasts/toasts.component';
 export * from './lib/structure/loader/loader.component';
-export * from './lib/structure/loader/loader.service';
 export * from './lib/structure/viewport/viewport.directive';
 
 export * from './lib/utilities/array.utility';

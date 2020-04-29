@@ -2,7 +2,7 @@ import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { FormGroup } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
-import { Observable } from 'rxjs';
+import { Observable, forkJoin } from 'rxjs';
 
 import { TableModel } from '../../table/table.model';
 import { TableRowModel } from '../../table/table-row.model';
@@ -12,13 +12,14 @@ import { ApiService } from '../../api/api.service';
 import { DialogService } from '../dialog/dialog.service';
 import { DialogModel } from '../dialog/dialog.model';
 import { ApiHalPagerModel } from '../../api/api-hal-pager.model';
-import { DataBaseModelInterface } from '../../api/data-base-model.interface';
 import { UiEventsService } from '../../ui-events.service';
 import { TableHeaderModel } from '../../table/table-header.model';
 import { SimplePanelLoadersModel } from './simple-panel-loaders.model';
 import { ToastsService } from '../../structure/toasts/toasts.service';
 import { ArrayUtility } from '../../utilities/array.utility';
 import { FormUtility } from '../../utilities/form.utility';
+import { RemoteDataService } from './remote-data/remote-data.service';
+import { RemoteDataModel } from './remote-data/remote-data.model';
 
 @Component({
 	selector: 'ng-solcre-simple-panel',
@@ -30,12 +31,13 @@ export class SimplePanelComponent implements OnInit {
 
 	// Inputs
 	@Input() tableModel: TableModel;
-	@Input() simplePanelOptions: SimplePanelOptions;
+	@Input() options: SimplePanelOptions;
 	@Input() primaryForm: FormGroup;
 	@Input() onParseRow: (row: any) => TableRowModel;
 	@Input() onGetJSON: (json: any, row: TableRowModel) => any;
 
 	// Outputs
+	@Output() onRemoteData: EventEmitter<any> = new EventEmitter();
 	@Output() onExtraAction: EventEmitter<any> = new EventEmitter();
 	@Output() onBeforeOpen: EventEmitter<any> = new EventEmitter();
 	@Output() onBeforeSend: EventEmitter<any> = new EventEmitter();
@@ -58,6 +60,7 @@ export class SimplePanelComponent implements OnInit {
 		private dialogService: DialogService,
 		private toastsService: ToastsService,
 		private translateService: TranslateService,
+		private remoteDataService: RemoteDataService,
 		private uiEvents: UiEventsService) { }
 
 	// On component init
@@ -66,53 +69,7 @@ export class SimplePanelComponent implements OnInit {
 		this.loader = new SimplePanelLoadersModel();
 
 		// Fetch rows
-		this.onGetRows();
-	}
-
-	onGetRows() {
-		// Must pass options
-		if (this.simplePanelOptions instanceof SimplePanelOptions) {
-			// Start loading
-			this.loader.global = true;
-
-			// Set the query paramaters and uri
-			const queryParams: any = this.resolveQueryParams();
-			const uri: string = this.getUri();
-
-			// Clear body
-			this.tableModel.removeBody();
-
-			// Do request
-			this.apiService.fetchData(uri, queryParams).subscribe(
-				(response: ApiResponseModel) => {
-					// Control response
-					if (response.hasCollectionResponse()) {
-						this.apiHalPagerModel = response.pager;
-
-						// Map 
-						ArrayUtility.each(response.data, (json: any) => {
-							// Send each row to the corresponding model
-							this.tableModel.addRow(
-								this.onParseRow(response)
-							);
-						});
-					}
-
-					// Stop all loadings
-					this.loader.clear();
-				},
-				(error: HttpErrorResponse) => {
-					// Stop all loadings
-					this.loader.clear();
-
-					// Display toasts
-					this.toastsService.showHttpError(error);
-				}
-			);
-		} else {
-			// Console warning to devs
-			console.warn("simplePanelOptions is not defined.")
-		}
+		this.initialFetchRows();
 	}
 
 	// Custom events
@@ -124,7 +81,7 @@ export class SimplePanelComponent implements OnInit {
 		this.apiHalPagerModel.currentPage = page;
 
 		// Do fetch
-		this.onGetRows();
+		this.fetchRows();
 	}
 
 	onSave() {
@@ -247,16 +204,16 @@ export class SimplePanelComponent implements OnInit {
 		if (this.apiHalPagerModel.totalPages == 1) {
 			this.sortTableInMemory();
 		} else {
-			this.onGetRows();
+			this.fetchRows();
 		}
 	}
 
 	// Private methods
 	private getUri(): string {
-		let uri: string = this.simplePanelOptions.URI;
+		let uri: string = this.options.URI;
 
-		if (this.simplePanelOptions.clientCode) {
-			uri = '/' + this.simplePanelOptions.clientCode + this.simplePanelOptions.URI;
+		if (this.options.clientCode) {
+			uri = '/' + this.options.clientCode + this.options.URI;
 		}
 		return uri;
 	}
@@ -273,7 +230,7 @@ export class SimplePanelComponent implements OnInit {
 		// Init var with default paras
 		const queryParams: any = Object.assign(
 			{ "page": this.apiHalPagerModel.currentPage },
-			this.simplePanelOptions.defaultQueryParams
+			this.options.defaultQueryParams
 		);
 
 		// Load sorting
@@ -339,7 +296,7 @@ export class SimplePanelComponent implements OnInit {
 			let observer: Observable<ApiResponseModel>;
 
 			// Check must update with patch?
-			if (this.simplePanelOptions.updateWithPatch) {
+			if (this.options.updateWithPatch) {
 				observer = this.apiService.partialUpdateObj(uri, json.id, json);
 			} else {
 				observer = this.apiService.partialUpdateObj(uri, json.id, json);
@@ -402,5 +359,76 @@ export class SimplePanelComponent implements OnInit {
 				this.loader.primaryModal = false;
 			}
 		);
+	}
+
+	private fetchRows() {
+		// Must pass options
+		if (this.options instanceof SimplePanelOptions) {
+			// Start loading
+			this.loader.global = true;
+
+			// Set the query paramaters and uri
+			const queryParams: any = this.resolveQueryParams();
+			const uri: string = this.getUri();
+
+			// Clear body
+			this.tableModel.removeBody();
+
+			// Do request
+			this.apiService.fetchData(uri, queryParams).subscribe(
+				(response: ApiResponseModel) => {
+					// Control response
+					if (response.hasCollectionResponse()) {
+						this.apiHalPagerModel = response.pager;
+
+						// Map 
+						ArrayUtility.each(response.data, (json: any) => {
+							// Send each row to the corresponding model
+							this.tableModel.addRow(
+								this.onParseRow(response)
+							);
+						});
+					}
+
+					// Stop all loadings
+					this.loader.clear();
+				},
+				(error: HttpErrorResponse) => {
+					// Stop all loadings
+					this.loader.clear();
+
+					// Display toasts
+					this.toastsService.showHttpError(error);
+				}
+			);
+		} else {
+			// Console warning to devs
+			console.warn("simplePanelOptions is not defined.")
+		}
+	}
+
+	private initialFetchRows(){
+		// Must pass options
+		if (this.options instanceof SimplePanelOptions) {
+			// has value
+			if (ArrayUtility.hasValue(this.options.remoteData)) {
+				// Start global loading
+				this.loader.global = true;
+
+				// Set remote data
+				this.remoteDataService.setRemoteDate(this.options.remoteData);
+
+				// Wait remote data at the same time with fetchrows
+				this.remoteDataService.process().subscribe( null, null,
+					() => {
+						// On complete start fetch
+						this.fetchRows();
+					}
+				)
+			} else {
+				// Normal flow
+				this.fetchRows();
+			}
+		}
 	}
 }
