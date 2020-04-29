@@ -32,22 +32,22 @@ export class DialogComponent implements OnInit {
 			//Open
       		this.isActive = true;
 		})
+
+		this.dialogService.onClose.subscribe(() => {
+			this.isActive = false;
+			this.loading = false;
+		})
 	}
 
 	//Custom events
 	onConfirm(){
-		//Close
-		if (this.model.confirmCallback) {
-			this.loading = true;
-		} else {
+		// Close
+		if (!this.model.confirmCallback) {
 			this.isActive = false;
 		}
+
 		if(this.model instanceof DialogModel){
 			this.model.doConfirm();
-			this.dialogService.onClose.subscribe(() => {
-				this.isActive = false;
-				this.loading = false;
-			})
 		}
 	}
 

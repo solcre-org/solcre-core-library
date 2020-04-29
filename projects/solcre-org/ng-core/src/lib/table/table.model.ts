@@ -6,6 +6,7 @@ export class TableModel {
 	constructor(
 		public title?: string,
 		public header?: TableHeaderModel[],
+		public fields?: string[],
 		public body?: TableRowModel[],
 		public sortable?: boolean,
 	) { }

@@ -1,8 +1,8 @@
-import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output, TemplateRef } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { FormGroup } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
-import { Observable, forkJoin } from 'rxjs';
+import { Observable, forkJoin, Observer } from 'rxjs';
 
 import { TableModel } from '../../table/table.model';
 import { TableRowModel } from '../../table/table-row.model';
@@ -19,7 +19,8 @@ import { ToastsService } from '../../structure/toasts/toasts.service';
 import { ArrayUtility } from '../../utilities/array.utility';
 import { FormUtility } from '../../utilities/form.utility';
 import { RemoteDataService } from './remote-data/remote-data.service';
-import { RemoteDataModel } from './remote-data/remote-data.model';
+import { SimplePanelRowParsingInterface } from './simple-panel-row-parsing.interface';
+import { DataBaseModelInterface } from '../../api/data-base-model.interface';
 
 @Component({
 	selector: 'ng-solcre-simple-panel',
@@ -33,7 +34,7 @@ export class SimplePanelComponent implements OnInit {
 	@Input() tableModel: TableModel;
 	@Input() options: SimplePanelOptions;
 	@Input() primaryForm: FormGroup;
-	@Input() onParseRow: (row: any) => TableRowModel;
+	@Input() customTableTemplate: TemplateRef<any>;
 	@Input() onGetJSON: (json: any, row: TableRowModel) => any;
 
 	// Outputs
@@ -41,6 +42,7 @@ export class SimplePanelComponent implements OnInit {
 	@Output() onExtraAction: EventEmitter<any> = new EventEmitter();
 	@Output() onBeforeOpen: EventEmitter<any> = new EventEmitter();
 	@Output() onBeforeSend: EventEmitter<any> = new EventEmitter();
+	@Output() onParseModel: EventEmitter<SimplePanelRowParsingInterface> = new EventEmitter();
 
 	// Models
 	apiHalPagerModel: ApiHalPagerModel = new ApiHalPagerModel(1);
@@ -159,15 +161,15 @@ export class SimplePanelComponent implements OnInit {
 			// Open dialog
 			this.dialogService.open(new DialogModel(message + row.reference + "?", () => {
 				// Remove object
-				this.deleteObj(row);
+				this.deleteObj(row.id);
 			}));
 		}
 	}
 
 	// Hide modal
-	onHideForm(): void {
+	onHideForm(skpiDirtyCheck?: boolean): void {
 		// Check if the user change the input values
-		if (this.primaryForm.dirty) {
+		if (this.primaryForm.dirty && !skpiDirtyCheck) {
 			// Open dialog before close
 			this.dialogService.open(
 				new DialogModel('share.dialog.warning', () => {
@@ -178,6 +180,9 @@ export class SimplePanelComponent implements OnInit {
 
 					// Emit event
 					this.uiEvents.internalModalStateChange.emit(false);
+
+					// Close dialog
+					this.dialogService.close();
 				})
 			);
 		} else {
@@ -260,14 +265,12 @@ export class SimplePanelComponent implements OnInit {
 
 					// Check response
 					if (response.hasSingleResponse()) {
-						// Add to tablemodel
-						this.tableModel.addRow(
-							this.onParseRow(response.data)
-						);
+						// Parse json and push or update it
+						this.parseRow(response.data);
 					}
 
 					// Call hide modal
-					this.onHideForm();
+					this.onHideForm(true);
 				},
 				(error: HttpErrorResponse) => {
 					// Display toasts
@@ -299,7 +302,7 @@ export class SimplePanelComponent implements OnInit {
 			if (this.options.updateWithPatch) {
 				observer = this.apiService.partialUpdateObj(uri, json.id, json);
 			} else {
-				observer = this.apiService.partialUpdateObj(uri, json.id, json);
+				observer = this.apiService.updateObj(uri, json);
 			}
 
 			// Do request
@@ -307,23 +310,12 @@ export class SimplePanelComponent implements OnInit {
 				(response: any) => {
 					// Check response
 					if (response.hasSingleResponse()) {
-						// Parse row
-						let newRow: TableRowModel = this.onParseRow(response.data);
-						// Find previous row
-						let row: TableRowModel = this.tableModel.findRow(model.id);
-
-						if (row instanceof TableRowModel) {
-							//update the data and model 
-							row.data = newRow.data;
-							row.model = newRow.model;
-
-							// Update to table model
-							this.tableModel.updateRow(row);
-							
-							// Close modal
-							this.onHideForm();
-						}
+						// Parse json and push or update it
+						this.parseRow(response.data, true);
 					}
+
+					// Close modal
+					this.onHideForm(true);
 
 					// Stop all loadings
 					this.loader.clear();
@@ -337,14 +329,19 @@ export class SimplePanelComponent implements OnInit {
 				}
 			);
 		}
-		this.primaryForm.reset();
 	}
 
 	private deleteObj(rowId: any): void {
 		const uri: string = this.getUri();
+		// Stop modal loader
+		this.loader.dialog = true;
+
 		//Delete the usergroup
 		this.apiService.deleteObj(uri, rowId).subscribe(
 			(response: any) => {
+				// Stop modal loader
+				this.loader.dialog = false;
+
 				// Remove from table model
 				this.tableModel.removeRow(rowId);
 
@@ -352,11 +349,11 @@ export class SimplePanelComponent implements OnInit {
 				this.dialogService.close();
 			},
 			(error: HttpErrorResponse) => {
+				// Stop modal loader
+				this.loader.dialog = false;
+
 				// Display toasts
 				this.toastsService.showHttpError(error);
-
-				// Stop modal loader
-				this.loader.primaryModal = false;
 			}
 		);
 	}
@@ -383,10 +380,8 @@ export class SimplePanelComponent implements OnInit {
 
 						// Map 
 						ArrayUtility.each(response.data, (json: any) => {
-							// Send each row to the corresponding model
-							this.tableModel.addRow(
-								this.onParseRow(json)
-							);
+							// Parse json and push or update it
+							this.parseRow(json);
 						});
 					}
 
@@ -433,5 +428,37 @@ export class SimplePanelComponent implements OnInit {
 				this.fetchRows();
 			}
 		}
+	}
+
+	private parseRow(json: any, updating?: boolean): void {
+		// Call on parse model, the parent must call callback and complete with the result model
+		this.onParseModel.emit({
+			callback: (model: DataBaseModelInterface) => {
+				// Check updating
+				if (updating) {
+					let foundRow: TableRowModel = this.tableModel.findRow(model.getId());
+
+					if (foundRow instanceof TableRowModel) {
+						//update the data and model 
+						foundRow.model = model;
+						foundRow.reference = model.getReference();
+			
+						// Update to table model
+						this.tableModel.updateRow(foundRow);
+					}
+				} else {
+					// Create row
+					const row: TableRowModel = new TableRowModel(
+						model.getId(), 
+						model.getReference(), 
+						model
+					);
+
+					// If not updating add it
+					this.tableModel.addRow(row);
+				}
+			},
+			json: json
+		});
 	}
 }

@@ -1,8 +1,12 @@
-<ng-solcre-select
-	[form]="form"
-	[placeholder]="placeholder"
-	[hasErrors]="hasErrors"
-	[controlName]="controlName"
-	[models]="countries"
-	[modelIdKey]="'id'"
-	[modelDisplayKey]="'name'"></ng-solcre-select>
+<div class="select" [formGroup]="form">
+	<select 
+		class="input"
+		[class.error]="hasErrors"
+		[class.placeholder]="!form.get(controlName).value"
+		[formControlName]="controlName">
+		<option [value]="null">{{ placeholder }}</option>
+		<option 
+			*ngFor="let country of countries"
+			[value]="country.id">{{ country.name }}</option>
+	</select>
+</div>

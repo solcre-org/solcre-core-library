@@ -23,6 +23,7 @@
 				<ng-solcre-table 
 					*ngIf="tableModel" 
 					[tableModel]="tableModel" 
+					[customTdTpl]="customTableTemplate" 
 					(onDelete)="onDeleteRow($event)"
 					(onUpdate)="onUpdateRow($event)" 
 					(onSort)="onSort($event)"
@@ -118,5 +119,5 @@
 	</ng-solcre-modal>
 
 	<!-- CONFIRM DIALOG -->
-	<ng-solcre-dialog></ng-solcre-dialog>
+	<ng-solcre-dialog [loading]="loader.dialog"></ng-solcre-dialog>
 </div>

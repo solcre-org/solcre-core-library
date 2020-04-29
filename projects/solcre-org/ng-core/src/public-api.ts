@@ -9,6 +9,7 @@ export * from './lib/table/table.model';
 
 export * from './lib/panel/simple-panel/simple-panel.component';
 export * from './lib/panel/simple-panel/simple-panel-options.model';
+export * from './lib/panel/simple-panel/simple-panel-row-parsing.interface';
 export * from './lib/panel/simple-panel/remote-data/remote-data.model';
 export * from './lib/panel/simple-panel/remote-data/remote-data.service';
 export * from './lib/panel/dialog/dialog.service';
@@ -52,6 +53,7 @@ export * from './lib/utilities/error.utility';
 
 export * from './lib/others/countries/country.model';
 export * from './lib/others/countries/country.service';
+export * from './lib/others/countries/country-name/country-name.pipe';
 export * from './lib/others/timezones/timezone.model';
 export * from './lib/others/timezones/timezone.service';
 

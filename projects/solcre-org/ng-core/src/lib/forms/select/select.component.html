@@ -7,6 +7,6 @@
 		<option [value]="null">{{ placeholder }}</option>
 		<option 
 			*ngFor="let model of models"
-			[value]="models[modelIdKey]">{{ models[modelDisplayKey] }}</option>
+			[value]="model[modelIdKey]">{{ model[modelDisplayKey] }}</option>
 	</select>
 </div>

@@ -1,8 +1,12 @@
-<ng-solcre-select
-	[form]="form"
-	[placeholder]="placeholder"
-	[hasErrors]="hasErrors"
-	[controlName]="controlName"
-	[models]="timezones"
-	[modelIdKey]="'id'"
-	[modelDisplayKey]="'name'"></ng-solcre-select>
+<div class="select" [formGroup]="form">
+	<select 
+		class="input"
+		[class.error]="hasErrors"
+		[class.placeholder]="!form.get(controlName).value"
+		[formControlName]="controlName">
+		<option [value]="null">{{ placeholder }}</option>
+		<option 
+			*ngFor="let timezone of timezones"
+			[value]="timezone.id">{{ timezone.display }}</option>
+	</select>
+</div>

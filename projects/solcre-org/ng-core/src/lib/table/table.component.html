@@ -21,9 +21,8 @@
             </thead>
             <tbody class="body">
                 <tr class="row" *ngFor="let tr of tableModel.body | filter:filteredStatus:'data'">
-                    <td class="cell" *ngFor="let td of tr.data">
-                        <!-- <div class="loader"><span class="spinner"></span></div> -->
-                        {{ td }}
+                    <td class="cell" *ngFor="let field of tableModel.fields">
+                        <ng-container *ngTemplateOutlet="customTdTpl ? customTdTpl : defaultTdTpl; context: { field: field, model: tr.model }"></ng-container>
                     </td>
                 
                     <td class="cell actions-holder">
@@ -54,3 +53,8 @@
         </table>
     </div>
 </div>
+
+<!-- TEMPLATES -->
+<ng-template #defaultTdTpl let-model="model" let-field="field">
+	{{ model[field] }}
+</ng-template>
