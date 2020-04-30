@@ -9,11 +9,11 @@
 		</div>
 
 		<!-- SHOW WHEN NOT LOADING-->
-		<ng-content *ngIf="!loader.global" >
+		<ng-container *ngIf="!loader.global" >
 			<!-- PANEL TOPBAR -->
-			<app-panel-topbar
+			<ng-solcre-topbar
 				[subtitle]="tableModel.title"
-				[breadcrumbs]="breadcrumbs"></app-panel-topbar>
+				[breadcrumbs]="breadcrumbs"></ng-solcre-topbar>
 
 			<div class="wrapper">
 				<div class="section">
@@ -75,7 +75,7 @@
 					</div> <!-- Content mobile -->
 				</div>
 			</div>
-		</ng-content>
+		</ng-container>
 	</div> <!-- Panel-content -->
 
 	<!-- PRIMARY MODAL -->
