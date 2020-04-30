@@ -2,7 +2,7 @@ import { Component, OnInit, Input, EventEmitter, Output, TemplateRef } from '@an
 import { TableModel } from './table.model';
 import { TableRowModel } from './table-row.model';
 import { FormGroup } from '@angular/forms';
-import { DialogModel } from '../panel/dialog/dialog.model';
+import { DialogModel } from '../dialog/dialog.model';
 import { TableHeaderModel } from './table-header.model';
 import { TableSortEnum } from './table-sort.enum';
 import { TableRowActionModel } from './table-row-action.model';

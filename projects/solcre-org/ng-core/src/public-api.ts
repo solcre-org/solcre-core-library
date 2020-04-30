@@ -1,11 +1,11 @@
 /*
  * Public API Surface of share-library
  */
-export * from './lib/table/table.component';
-export * from './lib/table/table-header.model';
-export * from './lib/table/table-row-action.model';
-export * from './lib/table/table-row.model';
-export * from './lib/table/table.model';
+export * from './lib/panel/table/table.component';
+export * from './lib/panel/table/table-header.model';
+export * from './lib/panel/table/table-row-action.model';
+export * from './lib/panel/table/table-row.model';
+export * from './lib/panel/table/table.model';
 
 export * from './lib/panel/simple-panel/simple-panel.component';
 export * from './lib/panel/simple-panel/simple-panel-options.model';

@@ -6,7 +6,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { PagerComponent } from './api/pager/pager.component';
-import { TableComponent } from './table/table.component';
+import { TableComponent } from './panel/table/table.component';
 import { SimplePanelComponent } from './panel/simple-panel/simple-panel.component';
 import { DialogComponent } from './panel/dialog/dialog.component';
 import { LoaderComponent } from './structure/loader/loader.component';

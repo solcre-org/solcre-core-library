@@ -1,4 +1,4 @@
-import { DataBaseModelInterface } from '../api/data-base-model.interface';
+import { DataBaseModelInterface } from '../../api/data-base-model.interface';
 
 export class TableRowModel {
     constructor(
