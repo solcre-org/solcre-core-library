@@ -17,31 +17,40 @@
 
 			<div class="wrapper">
 				<div class="section">
-					<!-- SUBTITLE -->
-					<p class="subtitle display-inline-block margin-r-4">
-						{{ tableModel.title | translate}}
-					</p>
+					<ng-container *ngIf="tableModel">
+						<!-- SUBTITLE -->
+						<p 
+							*ngIf="tableModel.body.length" 
+							class="subtitle display-inline-block margin-r-4">
+							{{ tableModel.title | translate}}
+						</p>
 
-					<!-- ADD ITEM -->
-					<a class="bold-link" (click)="onAddRow()">{{ "share.simplePanel.add"  | translate}}</a>
+						<!-- ADD ITEM -->
+						<a 
+							*ngIf="tableModel.body.length" 
+							class="bold-link" 
+							(click)="onAddRow()">
+							{{ "share.simplePanel.add"  | translate}}
+						</a>
 
-					<!-- TABLE -->
-					<ng-solcre-table 
-						*ngIf="tableModel" 
-						[tableModel]="tableModel" 
-						[customTdTpl]="customTableTemplate" 
-						(onDelete)="onDeleteRow($event)"
-						(onUpdate)="onUpdateRow($event)" 
-						(onSort)="onSort($event)">
-					</ng-solcre-table>
+						<!-- TABLE -->
+						<ng-solcre-table 
+							*ngIf="tableModel.body.length" 
+							[tableModel]="tableModel" 
+							[customTdTpl]="customTableTemplate" 
+							(onDelete)="onDeleteRow($event)"
+							(onUpdate)="onUpdateRow($event)" 
+							(onSort)="onSort($event)">
+						</ng-solcre-table>
 
-					<!-- PLACEHOLDER -->
-					<ng-solcre-placeholder 
-						*ngIf="tableModel && !tableModel.body.length"
-						[text]="'placeholder.empty' | translate" 
-						[large]="true" 
-						(onAdd)="onAddRow()">
-					</ng-solcre-placeholder>
+						<!-- PLACEHOLDER -->
+						<ng-solcre-placeholder 
+							*ngIf="!tableModel.body.length"
+							[text]="'placeholder.empty' | translate" 
+							[large]="true" 
+							(onAdd)="onAddRow()">
+						</ng-solcre-placeholder>
+					</ng-container>
 				</div>
 			</div>
 
