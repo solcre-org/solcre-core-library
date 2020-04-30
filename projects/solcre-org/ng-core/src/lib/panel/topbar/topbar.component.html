@@ -1,0 +1,62 @@
+<!-- @component start -->
+<!--
+	@comment start
+	* .fixed-top: position-{number of fixed element} to offset it correctly.
+	* Take out .fixed-top and .position to make it a regular position element.
+	* .topbar .holder: Use each .group to align elements to both sides.
+	**  First group is intended to show information, and second one to show actions.
+	@comment end
+-->
+<div class="topbar fixed-top position-1">
+	<!--
+		@comment start
+		Desktop version
+		@comment end
+	-->
+	<div class="holder desktop bg-lightgrey">
+		<div class="group align-m wrapper"><!--
+			--><div class="align">
+
+				<app-breadcrumb 
+					[back]="back"
+					[manualNavigate]="manualNavigate"
+					(onBack)="onBackEmit()"
+					(onNavigate)="onNavigateEmit($event)"
+					[breadcrumbs]="breadcrumbs"></app-breadcrumb>
+
+			</div> <!-- .align -->
+		</div> <!-- .group -->
+		<div class="group align-m" [class.wrapper]="!skipWrapper"><!--
+			--><div class="align">
+				<div class="display-inline-block">
+					<ng-content select=".actions"></ng-content>
+					<ng-content select=".actions-desktop"></ng-content>
+				</div>
+
+			</div> <!-- .align -->
+		</div> <!-- .group -->
+	</div> <!-- .holder -->
+
+	<!--
+		@comment start
+		Mobile version
+		* .holder: .actions-{number of available actions}.
+		* Maximum actions: Two btns + "More options".
+		@comment end
+	-->
+	<div class="holder actions-3 mobile bg-lightgrey wrapper align-m"><!--
+		--><div class="align">
+
+			<p class="subtitle">{{ subtitle | translate }}</p>
+
+		</div> <!-- .align -->
+		<div class="actions">
+			<div class="display-inline-block">
+				<ng-content select=".actions"></ng-content>
+				<ng-content select=".actions-mobile"></ng-content>
+			</div>
+
+		</div> <!-- .actions -->
+	</div> <!-- .holder -->
+</div> <!-- .topbar -->
+<!-- @component end -->

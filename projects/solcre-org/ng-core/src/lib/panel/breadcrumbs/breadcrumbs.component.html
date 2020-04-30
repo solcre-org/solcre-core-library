@@ -1,0 +1,35 @@
+<!-- @component start -->
+<!--
+	@comment start
+	* .breadcrumb: Add .light to turn on the light grey version.
+	* .back-btn: It's completly optional. Just hide it if not in use.
+	* .item:
+	* * .main to turn text uppercase.
+	* * Add an <a> inside when available.
+	* * .active to highlight an item.
+	@comment end
+-->
+<div class="breadcrumb light reversed-ellipsis" [class.left-padding]="back">
+	<button type="button" class="back-btn" *ngIf="back" (click)="onBackState()"></button>
+	<div class="reversed-holder"><!--
+	--><div class="reversed-text">
+			<ul class="list">
+				<li class="item" *ngFor="let breadcrumb of breadcrumbs" [class.active]="breadcrumb.active">
+					<ng-container *ngIf="!breadcrumb.state || breadcrumb.state.length === 0">
+						<span *ngIf="!breadcrumb.skipTranslate">{{ breadcrumb.display | translate }}</span>
+						<span *ngIf="breadcrumb.skipTranslate">{{ breadcrumb.display }}</span>
+					</ng-container>
+					
+					<ng-container *ngIf="breadcrumb.state && breadcrumb.state.length > 0">
+						<a class="dot-link" (click)="onState(breadcrumb.state)">
+							<span *ngIf="!breadcrumb.skipTranslate">{{ breadcrumb.display | translate }}</span>
+							<span *ngIf="breadcrumb.skipTranslate">{{ breadcrumb.display }}</span>
+						</a>
+					</ng-container>
+				</li>
+			</ul>
+		</div><!--
+		--><span class="ellipsis"></span><!--
+	--></div> <!-- .reversed-ellipsis -->
+</div> <!-- .breadcrumb -->
+<!-- @component end -->

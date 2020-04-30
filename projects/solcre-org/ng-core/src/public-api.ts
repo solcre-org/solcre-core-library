@@ -18,6 +18,9 @@ export * from './lib/panel/dialog/dialog.component';
 export * from './lib/panel/filter/fiter.pipe';
 export * from './lib/panel/modal/modal.component';
 export * from './lib/panel/placeholder/placeholder.component';
+export * from './lib/panel/breadcrumbs/breadcrumb.model';
+export * from './lib/panel/breadcrumbs/breadcrumbs.component';
+export * from './lib/panel/topbar/topbar.component';
 
 export * from './lib/forms/input-holder/input-holder.component';
 export * from './lib/forms/countries-select/countries-select.component';

@@ -21,6 +21,7 @@ import { FormUtility } from '../../utilities/form.utility';
 import { RemoteDataService } from './remote-data/remote-data.service';
 import { SimplePanelRowParsingInterface } from './simple-panel-row-parsing.interface';
 import { DataBaseModelInterface } from '../../api/data-base-model.interface';
+import { BreadcrumbModel } from '../breadcrumbs/breadcrumb.model';
 
 @Component({
 	selector: 'ng-solcre-simple-panel',
@@ -31,6 +32,7 @@ import { DataBaseModelInterface } from '../../api/data-base-model.interface';
 export class SimplePanelComponent implements OnInit {
 
 	// Inputs
+	@Input() breadcrumbs: BreadcrumbModel[];
 	@Input() tableModel: TableModel;
 	@Input() options: SimplePanelOptions;
 	@Input() primaryForm: FormGroup;

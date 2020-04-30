@@ -23,6 +23,8 @@ import { CountriesSelectComponent } from './forms/countries-select/countries-sel
 import { TimezonesSelectComponent } from './forms/timezones-select/timezones-select.component';
 import { SelectComponent } from './forms/select/select.component';
 import { CountryNamePipe } from './others/countries/country-name/country-name.pipe';
+import { BreadcrumbsComponent } from './panel/breadcrumbs/breadcrumbs.component';
+import { TopbarComponent } from './panel/topbar/topbar.component';
 
 @NgModule({
     declarations: [
@@ -43,7 +45,9 @@ import { CountryNamePipe } from './others/countries/country-name/country-name.pi
 		CountriesSelectComponent,
 		TimezonesSelectComponent,
 		SelectComponent,
-		CountryNamePipe
+		CountryNamePipe,
+		BreadcrumbsComponent,
+		TopbarComponent
     ],
     imports: [
         TranslateModule,
@@ -69,7 +73,9 @@ import { CountryNamePipe } from './others/countries/country-name/country-name.pi
 		CountriesSelectComponent,
 		TimezonesSelectComponent,
 		SelectComponent,
-		CountryNamePipe
+		CountryNamePipe,
+		BreadcrumbsComponent,
+		TopbarComponent
     ],
     providers: []
 })

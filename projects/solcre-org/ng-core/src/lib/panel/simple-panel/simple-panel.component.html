@@ -9,66 +9,73 @@
 		</div>
 
 		<!-- SHOW WHEN NOT LOADING-->
-		<div *ngIf="!loader.global" class="wrapper">
-			<div class="section">
-				<!-- SUBTITLE -->
-				<p class="subtitle display-inline-block margin-r-4">
-					{{ tableModel.title | translate}}
-				</p>
+		<ng-content *ngIf="!loader.global" >
+			<!-- PANEL TOPBAR -->
+			<app-panel-topbar
+				[subtitle]="tableModel.title"
+				[breadcrumbs]="breadcrumbs"></app-panel-topbar>
 
-				<!-- ADD ITEM -->
-				<a class="bold-link" (click)="onAddRow()">{{ "share.simplePanel.add"  | translate}}</a>
+			<div class="wrapper">
+				<div class="section">
+					<!-- SUBTITLE -->
+					<p class="subtitle display-inline-block margin-r-4">
+						{{ tableModel.title | translate}}
+					</p>
 
-				<!-- TABLE -->
-				<ng-solcre-table 
-					*ngIf="tableModel" 
-					[tableModel]="tableModel" 
-					[customTdTpl]="customTableTemplate" 
-					(onDelete)="onDeleteRow($event)"
-					(onUpdate)="onUpdateRow($event)" 
-					(onSort)="onSort($event)">
-				</ng-solcre-table>
+					<!-- ADD ITEM -->
+					<a class="bold-link" (click)="onAddRow()">{{ "share.simplePanel.add"  | translate}}</a>
 
-				<!-- PLACEHOLDER -->
-				<ng-solcre-placeholder 
-					*ngIf="tableModel && !tableModel.body.length"
-					[text]="'placeholder.empty' | translate" 
-					[large]="true" 
-					(onAdd)="onAddRow()">
-				</ng-solcre-placeholder>
+					<!-- TABLE -->
+					<ng-solcre-table 
+						*ngIf="tableModel" 
+						[tableModel]="tableModel" 
+						[customTdTpl]="customTableTemplate" 
+						(onDelete)="onDeleteRow($event)"
+						(onUpdate)="onUpdateRow($event)" 
+						(onSort)="onSort($event)">
+					</ng-solcre-table>
+
+					<!-- PLACEHOLDER -->
+					<ng-solcre-placeholder 
+						*ngIf="tableModel && !tableModel.body.length"
+						[text]="'placeholder.empty' | translate" 
+						[large]="true" 
+						(onAdd)="onAddRow()">
+					</ng-solcre-placeholder>
+				</div>
 			</div>
-		</div>
 
-		<!-- FOOTER -->
-		<div class="footer fixed-bottom">
-			<div class="fixed-holder holder">
+			<!-- FOOTER -->
+			<div class="footer fixed-bottom">
+				<div class="fixed-holder holder">
 
-				<div class="content desktop">
-					<div class="wrapper align-m">
-						<div class="align">
-							<ng-solcre-pager
-								*ngIf="apiHalPagerModel.totalItems" 
-								[(loading)]="loader.pager" 
-								[pager]="apiHalPagerModel" 
-								(onChange)="onChangePage($event)">
-							</ng-solcre-pager>
+					<div class="content desktop">
+						<div class="wrapper align-m">
+							<div class="align">
+								<ng-solcre-pager
+									*ngIf="apiHalPagerModel.totalItems" 
+									[(loading)]="loader.pager" 
+									[pager]="apiHalPagerModel" 
+									(onChange)="onChangePage($event)">
+								</ng-solcre-pager>
+							</div>
 						</div>
-					</div>
-				</div> <!-- content desktop -->
+					</div> <!-- content desktop -->
 
-				<div class="content mobile">
-					<div class="align-m">
-						<div class="align">
-							<ng-solcre-pager 
-								*ngIf="apiHalPagerModel.totalItems" 
-								[pager]="apiHalPagerModel"
-								(onChange)="onChangePage($event)">
-							</ng-solcre-pager>
+					<div class="content mobile">
+						<div class="align-m">
+							<div class="align">
+								<ng-solcre-pager 
+									*ngIf="apiHalPagerModel.totalItems" 
+									[pager]="apiHalPagerModel"
+									(onChange)="onChangePage($event)">
+								</ng-solcre-pager>
+							</div>
 						</div>
-					</div>
-				</div> <!-- Content mobile -->
+					</div> <!-- Content mobile -->
+				</div>
 			</div>
-		</div>
+		</ng-content>
 	</div> <!-- Panel-content -->
 
 	<!-- PRIMARY MODAL -->
