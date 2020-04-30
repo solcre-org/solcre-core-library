@@ -32,7 +32,7 @@
 							(click)="onExtraActionRow(tr, action)"
 							[title]="action.description | translate"
 							[disabled]="action.disabled"
-							class="action show-on-edit action-btn icon-btn {{ action.status ? action.status : 'text-info' }} {{ action.classes }}"></button>
+							class="action show-on-edit action-btn icon-btn {{ action.status ? 'text-' + action.status : 'text-info' }} {{ action.classes }}"></button>
 						<button 
 							type="button" 
 							*ngIf="!options.hideEdit"
