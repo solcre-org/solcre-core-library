@@ -4,6 +4,7 @@
 export * from './lib/panel/table/table.component';
 export * from './lib/panel/table/table-header.model';
 export * from './lib/panel/table/table-row-action.model';
+export * from './lib/panel/table/table-row-action-status.enum';
 export * from './lib/panel/table/table-row.model';
 export * from './lib/panel/table/table.model';
 export * from './lib/panel/table/table-options.interface';
