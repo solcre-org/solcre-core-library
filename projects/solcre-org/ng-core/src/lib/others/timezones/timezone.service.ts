@@ -52,6 +52,7 @@ export class TimezoneService {
 			new TimezoneModel('Atlantic/Cape_Verde', "(GMT-01:00) Cape Verde Is."),
 			new TimezoneModel('Africa/Casablanca', "(GMT) Casablanca"),
 			new TimezoneModel('Europe/Dublin', "(GMT) Dublin"),
+			new TimezoneModel('UTC', "(UTC) Tiempo Universal Coordinado"),
 			new TimezoneModel('Europe/Lisbon', "(GMT) Lisbon"),
 			new TimezoneModel('Europe/London', "(GMT) London"),
 			new TimezoneModel('Africa/Monrovia', "(GMT) Monrovia"),

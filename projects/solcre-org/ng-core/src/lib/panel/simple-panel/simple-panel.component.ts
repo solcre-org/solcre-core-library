@@ -52,6 +52,7 @@ export class SimplePanelComponent implements OnInit {
 	updateMode: boolean = false;
 	placeHolderText: string;
 	activeRow: TableRowModel; // Current active row editing
+	activeHeaderSorting: TableHeaderModel;
 
 	// Loaders 
 	loader: SimplePanelLoadersModel;
@@ -207,8 +208,15 @@ export class SimplePanelComponent implements OnInit {
 
 		// Check page counts
 		if (this.apiHalPagerModel.totalPages == 1) {
+			// Stop loading
+			event.column.loading = false;
+
+			// Sort in memory
 			this.sortTableInMemory();
 		} else {
+			this.activeHeaderSorting = event.column;
+
+			// Fetch rows
 			this.fetchRows();
 		}
 	}
@@ -387,10 +395,20 @@ export class SimplePanelComponent implements OnInit {
 
 					// Stop all loadings
 					this.loader.clear();
+
+					// Check active header sorting
+					if(this.activeHeaderSorting instanceof TableHeaderModel) {
+						this.activeHeaderSorting.loading = false;
+					}
 				},
 				(error: HttpErrorResponse) => {
 					// Stop all loadings
 					this.loader.clear();
+
+					// Check active header sorting
+					if(this.activeHeaderSorting instanceof TableHeaderModel) {
+						this.activeHeaderSorting.loading = false;
+					}
 
 					// Display toasts
 					this.toastsService.showHttpError(error);
