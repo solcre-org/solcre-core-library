@@ -5,6 +5,7 @@ import { FormGroup } from '@angular/forms';
 import { DialogModel } from '../panel/dialog/dialog.model';
 import { TableHeaderModel } from './table-header.model';
 import { TableSortEnum } from './table-sort.enum';
+import { TableRowActionModel } from './table-row-action.model';
 
 @Component({
 	selector: 'ng-solcre-table',
@@ -19,7 +20,6 @@ export class TableComponent implements OnInit {
 	@Output() onDelete: EventEmitter<TableRowModel> = new EventEmitter();
 	@Output() onUpdate: EventEmitter<TableRowModel> = new EventEmitter();
 	@Output() onSort: EventEmitter<any> = new EventEmitter();
-	@Output() onExtraActionClick: EventEmitter<any> = new EventEmitter();
 
 	dialog: DialogModel;
 	newprimaryForm: FormGroup;
@@ -77,8 +77,8 @@ export class TableComponent implements OnInit {
 		}
 	}
 
-	onExtraActionRow(key: string, row: any) {
-		this.onExtraActionClick.emit({ key, row });
+	onExtraActionRow(row: TableRowModel, action: TableRowActionModel) {
+		action.execute(row);
 	}
 
 }

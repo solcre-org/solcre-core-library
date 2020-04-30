@@ -26,12 +26,8 @@
                     </td>
                 
                     <td class="cell actions-holder">
-						<a 
-                            *ngFor="let action of tr.extraActions"
-							(click)="onExtraActionRow(action.key, tr)"
-							class="bold-link action">{{ action.description | translate }}</a>
 						<button 
-                            *ngFor="let action of tr.extraActions"
+                            *ngFor="let action of tableModel.extraActions"
 							type="button" 
 							(click)="onExtraActionRow(tr, action)"
 							[title]="action.description | translate"

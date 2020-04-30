@@ -1,12 +1,14 @@
 import { TableHeaderModel } from './table-header.model';
 import { TableRowModel } from './table-row.model';
 import { TableSortEnum } from './table-sort.enum';
+import { TableRowActionModel } from './table-row-action.model';
 
 export class TableModel {
 	constructor(
 		public title?: string,
 		public header?: TableHeaderModel[],
 		public fields?: string[],
+        public extraActions?: TableRowActionModel[],
 		public body?: TableRowModel[],
 		public sortable?: boolean,
 	) { }

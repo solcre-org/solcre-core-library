@@ -39,7 +39,6 @@ export class SimplePanelComponent implements OnInit {
 
 	// Outputs
 	@Output() onRemoteData: EventEmitter<any> = new EventEmitter();
-	@Output() onExtraAction: EventEmitter<any> = new EventEmitter();
 	@Output() onBeforeOpen: EventEmitter<any> = new EventEmitter();
 	@Output() onBeforeSend: EventEmitter<any> = new EventEmitter();
 	@Output() onParseModel: EventEmitter<SimplePanelRowParsingInterface> = new EventEmitter();
@@ -195,10 +194,6 @@ export class SimplePanelComponent implements OnInit {
 			// Emit event
 			this.uiEvents.internalModalStateChange.emit(false);
 		}
-	}
-
-	onExtraActionClick(data: any) {
-		this.onExtraAction.emit(data);
 	}
 
 	onSort(event: { column: TableHeaderModel, value: string }): void {
