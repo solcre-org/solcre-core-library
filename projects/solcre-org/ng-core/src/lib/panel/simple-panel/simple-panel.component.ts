@@ -2,11 +2,10 @@ import { Component, OnInit, Input, EventEmitter, Output, TemplateRef } from '@an
 import { HttpErrorResponse } from '@angular/common/http';
 import { FormGroup } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
-import { Observable, forkJoin, Observer } from 'rxjs';
+import { Observable } from 'rxjs';
 
 import { TableModel } from '../table/table.model';
 import { TableRowModel } from '../table/table-row.model';
-import { SimplePanelOptions } from './simple-panel-options.model';
 import { ApiResponseModel } from '../../api/api-response.model';
 import { ApiService } from '../../api/api.service';
 import { DialogService } from '../dialog/dialog.service';
@@ -22,6 +21,8 @@ import { RemoteDataService } from './remote-data/remote-data.service';
 import { SimplePanelRowParsingInterface } from './simple-panel-row-parsing.interface';
 import { DataBaseModelInterface } from '../../api/data-base-model.interface';
 import { BreadcrumbModel } from '../breadcrumbs/breadcrumb.model';
+import { TableOptions } from '../table/table-options.interface';
+import { SimplePanelOptions } from './simple-panel-options.interface';
 
 @Component({
 	selector: 'ng-solcre-simple-panel',
@@ -34,6 +35,7 @@ export class SimplePanelComponent implements OnInit {
 	// Inputs
 	@Input() breadcrumbs: BreadcrumbModel[];
 	@Input() tableModel: TableModel;
+	@Input() tableOptions: TableOptions;
 	@Input() options: SimplePanelOptions;
 	@Input() primaryForm: FormGroup;
 	@Input() customTableTemplate: TemplateRef<any>;
@@ -69,6 +71,11 @@ export class SimplePanelComponent implements OnInit {
 
 	// On component init
 	ngOnInit(): void {
+		// Check options
+		if (!this.options) {
+			this.options = {};
+		}
+		
 		// Init vars
 		this.loader = new SimplePanelLoadersModel();
 
@@ -365,7 +372,7 @@ export class SimplePanelComponent implements OnInit {
 
 	private fetchRows() {
 		// Must pass options
-		if (this.options instanceof SimplePanelOptions) {
+		if (this.options) {
 			// Start loading
 			this.loader.global = true;
 
@@ -419,7 +426,7 @@ export class SimplePanelComponent implements OnInit {
 
 	private initialFetchRows(){
 		// Must pass options
-		if (this.options instanceof SimplePanelOptions) {
+		if (this.options) {
 			// has value
 			if (ArrayUtility.hasValue(this.options.remoteData)) {
 				// Start global loading

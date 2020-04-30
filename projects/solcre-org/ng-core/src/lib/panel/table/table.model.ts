@@ -4,14 +4,13 @@ import { TableSortEnum } from './table-sort.enum';
 import { TableRowActionModel } from './table-row-action.model';
 
 export class TableModel {
+	public body?: TableRowModel[]
+
 	constructor(
-		public title?: string,
 		public header?: TableHeaderModel[],
-		public fields?: string[],
-        public extraActions?: TableRowActionModel[],
-		public body?: TableRowModel[],
-		public sortable?: boolean,
-	) { }
+		public extraActions?: TableRowActionModel[]) {
+		this.body = [];
+	}
 
 	public removeBody(): void {
 		this.body = [];

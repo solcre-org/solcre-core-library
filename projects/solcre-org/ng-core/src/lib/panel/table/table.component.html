@@ -21,8 +21,8 @@
             </thead>
             <tbody class="body">
                 <tr class="row" *ngFor="let tr of tableModel.body | filter:filteredStatus:'data'">
-                    <td class="cell" *ngFor="let field of tableModel.fields">
-                        <ng-container *ngTemplateOutlet="customTdTpl ? customTdTpl : defaultTdTpl; context: { field: field, model: tr.model }"></ng-container>
+                    <td class="cell" *ngFor="let header of tableModel.header">
+                        <ng-container *ngTemplateOutlet="customTdTpl ? customTdTpl : defaultTdTpl; context: { field: header.key, model: tr.model }"></ng-container>
                     </td>
                 
                     <td class="cell actions-holder">
@@ -35,11 +35,13 @@
 							class="action show-on-edit action-btn icon-btn text-info {{ action.classes }}"></button>
 						<button 
 							type="button" 
+							*ngIf="!options.hideEdit"
                             (click)="onModifiersRow(tr)"							
                             [title]="'share.table.modify'| translate"
 							class="action show-on-edit action-btn icon-btn icon-edit text-info"></button>
 						<button 
 							type="button" 
+							*ngIf="!options.hideDelete"
 							(click)="onDeleteRow(tr)"
 							[title]="'share.table.delete' | translate "
 							class="action show-on-edit action-btn icon-btn icon-delete text-error"></button>

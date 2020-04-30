@@ -6,6 +6,7 @@ import { DialogModel } from '../dialog/dialog.model';
 import { TableHeaderModel } from './table-header.model';
 import { TableSortEnum } from './table-sort.enum';
 import { TableRowActionModel } from './table-row-action.model';
+import { TableOptions } from './table-options.interface';
 
 @Component({
 	selector: 'ng-solcre-table',
@@ -15,6 +16,7 @@ import { TableRowActionModel } from './table-row-action.model';
 export class TableComponent implements OnInit {
 
 	@Input() tableModel: TableModel;
+	@Input() options: TableOptions;
 	@Input() customTdTpl: TemplateRef<any>;
 
 	@Output() onDelete: EventEmitter<TableRowModel> = new EventEmitter();
@@ -27,13 +29,15 @@ export class TableComponent implements OnInit {
 	updateGroupForm: FormGroup;
 	currentSorting: any = {};
 	currentKeySorting: string; // clicked column
-
-	constructor(
-	) { }
-
+	
 	ngOnInit() {
+		// Init sorting
 		this.currentSorting = {};
 
+		// Check options
+		if (!this.options) {
+			this.options = {};
+		}
 	}
 
 	onDeleteRow(row: TableRowModel) {

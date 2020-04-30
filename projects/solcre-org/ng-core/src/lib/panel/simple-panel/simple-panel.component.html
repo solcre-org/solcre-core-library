@@ -12,17 +12,18 @@
 		<ng-container *ngIf="!loader.global" >
 			<!-- PANEL TOPBAR -->
 			<ng-solcre-topbar
-				[subtitle]="tableModel.title"
+				[subtitle]="options.title"
 				[breadcrumbs]="breadcrumbs"></ng-solcre-topbar>
 
 			<div class="wrapper">
 				<div class="section">
 					<ng-container *ngIf="tableModel">
+						
 						<!-- SUBTITLE -->
 						<p 
 							*ngIf="tableModel.body.length" 
 							class="subtitle display-inline-block margin-r-4">
-							{{ tableModel.title | translate}}
+							{{ options.title | translate}}
 						</p>
 
 						<!-- ADD ITEM -->
@@ -37,6 +38,7 @@
 						<ng-solcre-table 
 							*ngIf="tableModel.body.length" 
 							[tableModel]="tableModel" 
+							[options]="tableOptions" 
 							[customTdTpl]="customTableTemplate" 
 							(onDelete)="onDeleteRow($event)"
 							(onUpdate)="onUpdateRow($event)" 
