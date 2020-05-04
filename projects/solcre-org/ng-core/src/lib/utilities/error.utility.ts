@@ -35,47 +35,51 @@ export class ErrorUtility {
 	//Parse apigility validation
 	static parseHttpValidationsError(httpError: any, errorMessage: ApiErrorModel): void {
 		//Validate error
-		if (httpError && httpError.error && httpError.error.validation_messages) {
-			let errorCode: string = null;
-			let fields: string[] = [];
-			let fieldErrors: any = null;
+		if (httpError) {
+			if(httpError.error && httpError.error.validation_messages){
+				let errorCode: string = null;
+				let fields: string[] = [];
+				let fieldErrors: any = null;
 
-			//Get errors
-			for (let field in httpError.error.validation_messages) {
-				fieldErrors = httpError.error.validation_messages[field];
+				//Get errors
+				for (let field in httpError.error.validation_messages) {
+					fieldErrors = httpError.error.validation_messages[field];
 
-				//Check errors
-				for (let errorKey in fieldErrors) {
-					//Load the first error, we can only display one error at time
-					if (!errorCode) {
-						errorCode = errorKey;
-					}
+					//Check errors
+					for (let errorKey in fieldErrors) {
+						//Load the first error, we can only display one error at time
+						if (!errorCode) {
+							errorCode = errorKey;
+						}
 
-					//Load field if is the same error
-					if (errorCode === errorKey) {
-						fields.push(field);
+						//Load field if is the same error
+						if (errorCode === errorKey) {
+							fields.push(field);
+						}
 					}
 				}
-			}
 
-			//Check error code
-			if (errorCode) {
-				//Load message
-				switch (errorCode) {
-					case "isEmpty":
-						errorMessage.message = "errors.requiredApi";
-						break;
-					case "stringLengthTooLong":
-						errorMessage.message = "errors.toLoongApi";
+				//Check error code
+				if (errorCode) {
+					//Load message
+					switch (errorCode) {
+						case "isEmpty":
+							errorMessage.message = "errors.requiredApi";
+							break;
+						case "stringLengthTooLong":
+							errorMessage.message = "errors.toLoongApi";
 
-						break;
+							break;
+					}
+
+					//Load fields
+					errorMessage.params = {
+						"fields": fields.join(", ")
+					};
 				}
-
-				//Load fields
-				errorMessage.params = {
-					"fields": fields.join(", ")
-				};
+			} else if(httpError.detail){
+				errorMessage.message = httpError.detail;
 			}
-		}
+		} 
 	}
 }
