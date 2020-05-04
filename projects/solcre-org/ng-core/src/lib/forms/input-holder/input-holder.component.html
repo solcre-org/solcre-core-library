@@ -18,7 +18,13 @@
         *ngIf="control.hasError('maxlength') && control.touched" 
         class="error"
         for="{{ inputId }}">
-        {{ "errors.maxLengthField" | translate }}
+        {{ "errors.maxLengthField" | translate:{maxLength: maxLength} }}
+    </label>
+    <label 
+        *ngIf="control.hasError('minLengthField') && control.touched" 
+        class="error"
+        for="{{ inputId }}">
+        {{ "errors.minLengthField" | translate:{minLength: minLength} }}
     </label>
     <label 
         *ngIf="control.hasError('passwordConfirmationNotEquals') && control.touched" 
