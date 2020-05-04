@@ -21,7 +21,7 @@
         {{ "errors.maxLengthField" | translate:{maxLength: maxLength} }}
     </label>
     <label 
-        *ngIf="control.hasError('minLengthField') && control.touched" 
+        *ngIf="control.hasError('minLength') && control.touched" 
         class="error"
         for="{{ inputId }}">
         {{ "errors.minLengthField" | translate:{minLength: minLength} }}
