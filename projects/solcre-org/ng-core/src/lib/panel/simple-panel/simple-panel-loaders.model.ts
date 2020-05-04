@@ -12,4 +12,11 @@ export class SimplePanelLoadersModel {
 		this.primaryModal = false;
 		this.dialog = false;
 	}
+
+	public updateFromOtherLoader(loader: SimplePanelLoadersModel): void {
+		this.global = loader.global;
+		this.pager = loader.pager;
+		this.primaryModal = loader.primaryModal;
+		this.dialog = loader.dialog;
+	}
 }

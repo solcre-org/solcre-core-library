@@ -1,8 +1,8 @@
-import { Component, OnInit, Input, EventEmitter, Output, TemplateRef } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output, TemplateRef, OnDestroy } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { FormGroup } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 
 import { TableModel } from '../table/table.model';
 import { TableRowModel } from '../table/table-row.model';
@@ -23,6 +23,7 @@ import { DataBaseModelInterface } from '../../api/data-base-model.interface';
 import { BreadcrumbModel } from '../breadcrumbs/breadcrumb.model';
 import { TableOptions } from '../table/table-options.interface';
 import { SimplePanelOptions } from './simple-panel-options.interface';
+import { SimplePanelService } from './simple-panel.service';
 
 @Component({
 	selector: 'ng-solcre-simple-panel',
@@ -30,7 +31,7 @@ import { SimplePanelOptions } from './simple-panel-options.interface';
 	styles: ['./simple-panel.component.css'],
 	providers: [DialogService]
 })
-export class SimplePanelComponent implements OnInit {
+export class SimplePanelComponent implements OnInit, OnDestroy {
 
 	// Inputs
 	@Input() breadcrumbs: BreadcrumbModel[];
@@ -57,6 +58,7 @@ export class SimplePanelComponent implements OnInit {
 	placeHolderText: string;
 	activeRow: TableRowModel; // Current active row editing
 	activeHeaderSorting: TableHeaderModel;
+	subscribers: Subscription[];
 
 	// Loaders 
 	loader: SimplePanelLoadersModel;
@@ -68,7 +70,8 @@ export class SimplePanelComponent implements OnInit {
 		private toastsService: ToastsService,
 		private translateService: TranslateService,
 		private remoteDataService: RemoteDataService,
-		private uiEvents: UiEventsService) { }
+		private uiEvents: UiEventsService,
+		private simplePanelService: SimplePanelService) { }
 
 	// On component init
 	ngOnInit(): void {
@@ -76,12 +79,43 @@ export class SimplePanelComponent implements OnInit {
 		if (!this.options) {
 			this.options = {};
 		}
-		
+
 		// Init vars
 		this.loader = new SimplePanelLoadersModel();
 
+		// Start watching events
+		this.subscribers = [
+			this.simplePanelService.getOnRefreshRows().subscribe((params: any) => {
+				// Do fetch
+				this.fetchRows(params);
+			}),
+			this.simplePanelService.getOnChangeLoader().subscribe((loader: SimplePanelLoadersModel) => {
+				// Update loaders
+				this.loader.updateFromOtherLoader(loader);
+			}),
+			this.simplePanelService.getOnAddRow().subscribe(() => {
+				// Show add modal
+				this.onAddRow();
+			}),
+			this.simplePanelService.getOnEditRow().subscribe((row: TableRowModel) => {
+				// Show edit modal
+				this.onUpdateRow(row);
+			}),
+			this.simplePanelService.getOnDeleteRow().subscribe((row: TableRowModel) => {
+				// Show delete modal
+				this.onDeleteRow(row);
+			})
+		];
+
 		// Fetch rows
 		this.initialFetchRows();
+	}
+
+	// On component destroy
+	ngOnDestroy(): void {
+		ArrayUtility.each(this.subscribers, (subscriber: Subscription) => {
+			subscriber.unsubscribe();
+		});
 	}
 
 	// Custom events
@@ -249,12 +283,15 @@ export class SimplePanelComponent implements OnInit {
 		this.loader.clear();
 	}
 
-	private resolveQueryParams(): any {
+	private resolveQueryParams(params?: any): any {
 		// Init var with default paras
-		const queryParams: any = Object.assign(
+		let queryParams: any = Object.assign(
 			{ "page": this.apiHalPagerModel.currentPage },
 			this.options.defaultQueryParams
 		);
+
+		// Maybe some overrides??
+		queryParams = Object.assign(queryParams, params);
 
 		// Load sorting
 		if (this.currentKeySorting) {
@@ -376,14 +413,14 @@ export class SimplePanelComponent implements OnInit {
 		);
 	}
 
-	private fetchRows() {
+	private fetchRows(params?: any) {
 		// Must pass options
 		if (this.options) {
 			// Start loading
 			this.loader.global = true;
 
 			// Set the query paramaters and uri
-			const queryParams: any = this.resolveQueryParams();
+			const queryParams: any = this.resolveQueryParams(params);
 			const uri: string = this.getUri();
 
 			// Clear body
@@ -407,7 +444,7 @@ export class SimplePanelComponent implements OnInit {
 					this.loader.clear();
 
 					// Check active header sorting
-					if(this.activeHeaderSorting instanceof TableHeaderModel) {
+					if (this.activeHeaderSorting instanceof TableHeaderModel) {
 						this.activeHeaderSorting.loading = false;
 					}
 				},
@@ -416,7 +453,7 @@ export class SimplePanelComponent implements OnInit {
 					this.loader.clear();
 
 					// Check active header sorting
-					if(this.activeHeaderSorting instanceof TableHeaderModel) {
+					if (this.activeHeaderSorting instanceof TableHeaderModel) {
 						this.activeHeaderSorting.loading = false;
 					}
 
@@ -430,7 +467,7 @@ export class SimplePanelComponent implements OnInit {
 		}
 	}
 
-	private initialFetchRows(){
+	private initialFetchRows() {
 		// Must pass options
 		if (this.options) {
 			// has value
@@ -442,7 +479,7 @@ export class SimplePanelComponent implements OnInit {
 				this.remoteDataService.setRemoteDate(this.options.remoteData);
 
 				// Wait remote data at the same time with fetchrows
-				this.remoteDataService.process().subscribe( null, null,
+				this.remoteDataService.process().subscribe(null, null,
 					() => {
 						// Emit event
 						this.onRemoteData.emit(this.remoteDataService.getData());
@@ -470,23 +507,31 @@ export class SimplePanelComponent implements OnInit {
 						//update the data and model 
 						foundRow.model = model;
 						foundRow.reference = model.getReference();
-			
+
 						// Update to table model
 						this.tableModel.updateRow(foundRow);
+					} else {
+						// If not exist, add it
+						this.addRow(model);
 					}
 				} else {
-					// Create row
-					const row: TableRowModel = new TableRowModel(
-						model.getId(), 
-						model.getReference(), 
-						model
-					);
-
 					// If not updating add it
-					this.tableModel.addRow(row);
+					this.addRow(model);
 				}
 			},
 			json: json
 		});
+	}
+
+	private addRow(model: DataBaseModelInterface): void {
+		// Create row
+		const row: TableRowModel = new TableRowModel(
+			model.getId(),
+			model.getReference(),
+			model
+		);
+
+		// If not updating add it
+		this.tableModel.addRow(row);
 	}
 }

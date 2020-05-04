@@ -12,6 +12,7 @@ export * from './lib/panel/table/table-options.interface';
 export * from './lib/panel/simple-panel/simple-panel.component';
 export * from './lib/panel/simple-panel/simple-panel-options.interface';
 export * from './lib/panel/simple-panel/simple-panel-row-parsing.interface';
+export * from './lib/panel/simple-panel/simple-panel.service';
 export * from './lib/panel/simple-panel/remote-data/remote-data.model';
 export * from './lib/panel/simple-panel/remote-data/remote-data.service';
 export * from './lib/panel/dialog/dialog.service';
