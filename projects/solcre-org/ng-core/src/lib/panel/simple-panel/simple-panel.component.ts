@@ -42,6 +42,7 @@ export class SimplePanelComponent implements OnInit {
 	@Input() onGetJSON: (json: any, row: TableRowModel) => any;
 
 	// Outputs
+	@Output() onBeforeSave: EventEmitter<any> = new EventEmitter();
 	@Output() onRemoteData: EventEmitter<any> = new EventEmitter();
 	@Output() onBeforeOpen: EventEmitter<any> = new EventEmitter();
 	@Output() onBeforeSend: EventEmitter<any> = new EventEmitter();
@@ -98,13 +99,18 @@ export class SimplePanelComponent implements OnInit {
 	onSave() {
 		// Control form is valid
 		if (this.primaryForm.valid) {
+			const json: any = this.primaryForm.value;
+
+			// Emit on before save
+			this.onBeforeSave.emit(json);
+
 			// Controls if is a new obj or update it
 			if (this.primaryForm.value.id == null) {
 				// Do add obj
-				this.addObj(this.primaryForm.value, null);
+				this.addObj(json, null);
 			} else {
 				// Do update
-				this.updateObj(this.primaryForm.value, this.activeRow);
+				this.updateObj(json, this.activeRow);
 			}
 		} else {
 			// Trigger form validations
