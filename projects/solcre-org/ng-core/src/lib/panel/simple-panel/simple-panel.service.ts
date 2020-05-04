@@ -33,7 +33,7 @@ export class SimplePanelService {
 	}
 
 	// Triggers
-	public triggerOnRefreshRows(params: any): void {
+	public triggerOnRefreshRows(params?: any): void {
 		this.onRefreshRows.emit(params);
 	}
 	public triggerOnAddRow(): void {
