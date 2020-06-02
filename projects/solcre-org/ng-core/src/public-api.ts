@@ -57,6 +57,7 @@ export * from './lib/utilities/array.utility';
 export * from './lib/utilities/form.utility';
 export * from './lib/utilities/string.utility';
 export * from './lib/utilities/error.utility';
+export * from './lib/utilities/object.utility';
 
 export * from './lib/others/countries/country.model';
 export * from './lib/others/countries/country.service';

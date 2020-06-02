@@ -24,6 +24,7 @@ import { BreadcrumbModel } from '../breadcrumbs/breadcrumb.model';
 import { TableOptions } from '../table/table-options.interface';
 import { SimplePanelOptions } from './simple-panel-options.interface';
 import { SimplePanelService } from './simple-panel.service';
+import { ObjectUtility } from '../../utilities/object.utility';
 
 @Component({
 	selector: 'ng-solcre-simple-panel',
@@ -133,7 +134,7 @@ export class SimplePanelComponent implements OnInit, OnDestroy {
 	onSave() {
 		// Control form is valid
 		if (this.primaryForm.valid) {
-			const json: any = this.primaryForm.value;
+			const json: any = ObjectUtility.clone(this.primaryForm.value);
 
 			// Emit on before save
 			this.onBeforeSave.emit(json);
@@ -342,10 +343,14 @@ export class SimplePanelComponent implements OnInit, OnDestroy {
 		// Chek value
 		if (model) {
 			const json: any = this.onGetJSON(model, row) || model;
+			const id: any = json.id;
 			const uri: string = this.getUri();
 
 			// Emit event if parent need to modify json
 			this.onBeforeSend.emit(json);
+
+			//Remove id from the body
+			delete json.id;
 
 			// Start modal loader
 			this.loader.primaryModal = true;
@@ -355,7 +360,7 @@ export class SimplePanelComponent implements OnInit, OnDestroy {
 
 			// Check must update with patch?
 			if (this.options.updateWithPatch) {
-				observer = this.apiService.partialUpdateObj(uri, json.id, json);
+				observer = this.apiService.partialUpdateObj(uri, id, json);
 			} else {
 				observer = this.apiService.updateObj(uri, json);
 			}
