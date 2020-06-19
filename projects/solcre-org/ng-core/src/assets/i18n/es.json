@@ -22,26 +22,29 @@
             "description": "Ingrese la descripción del permiso"
         }
     },
-    "share": {
+    "shared": {
         "simplePanel": {
-            "add": "Agregar", 
-            "cancel": "Cancelar",
+			"add": "Agregar",
+			"cancel": "Cancelar",
 			"save": "Guardar",
 			"modify": "Modificar",
 			"addNew": "Agregar nuevo"
-        },
-        "table": {
-            "modify": "Modificar", 
-            "delete": "Eliminar",
-            "filter": "Filtrar en esta tabla"
-        },
-        "dialog": {
-            "warning": "No ha confirmado los cambios. ¿Desea continuar y perder los cambios?",
-            "message": "¿Estás seguro que deseas borrar el ítem: ",
-            "accept": "Aceptar",
-            "cancel": "Cancelar",
-            "errorPassword": "El usuario o la contraseña no son correctos."
-        }
+		},
+		"table": {
+			"modify": "Modificar",
+			"delete": "Eliminar",
+			"filter": "Filtrar en esta tabla"
+		},
+		"dialog": {
+			"warning": "No ha confirmado los cambios. ¿Desea continuar y perder los cambios?",
+			"message": "¿Estás seguro que deseas borrar el ítem: ",
+			"accept": "Aceptar",
+			"cancel": "Cancelar",
+			"errorPassword": "El usuario o la contraseña no son correctos."
+		},
+		"inputFile": {
+			"placeholder": "Seleccione un archivo..."
+		}
     },
     "common": {
         "add": "Agregar",

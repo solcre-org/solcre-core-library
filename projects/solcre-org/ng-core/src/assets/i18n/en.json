@@ -21,7 +21,7 @@
             "description": "Enter permission description"
         }
     },
-    "share": {
+    "shared": {
         "simplePanel": {
             "add": "Add", 
             "cancel": "Cancel",

@@ -31,7 +31,7 @@
 							*ngIf="tableModel.body.length" 
 							class="bold-link" 
 							(click)="onAddRow()">
-							{{ "share.simplePanel.add"  | translate}}
+							{{ "shared.simplePanel.add"  | translate}}
 						</a>
 
 						<!-- TABLE -->
@@ -99,12 +99,12 @@
 			<div class="modal-head align-m">
 				<div class="align">
 					<button (click)="onHideForm()" type="button" class="link cancel">
-						{{ "share.simplePanel.cancel"  | translate }}
+						{{ "shared.simplePanel.cancel"  | translate }}
 					</button>
 
 					<p class="text">
-						<span *ngIf="!updateMode">{{ "share.simplePanel.addNew" | translate }}</span>
-						<span *ngIf="updateMode">{{ "share.simplePanel.modify" | translate }}</span>
+						<span *ngIf="!updateMode">{{ "shared.simplePanel.addNew" | translate }}</span>
+						<span *ngIf="updateMode">{{ "shared.simplePanel.modify" | translate }}</span>
 					</p>
 
 					<button 
@@ -113,14 +113,14 @@
 						[class.loading]="loader.primaryModal" 
 						type="button"
 						(click)="onSave()">
-						{{ "share.simplePanel.add" | translate }}</button>
+						{{ "shared.simplePanel.add" | translate }}</button>
 					<button 
 						*ngIf="updateMode" 
 						class="link confirm" 
 						[class.loading]="loader.primaryModal" 
 						type="button"
 						(click)="onSave()">
-						{{ "share.simplePanel.save" | translate }}</button>
+						{{ "shared.simplePanel.save" | translate }}</button>
 				</div> <!-- align -->
 
 			</div> <!-- modal-head -->

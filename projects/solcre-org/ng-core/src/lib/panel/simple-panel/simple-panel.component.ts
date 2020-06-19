@@ -206,7 +206,7 @@ export class SimplePanelComponent implements OnInit, OnDestroy {
 		//Open dialog
 		if (row instanceof TableRowModel) {
 			//get the translate message and save in let
-			let message: string = this.translateService.instant('share.dialog.message');
+			let message: string = this.translateService.instant('shared.dialog.message');
 
 			// Open dialog
 			this.dialogService.open(new DialogModel(message + row.reference + "?", () => {
@@ -222,7 +222,7 @@ export class SimplePanelComponent implements OnInit, OnDestroy {
 		if (this.primaryForm.dirty && !skpiDirtyCheck) {
 			// Open dialog before close
 			this.dialogService.open(
-				new DialogModel('share.dialog.warning', () => {
+				new DialogModel('shared.dialog.warning', () => {
 					// Clear vars
 					this.showForm = false;
 					this.updateMode = false;

@@ -3,7 +3,7 @@ export class ObjectUtility {
 	// Clone
 	static clone(obj: any): any {
 		// basic type deep copy
-		if (obj === null || obj === undefined || typeof obj !== 'object') {
+		if (obj === null || obj === undefined || typeof obj !== 'object' || obj instanceof File || obj instanceof Blob) {
 			return obj
 		}
 		// array deep copy
