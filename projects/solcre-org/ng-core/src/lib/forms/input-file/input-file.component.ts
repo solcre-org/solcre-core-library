@@ -11,6 +11,7 @@ export class InputFileComponent implements OnChanges{
 	//Inputs
 	@Input() fileControl: FormControl;
 	@Input() fileName: string;
+	@Input() accept: string;
 
 	//properties
 	selectedFile: File;

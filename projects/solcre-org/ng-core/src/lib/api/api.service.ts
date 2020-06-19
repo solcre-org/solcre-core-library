@@ -5,6 +5,7 @@ import { map } from "rxjs/operators";
 
 import { ApiResponseModel } from "./api-response.model";
 import { ApiConfigInterface } from './api-config.interface';
+import { FormUtility } from '../utilities/form.utility';
 
 @Injectable({
 	providedIn: "root"
@@ -191,9 +192,9 @@ export class ApiService {
 		const url: string = this.config.apiUrl + uri;
 
 		//check form data
-		// if(FormUtility.needFormData(obj)){
-		// 	obj = FormUtility.jsonToFormData(obj);
-		// }
+		if(FormUtility.needFormData(obj)){
+		 	obj = FormUtility.jsonToFormData(obj);
+		}
 
 		//Do request
 		return this.httpClient
@@ -223,6 +224,11 @@ export class ApiService {
 
 		//Url
 		const url: string = this.config.apiUrl + uri + '/' + obj.id;
+
+		//check form data
+		if(FormUtility.needFormData(obj)){
+			obj = FormUtility.jsonToFormData(obj);
+	   }
 
 		//Do request
 		return this.httpClient

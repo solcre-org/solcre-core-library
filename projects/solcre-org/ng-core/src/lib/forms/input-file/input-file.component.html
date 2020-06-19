@@ -1,5 +1,9 @@
 <div class="input-file input">
-	<span class="placeholder" *ngIf="!fileName">{{ "InputFile.placeholder" | translate }}</span>
+	<span class="placeholder" *ngIf="!fileName">{{ "inputFile.placeholder" | translate }}</span>
 	<span class="value" *ngIf="fileName">{{ fileName }}</span>
-	<input type="file" class="input" accept="image/*" (change)="onFileSelect($event)">
+	<input 
+		type="file" 
+		class="input" 
+		[accept]="accept ? accept : 'image/*'" 
+		(change)="onFileSelect($event)">
 </div> <!-- .input-file -->
