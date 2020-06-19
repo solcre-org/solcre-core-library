@@ -30,6 +30,7 @@ export * from './lib/forms/input-holder/input-holder.component';
 export * from './lib/forms/countries-select/countries-select.component';
 export * from './lib/forms/timezones-select/timezones-select.component';
 export * from './lib/forms/select/select.component';
+export * from './lib/forms/input-file/input-file.component';
 
 export * from './lib/api/pager/pager.component';
 export * from './lib/api/data-base-model.interface';

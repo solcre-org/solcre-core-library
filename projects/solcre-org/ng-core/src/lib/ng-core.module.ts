@@ -25,6 +25,7 @@ import { SelectComponent } from './forms/select/select.component';
 import { CountryNamePipe } from './others/countries/country-name/country-name.pipe';
 import { BreadcrumbsComponent } from './panel/breadcrumbs/breadcrumbs.component';
 import { TopbarComponent } from './panel/topbar/topbar.component';
+import { InputFileComponent } from './forms/input-file/input-file.component';
 
 @NgModule({
     declarations: [
@@ -47,7 +48,8 @@ import { TopbarComponent } from './panel/topbar/topbar.component';
 		SelectComponent,
 		CountryNamePipe,
 		BreadcrumbsComponent,
-		TopbarComponent
+		TopbarComponent,
+		InputFileComponent
     ],
     imports: [
         TranslateModule,
@@ -75,7 +77,8 @@ import { TopbarComponent } from './panel/topbar/topbar.component';
 		SelectComponent,
 		CountryNamePipe,
 		BreadcrumbsComponent,
-		TopbarComponent
+		TopbarComponent,
+		InputFileComponent
     ],
     providers: []
 })
