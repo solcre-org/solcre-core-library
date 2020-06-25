@@ -362,7 +362,7 @@ export class SimplePanelComponent implements OnInit, OnDestroy {
 			if (this.options.updateWithPatch) {
 				observer = this.apiService.partialUpdateObj(uri, id, json);
 			} else {
-				observer = this.apiService.updateObj(uri, json);
+				observer = this.apiService.updateObj(uri, id, json);
 			}
 
 			// Do request

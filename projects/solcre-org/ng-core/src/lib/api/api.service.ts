@@ -208,7 +208,7 @@ export class ApiService {
 	}
 
 	//Update an object using PUT
-	public updateObj(uri: string, obj: any): Observable<ApiResponseModel> {
+	public updateObj(uri: string, id: any, obj: any): Observable<ApiResponseModel> {
 		//Header json
 		const headers: any = {}
 
@@ -223,7 +223,7 @@ export class ApiService {
 		};
 
 		//Url
-		const url: string = this.config.apiUrl + uri + '/' + obj.id;
+		const url: string = this.config.apiUrl + uri + '/' + id;
 
 		//check form data
 		if(FormUtility.needFormData(obj)){

@@ -60,6 +60,9 @@ export * from './lib/utilities/string.utility';
 export * from './lib/utilities/error.utility';
 export * from './lib/utilities/object.utility';
 
+export * from './lib/interceptors/utc-dates/utc-dates.interceptor';
+export * from './lib/interceptors/utc-dates/utc-dates.service';
+
 export * from './lib/others/countries/country.model';
 export * from './lib/others/countries/country.service';
 export * from './lib/others/countries/country-name/country-name.pipe';
