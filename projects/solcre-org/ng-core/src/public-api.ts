@@ -59,6 +59,7 @@ export * from './lib/utilities/form.utility';
 export * from './lib/utilities/string.utility';
 export * from './lib/utilities/error.utility';
 export * from './lib/utilities/object.utility';
+export * from './lib/utilities/date.utility';
 
 export * from './lib/interceptors/utc-dates/utc-dates.interceptor';
 export * from './lib/interceptors/utc-dates/utc-dates.service';
