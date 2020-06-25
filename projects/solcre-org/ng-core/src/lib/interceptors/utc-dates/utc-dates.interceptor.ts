@@ -17,9 +17,7 @@ import { UtcDatesService } from './utc-dates.service';
 @Injectable()
 export class UtcDatesInterceptor implements HttpInterceptor {
 	static DATE_FORMAT: string = "YYYY-MM-DD HH:mm:ss";
-	static DATE_REGEX: RegExp = /\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}/;
 	static DATE_FORMAT_WSECONDS: string = "YYYY-MM-DD HH:mm";
-	static DATE_REGEX_WSECONDS: RegExp = /\d{4}-\d{2}-\d{2} \d{2}:\d{2}/;
 
 	//Inject services
     constructor(
@@ -126,7 +124,7 @@ export class UtcDatesInterceptor implements HttpInterceptor {
 	//Check matches
 	private checkMatches(value: string,  toUTC?: boolean): string{
 		//Check
-		let matches: any[] = value.match(UtcDatesInterceptor.DATE_REGEX);
+		let matches: any[] = value.match(/\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}/);
 		let result: string = value;
 				
 		//Check matches
@@ -134,7 +132,7 @@ export class UtcDatesInterceptor implements HttpInterceptor {
 			result = this.processMatch(result, matches[0], UtcDatesInterceptor.DATE_FORMAT, toUTC);
 		} else {
 			//Check matches without seconds
-			matches = result.match(UtcDatesInterceptor.DATE_REGEX_WSECONDS);
+			matches = result.match(/\d{4}-\d{2}-\d{2} \d{2}:\d{2}/);
 				
 			//Check matches
 			if(matches instanceof Array){
