@@ -1,0 +1,25 @@
+<div class="row" [formGroup]="urlForm">
+	<div class="col-3">
+		<div class="select">
+			<select 
+				class="input"
+				[class.placeholder]="!urlForm.get('prefix').value"
+				(change)="onUrlChange()"
+				formControlName="prefix">
+				<option [value]="null"></option>
+				<option value="http://">http://</option>
+				<option value="https://">https://</option>
+				<option value="/">/</option>
+				<option value="#">#</option>
+				<option value="">None</option>
+			</select>
+		</div>
+	</div>
+	<div class="col-9">
+		<input type="text"
+		   (blur)="onUrlChange()"
+		   [placeholder]="placeholder ? placeholder : ''"
+		   formControlName="url"
+           class="input">
+	</div>
+</div>

@@ -26,6 +26,7 @@ import { CountryNamePipe } from './others/countries/country-name/country-name.pi
 import { BreadcrumbsComponent } from './panel/breadcrumbs/breadcrumbs.component';
 import { TopbarComponent } from './panel/topbar/topbar.component';
 import { InputFileComponent } from './forms/input-file/input-file.component';
+import { InputUrlComponent } from './forms/input-url/input-url.component';
 
 @NgModule({
     declarations: [
@@ -49,7 +50,8 @@ import { InputFileComponent } from './forms/input-file/input-file.component';
 		CountryNamePipe,
 		BreadcrumbsComponent,
 		TopbarComponent,
-		InputFileComponent
+		InputFileComponent,
+		InputUrlComponent
     ],
     imports: [
         TranslateModule,
@@ -78,7 +80,8 @@ import { InputFileComponent } from './forms/input-file/input-file.component';
 		CountryNamePipe,
 		BreadcrumbsComponent,
 		TopbarComponent,
-		InputFileComponent
+		InputFileComponent,
+		InputUrlComponent
     ],
     providers: []
 })

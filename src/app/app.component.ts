@@ -1,10 +1,21 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder } from '@angular/forms';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+	selector: 'app-root',
+	templateUrl: './app.component.html',
+	styleUrls: ['./app.component.css']
 })
-export class AppComponent {
-  title = 'solcre-core-library';
+export class AppComponent implements OnInit {
+	form: FormGroup;
+
+	constructor(
+		private fb: FormBuilder
+	){}
+
+	ngOnInit(){
+		this.form = this.fb.group({
+			'link': this.fb.control('https://solcre.com')
+		});
+	}
 }
