@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
 
 import { AppComponent } from './app.component';
 import { NgCoreModule } from 'projects/solcre-org/ng-core/src/public-api';
@@ -12,7 +13,8 @@ import { NgCoreModule } from 'projects/solcre-org/ng-core/src/public-api';
   imports: [
 	BrowserModule,
 	ReactiveFormsModule,
-	NgCoreModule
+	NgCoreModule,
+	TranslateModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

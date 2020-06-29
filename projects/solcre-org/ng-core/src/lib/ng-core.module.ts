@@ -27,6 +27,7 @@ import { BreadcrumbsComponent } from './panel/breadcrumbs/breadcrumbs.component'
 import { TopbarComponent } from './panel/topbar/topbar.component';
 import { InputFileComponent } from './forms/input-file/input-file.component';
 import { InputUrlComponent } from './forms/input-url/input-url.component';
+import { TabsComponent } from './structure/tabs/tabs.component';
 
 @NgModule({
     declarations: [
@@ -51,7 +52,8 @@ import { InputUrlComponent } from './forms/input-url/input-url.component';
 		BreadcrumbsComponent,
 		TopbarComponent,
 		InputFileComponent,
-		InputUrlComponent
+		InputUrlComponent,
+		TabsComponent
     ],
     imports: [
         TranslateModule,
@@ -81,7 +83,8 @@ import { InputUrlComponent } from './forms/input-url/input-url.component';
 		BreadcrumbsComponent,
 		TopbarComponent,
 		InputFileComponent,
-		InputUrlComponent
+		InputUrlComponent,
+		TabsComponent
     ],
     providers: []
 })

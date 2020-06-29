@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
+import { TabModel } from 'projects/solcre-org/ng-core/src/public-api';
 
 @Component({
 	selector: 'app-root',
@@ -8,6 +9,7 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 })
 export class AppComponent implements OnInit {
 	form: FormGroup;
+	tabs: TabModel[];
 
 	constructor(
 		private fb: FormBuilder
@@ -17,5 +19,10 @@ export class AppComponent implements OnInit {
 		this.form = this.fb.group({
 			'link': this.fb.control('https://solcre.com')
 		});
+		this.tabs = [
+			new TabModel(1, 'Tab 1'),
+			new TabModel(2, 'Tab 2'),
+			new TabModel(3, 'Tab 3')
+		];
 	}
 }
