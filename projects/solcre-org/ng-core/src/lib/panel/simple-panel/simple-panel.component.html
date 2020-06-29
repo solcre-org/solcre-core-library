@@ -125,6 +125,8 @@
 
 			</div> <!-- modal-head -->
 
+			<ng-content select=".primary-form-tabs"></ng-content>
+
 			<div class="scrollable wrapper section">
 				<form *ngIf="showForm" [formGroup]="primaryForm" (ngSubmit)="onSave()">
 					<ng-content select=".primary-form"></ng-content>

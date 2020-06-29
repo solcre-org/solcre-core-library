@@ -10,7 +10,7 @@
 			(click)="onTabClick(tab)"
 			class="tab" 
 			type="button">
-		{{ tab.display }}
+		{{ tab.display | translate }}
 		<span class="number" *ngIf="withQuantities">{{ tab.quantity }}</span>
 		<span class="icon icon-filter" *ngIf="tab.filtered"></span>
 	</button><!--
