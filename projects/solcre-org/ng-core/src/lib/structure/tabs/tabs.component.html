@@ -1,24 +1,16 @@
-<div class="tabs-container">
-	<div 	
-		class="tabs strong" 
-		[attr.data-tabs]="tabs ? tabs.length : 0"
-		[class.with-quantities]="withQuantities"><!--
-	--><button
-			*ngFor="let tab of tabs; let i=index;"
-			[class.active]="selected == tab.id"
-			[class.filtered]="tab.filtered"
-			(click)="onTabClick(tab)"
-			class="tab" 
-			type="button">
-		{{ tab.display | translate }}
-		<span class="number" *ngIf="withQuantities">{{ tab.quantity }}</span>
-		<span class="icon icon-filter" *ngIf="tab.filtered"></span>
-	</button><!--
-	--></div>
-	<div class="wrapper" [attr.data-tab]="selected">
-		<div 
-			class="section">
-			<ng-content select=".tab-content"></ng-content>
-		</div>
-	</div>
-</div>
+<div 	
+	class="tabs strong" 
+	[attr.data-tabs]="tabs ? tabs.length : 0"
+	[class.with-quantities]="withQuantities"><!--
+--><button
+		*ngFor="let tab of tabs; let i=index;"
+		[class.active]="selected == tab.id"
+		[class.filtered]="tab.filtered"
+		(click)="onTabClick(tab)"
+		class="tab" 
+		type="button">
+	{{ tab.display | translate }}
+	<span class="number" *ngIf="withQuantities">{{ tab.quantity }}</span>
+	<span class="icon icon-filter" *ngIf="tab.filtered"></span>
+</button><!--
+--></div>

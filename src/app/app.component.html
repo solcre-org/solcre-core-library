@@ -5,17 +5,19 @@
 </div>
 
 <ng-solcre-tabs
+	(onChange)="selected = $event.id"
 	[tabs]="tabs"
 	[selected]="1">
-	<div class="tab-content">
-		<div class="tab-content-1">
-			<p>Contenido tab 1</p>
-		</div>
-		<div class="tab-content-2">
-			<p>Contenido tab 2</p>
-		</div>
-		<div class="tab-content-3">
-			<p>Contenido tab 3</p>
-		</div>
-	</div>
 </ng-solcre-tabs>
+
+<div class="tab-content">
+	<div class="tab-content-1" *ngIf="selected == 1">
+		<p>Contenido tab 1</p>
+	</div>
+	<div class="tab-content-2" *ngIf="selected == 2">
+		<p>Contenido tab 2</p>
+	</div>
+	<div class="tab-content-3" *ngIf="selected == 3">
+		<p>Contenido tab 3</p>
+	</div>
+</div>

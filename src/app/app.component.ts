@@ -10,6 +10,7 @@ import { TabModel } from 'projects/solcre-org/ng-core/src/public-api';
 export class AppComponent implements OnInit {
 	form: FormGroup;
 	tabs: TabModel[];
+	selected: number = 1;
 
 	constructor(
 		private fb: FormBuilder

@@ -14,7 +14,7 @@ import { NgCoreModule } from 'projects/solcre-org/ng-core/src/public-api';
 	BrowserModule,
 	ReactiveFormsModule,
 	NgCoreModule,
-	TranslateModule,
+	TranslateModule.forRoot(),
   ],
   providers: [],
   bootstrap: [AppComponent]
