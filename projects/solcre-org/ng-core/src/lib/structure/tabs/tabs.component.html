@@ -18,9 +18,7 @@
 	<div class="wrapper" [attr.data-tab]="selected">
 		<div 
 			class="section">
-			<ng-content 
-				*ngFor="let tab of tabs; let i=index;"
-				[select]="'.tab-content-' + tab.id"></ng-content>
+			<ng-content select=".tab-content"></ng-content>
 		</div>
 	</div>
 </div>
