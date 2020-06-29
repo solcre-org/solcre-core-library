@@ -1,5 +1,5 @@
 <div class="row" [formGroup]="urlForm">
-	<div class="col-3">
+	<div class="col-sm-3">
 		<div class="select">
 			<select 
 				class="input"
@@ -15,7 +15,7 @@
 			</select>
 		</div>
 	</div>
-	<div class="col-9">
+	<div class="col-sm-9">
 		<input type="text"
 		   (blur)="onUrlChange()"
 		   [placeholder]="placeholder ? placeholder : ''"

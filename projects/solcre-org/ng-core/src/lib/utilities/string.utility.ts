@@ -16,8 +16,12 @@ export class StringUtility {
 			//Clean url
 			url = url.replace(/https:\/\//g, '');
 			url = url.replace(/http:\/\//g, '');
-			url = url.replace(/\//g, '');
-			url = url.replace(/#/g, '');
+
+			if(str.charAt(0) === '/') {
+				url = url.replace(/\//g, '');
+			} else if(str.indexOf('#') > -1) {
+				url = url.replace(/#/g, '');
+			}
 			parts[1]= url;
 
 			//Load protocol
