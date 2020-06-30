@@ -1,5 +1,6 @@
-import { Component, OnInit, Output, Input, EventEmitter, ViewEncapsulation } from '@angular/core';
+import { Component, Output, Input, EventEmitter, ViewEncapsulation } from '@angular/core';
 import { TabModel } from './tab.model';
+import { ArrayUtility } from '../../utilities/array.utility';
 
 @Component({
   selector: 'ng-solcre-tabs',
@@ -10,16 +11,21 @@ import { TabModel } from './tab.model';
 export class TabsComponent {
 	//Inputs and ouputs
 	@Input() tabs: TabModel[];
-	@Input() selected: number;
 	@Input() withQuantities: boolean;
 
 	@Output() onChange: EventEmitter<TabModel> = new EventEmitter<TabModel>();
 
 	onTabClick(tab: TabModel){
+		//Clear all previous selected
+		ArrayUtility.each(this.tabs, (tab: TabModel) => {
+			tab.selected = false;
+		})
+
+		//Set selected
+		tab.selected = true;;
+
 		//Emit event
 		this.onChange.emit(tab);
 
-		//Set selected
-		this.selected = tab.id;
 	}
 }

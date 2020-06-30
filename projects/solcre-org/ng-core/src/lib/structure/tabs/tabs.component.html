@@ -4,7 +4,7 @@
 	[class.with-quantities]="withQuantities"><!--
 --><button
 		*ngFor="let tab of tabs; let i=index;"
-		[class.active]="selected == tab.id"
+		[class.active]="tab.selected"
 		[class.filtered]="tab.filtered"
 		(click)="onTabClick(tab)"
 		class="tab" 

@@ -21,7 +21,7 @@ export class AppComponent implements OnInit {
 			'link': this.fb.control('https://solcre.com')
 		});
 		this.tabs = [
-			new TabModel(1, 'Tab 1'),
+			new TabModel(1, 'Tab 1', true),
 			new TabModel(2, 'Tab 2'),
 			new TabModel(3, 'Tab 3')
 		];
