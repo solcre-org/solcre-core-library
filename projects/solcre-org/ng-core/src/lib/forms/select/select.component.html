@@ -1,6 +1,7 @@
 <div class="select" [formGroup]="form">
 	<select 
 		class="input"
+		(change)="onModelChange()"
 		[class.error]="hasErrors"
 		[class.placeholder]="!form.get(controlName).value"
 		[formControlName]="controlName">
