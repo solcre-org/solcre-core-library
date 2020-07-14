@@ -60,4 +60,19 @@ export class DateUtility {
 
 		}
 	}
+
+	//To sql date
+	static format(date: string, format?: string): string{
+		try {
+			//Check date
+			if(!date){
+				return;
+			}
+
+			let momentDate: moment.Moment = moment(date);
+			return  momentDate.format(format ? format : "YYYY-MM-DD HH:mm:ss");
+		} catch(e){
+
+		}
+	}
 }
