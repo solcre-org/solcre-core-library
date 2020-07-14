@@ -32,7 +32,7 @@
 								type="button" 
 								(click)="onExtraActionRow(tr, action)"
 								[title]="action.description | translate"
-								[disabled]="action.disabled"
+								[disabled]="action.disabled || (tr.options && tr.options.actionsDisponibility && tr.options.actionsDisponibility[action.key] != undefined && !tr.options.actionsDisponibility[action.key])"
 								class="action show-on-edit action-btn icon-btn {{ action.status ? 'text-' + action.status : 'text-info' }} {{ action.classes }}"></button>
 						</ng-container>
 						
