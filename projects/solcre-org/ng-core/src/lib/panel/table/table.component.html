@@ -26,22 +26,25 @@
                     </td>
                 
                     <td class="cell actions-holder">
+						<ng-container *ngFor="let action of tableModel.extraActions">
+							<button 
+								*ngIf="!tr.options || !tr.options.actionsVisibility || tr.options.actionsVisibility[action.key]"
+								type="button" 
+								(click)="onExtraActionRow(tr, action)"
+								[title]="action.description | translate"
+								[disabled]="action.disabled"
+								class="action show-on-edit action-btn icon-btn {{ action.status ? 'text-' + action.status : 'text-info' }} {{ action.classes }}"></button>
+						</ng-container>
+						
 						<button 
-                            *ngFor="let action of tableModel.extraActions"
 							type="button" 
-							(click)="onExtraActionRow(tr, action)"
-							[title]="action.description | translate"
-							[disabled]="action.disabled"
-							class="action show-on-edit action-btn icon-btn {{ action.status ? 'text-' + action.status : 'text-info' }} {{ action.classes }}"></button>
-						<button 
-							type="button" 
-							*ngIf="!options.hideEdit"
+							*ngIf="!options.hideEdit && (!tr.options || !tr.options.actionsVisibility || tr.options.actionsVisibility['edit'])"
                             (click)="onModifiersRow(tr)"							
                             [title]="'shared.table.modify'| translate"
 							class="action show-on-edit action-btn icon-btn icon-edit text-info"></button>
 						<button 
 							type="button" 
-							*ngIf="!options.hideDelete"
+							*ngIf="!options.hideDelete && (!tr.options || !tr.options.actionsVisibility || tr.options.actionsVisibility['delete'])"
 							(click)="onDeleteRow(tr)"
 							[title]="'shared.table.delete' | translate "
 							class="action show-on-edit action-btn icon-btn icon-delete text-error"></button>

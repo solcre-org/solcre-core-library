@@ -49,6 +49,7 @@ export class SimplePanelComponent implements OnInit, OnDestroy {
 	@Output() onBeforeOpen: EventEmitter<any> = new EventEmitter();
 	@Output() onBeforeSend: EventEmitter<any> = new EventEmitter();
 	@Output() onParseModel: EventEmitter<SimplePanelRowParsingInterface> = new EventEmitter();
+	@Output() onRowChanged: EventEmitter<TableRowModel> = new EventEmitter();
 
 	// Models
 	apiHalPagerModel: ApiHalPagerModel = new ApiHalPagerModel(1);
@@ -304,7 +305,7 @@ export class SimplePanelComponent implements OnInit, OnDestroy {
 	private addObj(model: any, row: TableRowModel): void {
 		// Chek value
 		if (model) {
-			const json: any = this.onGetJSON(model, row) || model;
+			const json: any = this.onGetJSON ? (this.onGetJSON(model, row) || model) : model; //TODO: improve this code
 			const uri: string = this.getUri();
 
 			// Emit event if parent need to modify json
@@ -522,6 +523,9 @@ export class SimplePanelComponent implements OnInit, OnDestroy {
 
 						// Update to table model
 						this.tableModel.updateRow(foundRow);
+
+						//Emit row changed
+						this.onRowChanged.emit(foundRow);
 					} else {
 						// If not exist, add it
 						this.addRow(model);
@@ -545,5 +549,8 @@ export class SimplePanelComponent implements OnInit, OnDestroy {
 
 		// If not updating add it
 		this.tableModel.addRow(row, this.tableOptions ? this.tableOptions.useUnshift : false);
+
+		//Emit row changed
+		this.onRowChanged.emit(row);
 	}
 }

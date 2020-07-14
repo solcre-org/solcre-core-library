@@ -20,3 +20,11 @@
 		<p>Contenido tab 3</p>
 	</div>
 </div>
+<hr />
+<ng-solcre-simple-panel
+	*ngIf="tableModel" 
+	(onParseModel)="onParseModel($event)"
+	(onRowChanged)="onRowChanged($event)"
+	[primaryForm]="form"
+	[options]="panelOptions"
+	[tableModel]="tableModel"></ng-solcre-simple-panel>

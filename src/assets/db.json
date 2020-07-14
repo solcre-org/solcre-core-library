@@ -1,0 +1,18 @@
+{
+	"page": 1,
+	"page_count": 1,
+	"page_size": 25,
+	"total_items": 2,
+	"_embedded": {
+		"news": [
+			{
+				"id": 1,
+				"title": "News test 1"
+			},
+			{
+				"id": 2,
+				"title": "News test 2"
+			}
+		]
+	}
+}
