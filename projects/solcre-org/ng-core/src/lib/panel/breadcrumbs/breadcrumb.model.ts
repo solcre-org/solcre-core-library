@@ -3,7 +3,8 @@ export class BreadcrumbModel {
 		public display: string,
 		public state?: string[],
 		public active?: boolean,
-		public skipTranslate?: boolean
+		public skipTranslate?: boolean,
+		public queryparams?: any
 	){}
 
 	toString(): string{

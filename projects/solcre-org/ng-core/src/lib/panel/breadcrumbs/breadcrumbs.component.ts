@@ -29,7 +29,7 @@ export class BreadcrumbsComponent {
 		this.onBack.emit();
 	}
 
-	onState(state: string[]) {
+	onState(state: string[], queryParams?: any) {
 		//Manual navigate
 		if (this.manualNavigate) {
 			this.onNavigate.emit(state);
@@ -37,7 +37,9 @@ export class BreadcrumbsComponent {
 		}
 
 		//Automatic navigate
-		this.router.navigate(state);
+		this.router.navigate(state, queryParams ? {
+			queryParams: queryParams
+		} : {});
 	}
 
 }

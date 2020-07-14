@@ -21,7 +21,7 @@
 					</ng-container>
 					
 					<ng-container *ngIf="breadcrumb.state && breadcrumb.state.length > 0">
-						<a class="dot-link" (click)="onState(breadcrumb.state)">
+						<a class="dot-link" (click)="onState(breadcrumb.state, breadcrumb.queryParams)">
 							<span *ngIf="!breadcrumb.skipTranslate">{{ breadcrumb.display | translate }}</span>
 							<span *ngIf="breadcrumb.skipTranslate">{{ breadcrumb.display }}</span>
 						</a>
