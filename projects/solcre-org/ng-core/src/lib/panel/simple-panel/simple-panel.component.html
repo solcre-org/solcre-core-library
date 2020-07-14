@@ -28,7 +28,7 @@
 
 						<!-- ADD ITEM -->
 						<a 
-							*ngIf="tableModel.body.length" 
+							*ngIf="tableModel.body.length && !options.disableAdd" 
 							class="bold-link" 
 							(click)="onAddRow()">
 							{{ "shared.simplePanel.add"  | translate}}

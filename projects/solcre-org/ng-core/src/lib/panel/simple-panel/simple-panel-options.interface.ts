@@ -7,4 +7,5 @@ export interface SimplePanelOptions {
 	updateWithPatch?: boolean;
 	defaultQueryParams?: any;
 	remoteData?: RemoteDataModel[];
+	disableAdd?: boolean;
 }
