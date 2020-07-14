@@ -484,15 +484,22 @@ export class SimplePanelComponent implements OnInit, OnDestroy {
 				this.remoteDataService.setRemoteDate(this.options.remoteData);
 
 				// Wait remote data at the same time with fetchrows
-				this.remoteDataService.process().subscribe(null, null,
+				this.remoteDataService.process().subscribe(
+					() => {
+						// TODO: Move this code to extra function to avoid repeat code
+						// Emit event
+						this.onRemoteData.emit(this.remoteDataService.getData());
+
+						// On complete start fetch
+						this.fetchRows();
+					}, 
 					() => {
 						// Emit event
 						this.onRemoteData.emit(this.remoteDataService.getData());
 
 						// On complete start fetch
 						this.fetchRows();
-					}
-				)
+					});
 			} else {
 				// Normal flow
 				this.fetchRows();
