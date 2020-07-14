@@ -544,6 +544,6 @@ export class SimplePanelComponent implements OnInit, OnDestroy {
 		);
 
 		// If not updating add it
-		this.tableModel.addRow(row);
+		this.tableModel.addRow(row, this.tableOptions ? this.tableOptions.useUnshift : false);
 	}
 }

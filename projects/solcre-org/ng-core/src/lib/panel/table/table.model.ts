@@ -16,11 +16,16 @@ export class TableModel {
 		this.body = [];
 	}
 
-	public addRow(row: TableRowModel): void {
+	public addRow(row: TableRowModel, useUnshift?: boolean): void {
 		if (!this.body) {
 			this.body = [];
 		}
-		this.body.unshift(row);
+
+		if(useUnshift){
+			this.body.unshift(row);
+		} else {
+			this.body.push(row);
+		}
 	}
 
 	public findRow(id: any): TableRowModel {
