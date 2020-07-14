@@ -38,13 +38,13 @@
 						
 						<button 
 							type="button" 
-							*ngIf="!options.hideEdit && (!tr.options || !tr.options.actionsVisibility || tr.options.actionsVisibility['edit'])"
+							*ngIf="!options.hideEdit && (!tr.options || !tr.options.actionsVisibility || tr.options.actionsVisibility['edit'] == undefined || tr.options.actionsVisibility['edit'])"
                             (click)="onModifiersRow(tr)"							
                             [title]="'shared.table.modify'| translate"
 							class="action show-on-edit action-btn icon-btn icon-edit text-info"></button>
 						<button 
 							type="button" 
-							*ngIf="!options.hideDelete && (!tr.options || !tr.options.actionsVisibility || tr.options.actionsVisibility['delete'])"
+							*ngIf="!options.hideDelete && (!tr.options || !tr.options.actionsVisibility || tr.options.actionsVisibility['delete'] == undefined || tr.options.actionsVisibility['delete'])"
 							(click)="onDeleteRow(tr)"
 							[title]="'shared.table.delete' | translate "
 							class="action show-on-edit action-btn icon-btn icon-delete text-error"></button>

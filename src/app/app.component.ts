@@ -81,6 +81,8 @@ export class AppComponent implements OnInit {
 				'delete': false,
 				'edit': false
 			}
+		} else {
+			row.options.actionsVisibility = {};
 		}
 	}
 }
