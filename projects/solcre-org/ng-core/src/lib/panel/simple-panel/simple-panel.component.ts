@@ -50,6 +50,8 @@ export class SimplePanelComponent implements OnInit, OnDestroy {
 	@Output() onBeforeSend: EventEmitter<any> = new EventEmitter();
 	@Output() onParseModel: EventEmitter<SimplePanelRowParsingInterface> = new EventEmitter();
 	@Output() onRowChanged: EventEmitter<TableRowModel> = new EventEmitter();
+	@Output() onRowAdded: EventEmitter<TableRowModel> = new EventEmitter();
+	@Output() onRowUpdated: EventEmitter<TableRowModel> = new EventEmitter();
 
 	// Models
 	apiHalPagerModel: ApiHalPagerModel = new ApiHalPagerModel(1);
@@ -526,6 +528,9 @@ export class SimplePanelComponent implements OnInit, OnDestroy {
 
 						//Emit row changed
 						this.onRowChanged.emit(foundRow);
+
+						//Emit row updated
+						this.onRowUpdated.emit(foundRow);
 					} else {
 						// If not exist, add it
 						this.addRow(model);
@@ -552,5 +557,8 @@ export class SimplePanelComponent implements OnInit, OnDestroy {
 
 		//Emit row changed
 		this.onRowChanged.emit(row);
+
+		//Emit row added
+		this.onRowAdded.emit(row);
 	}
 }
