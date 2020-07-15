@@ -6,16 +6,17 @@ export class FormUtility {
 	 * Returns a form data object
 	 * @param json
 	 */
-	static jsonToFormData(json: any): FormData {
-		const fd = new FormData();
+	static jsonToFormData(json: any, fd?: FormData, parentKey?: string): FormData {
+		fd = fd ? fd : new FormData();
 
 		for (const key in json) {
-			if (json[key] instanceof Array) {
-				json[key].forEach((jsonChild: any, index: number) => {
-					fd.append(key + '[' + index + ']', jsonChild);
-				});
+
+			const parsedKey: string = parentKey ? parentKey + '[' + key + ']' : key;
+
+			if (json[key] instanceof Array || (json[key] !== null && typeof json[key] === 'object' && !(json[key] instanceof File) && !(json[key] instanceof Blob))) {
+				FormUtility.jsonToFormData(json[key], fd, parsedKey);
 			} else {
-				fd.append(key, json[key]);
+				fd.append(parsedKey, json[key]);
 			}
 		}
 		return fd;
