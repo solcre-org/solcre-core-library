@@ -28,7 +28,7 @@
                     <td class="cell actions-holder">
 						<ng-container *ngFor="let action of tableModel.extraActions">
 							<button 
-								*ngIf="!tr.options || !tr.options.actionsVisibility || tr.options.actionsVisibility[action.key]"
+								*ngIf="!tr.options || !tr.options.actionsVisibility || tr.options.actionsVisibility[action.key] == undefined || tr.options.actionsVisibility[action.key]"
 								type="button" 
 								(click)="onExtraActionRow(tr, action)"
 								[title]="action.description | translate"

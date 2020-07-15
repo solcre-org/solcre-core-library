@@ -77,9 +77,11 @@ export class AppComponent implements OnInit {
 	onRowChanged(row: TableRowModel){
 		if(row.model.getId() === 2) {
 			row.options.actionsVisibility = {
-				'action': false,
 				'delete': false,
 				'edit': false
+			};
+			row.options.actionsDisponibility = {
+				'action': true
 			}
 		} else {
 			row.options.actionsVisibility = {};
