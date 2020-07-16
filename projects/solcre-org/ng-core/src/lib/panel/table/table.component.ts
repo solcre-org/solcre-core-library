@@ -61,7 +61,7 @@ export class TableComponent implements OnInit {
 	}
 
 	onSortRows(column: TableHeaderModel) {
-		if (column instanceof TableHeaderModel) {
+		if (column instanceof TableHeaderModel && (column.sortable || column.sortable == undefined) ) {
 			const current: string = this.currentSorting[column.key];
 			this.currentSorting = {}; //Warning! remove the last sort
 
@@ -78,7 +78,6 @@ export class TableComponent implements OnInit {
 			}
 
 			//Loading
-			column.sortable = true;
 			column.loading = true;
 
 			//Emit sorting

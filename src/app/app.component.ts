@@ -48,7 +48,7 @@ export class AppComponent implements OnInit {
 		];
 		//Create model
 		this.tableModel = new TableModel([
-			new TableHeaderModel('ID', 'id'),
+			new TableHeaderModel('ID', 'id', false),
 			new TableHeaderModel('TITLE', 'title'),
 		], 
 		[
