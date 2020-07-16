@@ -264,8 +264,8 @@ export class SimplePanelComponent implements OnInit, OnDestroy {
 		} else {
 			this.activeHeaderSorting = event.column;
 
-			// Fetch rows
-			this.fetchRows();
+			// Fetch rows with ignore loader
+			this.fetchRows(null, true);
 		}
 	}
 
@@ -297,8 +297,8 @@ export class SimplePanelComponent implements OnInit, OnDestroy {
 		// Maybe some overrides??
 		queryParams = Object.assign(queryParams, params);
 
-		// Load sorting
-		if (this.currentKeySorting) {
+		// Load sorting if all is load correctly
+		if (this.currentKeySorting && this.currentSorting[this.currentKeySorting]) {
 			queryParams["sort[" + this.currentKeySorting + "]"] = this.currentSorting[this.currentKeySorting];
 		}
 		return queryParams;
@@ -421,22 +421,24 @@ export class SimplePanelComponent implements OnInit, OnDestroy {
 		);
 	}
 
-	private fetchRows(params?: any) {
+	private fetchRows(params?: any, ignoreLoader?: boolean): void {
 		// Must pass options
 		if (this.options) {
 			// Start loading
-			this.loader.global = true;
+			if(!ignoreLoader){
+				this.loader.global = true;
+			}
 
 			// Set the query paramaters and uri
 			const queryParams: any = this.resolveQueryParams(params);
 			const uri: string = this.getUri();
 
-			// Clear body
-			this.tableModel.removeBody();
-
 			// Do request
 			this.apiService.fetchData(uri, queryParams).subscribe(
 				(response: ApiResponseModel) => {
+					// Clear body
+					this.tableModel.removeBody();
+
 					// Control response
 					if (response.hasCollectionResponse()) {
 						this.apiHalPagerModel = response.pager;

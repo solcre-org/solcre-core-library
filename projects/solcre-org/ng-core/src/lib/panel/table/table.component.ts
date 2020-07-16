@@ -27,8 +27,11 @@ export class TableComponent implements OnInit {
 	newprimaryForm: FormGroup;
 	filteredStatus = '';
 	updateGroupForm: FormGroup;
+
+	//Sorting
 	currentSorting: any = {};
-	currentKeySorting: string; // clicked column
+	currentKeySorting: string;
+	sortingDirections: any = TableSortEnum;
 	
 	ngOnInit() {
 		// Init sorting
@@ -61,6 +64,7 @@ export class TableComponent implements OnInit {
 		if (column instanceof TableHeaderModel) {
 			const current: string = this.currentSorting[column.key];
 			this.currentSorting = {}; //Warning! remove the last sort
+
 			//Switch between states   
 			if (!current) {
 				this.currentSorting[column.key] = TableSortEnum.ASC;
@@ -72,11 +76,15 @@ export class TableComponent implements OnInit {
 				delete this.currentSorting[column.key];
 				this.currentKeySorting = null;
 			}
+
+			//Loading
 			column.sortable = true;
 			column.loading = true;
+
+			//Emit sorting
 			this.onSort.emit({
 				column: column,
-				value: this.currentSorting[this.currentKeySorting]
+				value: this.currentSorting[this.currentKeySorting] ? this.currentSorting[this.currentKeySorting] : null
 			});
 		}
 	}

@@ -6,8 +6,8 @@
                 <tr class="row">
                     <th class="cell sortable last-hide-edit"
                         (click)="onSortRows(th)"
-                        [class.asc]="currentSorting[th.key] === 'ASC'"
-                        [class.desc]="currentSorting[th.key] === 'DESC'"
+                        [class.asc]="currentSorting[th.key] === sortingDirections.ASC"
+                        [class.desc]="currentSorting[th.key] === sortingDirections.DESC"
                         [class.loading]="th.loading"
                         *ngFor="let th of tableModel.header">
                         <div class="content" [title]="th.display | translate">{{ th.display | translate }}</div>
