@@ -18,6 +18,8 @@ export class TableComponent implements OnInit {
 	@Input() tableModel: TableModel;
 	@Input() options: TableOptions;
 	@Input() customTdTpl: TemplateRef<any>;
+	@Input() currentSorting: any;
+	@Input() currentKeySorting: string;
 
 	@Output() onDelete: EventEmitter<TableRowModel> = new EventEmitter();
 	@Output() onUpdate: EventEmitter<TableRowModel> = new EventEmitter();
@@ -29,13 +31,13 @@ export class TableComponent implements OnInit {
 	updateGroupForm: FormGroup;
 
 	//Sorting
-	currentSorting: any = {};
-	currentKeySorting: string;
 	sortingDirections: any = TableSortEnum;
 	
 	ngOnInit() {
 		// Init sorting
-		this.currentSorting = {};
+		if(!this.currentSorting){
+			this.currentSorting = {};
+		}
 
 		// Check options
 		if (!this.options) {
@@ -63,18 +65,13 @@ export class TableComponent implements OnInit {
 	onSortRows(column: TableHeaderModel) {
 		if (column instanceof TableHeaderModel && (column.sortable || column.sortable == undefined) ) {
 			const current: string = this.currentSorting[column.key];
-			this.currentSorting = {}; //Warning! remove the last sort
+			const currentSorting: any = {}; //Warning! remove the last sort
 
 			//Switch between states   
 			if (!current) {
-				this.currentSorting[column.key] = TableSortEnum.ASC;
-				this.currentKeySorting = column.key
+				currentSorting[column.key] = TableSortEnum.ASC;
 			} else if (current === TableSortEnum.ASC) {
-				this.currentSorting[column.key] = TableSortEnum.DESC;
-				this.currentKeySorting = column.key
-			} else {
-				delete this.currentSorting[column.key];
-				this.currentKeySorting = null;
+				currentSorting[column.key] = TableSortEnum.DESC;
 			}
 
 			//Loading
@@ -83,7 +80,7 @@ export class TableComponent implements OnInit {
 			//Emit sorting
 			this.onSort.emit({
 				column: column,
-				value: this.currentSorting[this.currentKeySorting] ? this.currentSorting[this.currentKeySorting] : null
+				value: currentSorting[column.key] ? currentSorting[column.key] : null
 			});
 		}
 	}

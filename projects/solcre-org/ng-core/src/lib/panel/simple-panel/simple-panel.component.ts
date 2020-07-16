@@ -25,6 +25,7 @@ import { TableOptions } from '../table/table-options.interface';
 import { SimplePanelOptions } from './simple-panel-options.interface';
 import { SimplePanelService } from './simple-panel.service';
 import { ObjectUtility } from '../../utilities/object.utility';
+import { TableSortEnum } from '../table/table-sort.enum';
 
 @Component({
 	selector: 'ng-solcre-simple-panel',
@@ -249,7 +250,7 @@ export class SimplePanelComponent implements OnInit, OnDestroy {
 		}
 	}
 
-	onSort(event: { column: TableHeaderModel, value: string }): void {
+	onSort(event: { column: TableHeaderModel, value: TableSortEnum }): void {
 		// Load sortings
 		this.currentKeySorting = event.column.key;
 		this.currentSorting[event.column.key] = event.value;

@@ -39,6 +39,8 @@
 							*ngIf="tableModel.body.length" 
 							[tableModel]="tableModel" 
 							[options]="tableOptions" 
+							[currentSorting]="currentSorting" 
+							[currentKeySorting]="currentKeySorting" 
 							[customTdTpl]="customTableTemplate" 
 							(onDelete)="onDeleteRow($event)"
 							(onUpdate)="onUpdateRow($event)" 
