@@ -1,4 +1,5 @@
 import { FormGroup, FormControl, AbstractControl } from '@angular/forms';
+import { DateUtility } from './date.utility';
 
 export class FormUtility {
 
@@ -55,5 +56,9 @@ export class FormUtility {
 	static validatePasswordConfirmation(control: AbstractControl): {[key: string]: any}  {
 		const equals = control.value ? control.value === control.root.value.password : true;
 		return !equals ? {'passwordConfirmationNotEquals': {value: control.value}} : null;
+	};
+
+	static validateDate(control: AbstractControl): {[key: string]: any}  {
+		return !DateUtility.validate(control.value) ? {'required': {value: control.value}} : null;
 	};
 }

@@ -47,14 +47,14 @@ export class DateUtility {
 	}
 
 	//To sql date
-	static sqlDateTimeComplete(date: string): string{
+	static sqlDateTimeComplete(date: string, format?: string): string{
 		try {
 			//Check date
 			if(!date){
 				return;
 			}
 
-			let momentDate: moment.Moment = moment(date);
+			let momentDate: moment.Moment = moment(date, format);
 			return  momentDate.format("YYYY-MM-DD HH:mm:ss");
 		} catch(e){
 
@@ -71,6 +71,21 @@ export class DateUtility {
 
 			let momentDate: moment.Moment = moment(date);
 			return  momentDate.format(format ? format : "YYYY-MM-DD HH:mm:ss");
+		} catch(e){
+
+		}
+	}
+
+	//Validate date
+	static validate(date: string, format?: string): boolean{
+		try {
+			//Check date
+			if(!date){
+				return;
+			}
+
+			let momentDate: moment.Moment = moment(date, format);
+			return  momentDate.isValid();
 		} catch(e){
 
 		}
