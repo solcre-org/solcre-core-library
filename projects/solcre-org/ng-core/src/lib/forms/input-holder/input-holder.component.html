@@ -32,4 +32,10 @@
         for="{{inputId}}">
         {{ "errors.passwordConfirmationNotEquals" | translate }}
     </label>
+    <label 
+        *ngIf="control.hasError('invalidDate') && control.touched" 
+        class="error"
+        for="{{inputId}}">
+        {{ "errors.invalidDate" | translate }}
+    </label>
 </div>

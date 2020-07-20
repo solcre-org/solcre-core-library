@@ -64,6 +64,7 @@
 		"invalidField": "Este campo es invalido.",
 		"minLengthField": "Este campo debe tener un largo mínimo de {{minLength}}",
 		"maxLengthField": "Este campo debe tener un largo máximo de {{maxLength}}",
+		"invalidDate": "La fecha ingresada no es correcta.",
 		"passwordConfirmationNotEquals": "La contraseña y la confirmación no son iguales.",
 		"genericError": "Ocurrió un error en la solicitud.",
 		"password": "El usuario o la contraseña no son correctos.",
