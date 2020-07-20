@@ -5,12 +5,12 @@
 				{{ model.message | translate}} <br class="hidden-mobile">
 			</p>
 			<div class="btns margin-t-6">
-				<button class="btn filled-btn error"
+				<button class="btn filled-btn"
 					[class.loading]="loading"
 					(click)="onConfirm()">
 					{{ "shared.dialog.accept" | translate }}
 				</button>
-				<button class="btn filled-btn"
+				<button class="btn filled-btn error"
 					*ngIf="isCancel" 
 					(click)="onCancel()">
 					{{ "shared.dialog.cancel" | translate }}
