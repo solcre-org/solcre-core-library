@@ -29,7 +29,12 @@ export class UtcDatesInterceptor implements HttpInterceptor {
 		let request: HttpRequest<any> = req;
 
 		//Process request body and params
-		if(isApiUrl && !this.utcDatesService.checkIgnoredURIFromURL(req.url)){
+		if(isApiUrl){
+			//Must ignore???
+			if(this.utcDatesService.checkIgnoredURIFromURL(req.url)){
+				return next.handle(request);
+			}
+
 			//Process body
 			if(req.body){
 				this.process(req.body, true);
