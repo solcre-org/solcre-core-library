@@ -3,14 +3,14 @@ import * as moment from 'moment-timezone';
 export class DateUtility {
 
 	//To sql date
-	static sqlDate(date: string): string{
+	static sqlDate(date: string, format?: string): string{
 		try {
 			//Check date
 			if(!date){
 				return;
 			}
 
-			let momentDate: moment.Moment = moment(date);
+			let momentDate: moment.Moment = moment(date, format);
 			return  momentDate.format("YYYY-MM-DD");
 		} catch(e){
 
@@ -18,28 +18,28 @@ export class DateUtility {
 	}
 
 	//To sql date
-	static sqlDateTime(date: string): string{
+	static sqlDateTime(date: string, format?: string): string{
 		try {
 			//Check date
 			if(!date){
 				return;
 			}
 
-			let momentDate: moment.Moment = moment(date);
+			let momentDate: moment.Moment = moment(date, format);
 			return  momentDate.format("YYYY-MM-DD HH:mm");
 		} catch(e){
 
 		}
 	}
 
-	static sqlDateT(date: string): string{
+	static sqlDateT(date: string, format?: string): string{
 		try {
 			//Check date
 			if(!date){
 				return;
 			}
 
-			let momentDate: moment.Moment = moment(date);
+			let momentDate: moment.Moment = moment(date, format);
 			return  momentDate.format("YYYY-MM-DD[T]HH:mm");
 		} catch(e){
 
