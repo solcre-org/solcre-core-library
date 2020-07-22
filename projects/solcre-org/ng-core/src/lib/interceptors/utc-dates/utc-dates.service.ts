@@ -39,7 +39,8 @@ export class UtcDatesService {
 	}
 
 	public checkIgnoredURIFromURL(url: string): boolean {
-		let urlObj: URL = new URL(url);
-		return this.checkIgnoredURI(urlObj.pathname);
+		if(!url) return;
+		let urlMatch: any = url.match(/.+?\:\/\/.+?(\/.+?)(?:#|\?|$)/);
+		return urlMatch ? this.checkIgnoredURI(urlMatch[1]) : false;
 	}
 }
