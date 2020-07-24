@@ -11,6 +11,7 @@ export class PlaceholderComponent implements OnInit {
 	@Input() large: boolean;
 	@Input() text: string;
 	@Input() editMode: boolean;
+	@Input() skipAdd: boolean;
 
 	//Outputs
 	@Output() onAdd: EventEmitter<void> = new EventEmitter();

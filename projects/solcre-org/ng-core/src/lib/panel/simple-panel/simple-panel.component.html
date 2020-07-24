@@ -62,6 +62,7 @@
 							*ngIf="!tableModel.body.length"
 							[text]="'placeholder.empty' | translate" 
 							[large]="true" 
+							[skipAdd]="options.disableAdd"
 							(onAdd)="onAddRow()">
 						</ng-solcre-placeholder>
 					</ng-container>
