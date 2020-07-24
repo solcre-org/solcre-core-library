@@ -13,7 +13,17 @@
 			<!-- PANEL TOPBAR -->
 			<ng-solcre-topbar
 				[subtitle]="options.title"
-				[breadcrumbs]="breadcrumbs"></ng-solcre-topbar>
+				[breadcrumbs]="breadcrumbs">
+
+				<div class="actions">
+					<ng-content select=".topbar-actions"></ng-content>
+				</div>
+
+				<div class="actions-mobile">
+					<ng-content select=".topbar-actions-mobile"></ng-content>
+				</div>
+
+			</ng-solcre-topbar>
 
 			<div class="wrapper">
 				<div class="section">
