@@ -329,6 +329,9 @@ export class SimplePanelComponent implements OnInit, OnDestroy {
 						this.parseRow(response.data);
 					}
 
+					//Increase count
+					this.apiHalPagerModel.increaseTotalItems();
+
 					// Call hide modal
 					this.onHideForm(true);
 				},
@@ -408,6 +411,9 @@ export class SimplePanelComponent implements OnInit, OnDestroy {
 
 				// Remove from table model
 				this.tableModel.removeRow(rowId);
+
+				//Decrease count
+				this.apiHalPagerModel.decreaseTotalItems();
 
 				// Close dialog
 				this.dialogService.close();

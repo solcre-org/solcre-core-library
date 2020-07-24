@@ -28,6 +28,7 @@ import { TopbarComponent } from './panel/topbar/topbar.component';
 import { InputFileComponent } from './forms/input-file/input-file.component';
 import { InputUrlComponent } from './forms/input-url/input-url.component';
 import { TabsComponent } from './structure/tabs/tabs.component';
+import { PrettyNumberPipe } from './others/pipes/pretty-number.pipe';
 
 @NgModule({
     declarations: [
@@ -49,6 +50,7 @@ import { TabsComponent } from './structure/tabs/tabs.component';
 		TimezonesSelectComponent,
 		SelectComponent,
 		CountryNamePipe,
+		PrettyNumberPipe,
 		BreadcrumbsComponent,
 		TopbarComponent,
 		InputFileComponent,
@@ -74,6 +76,7 @@ import { TabsComponent } from './structure/tabs/tabs.component';
 		HeaderComponent,
 		NavbarComponent,
 		CanEnterPipe,
+		PrettyNumberPipe,
 		ToastsComponent,
 		ViewportDirective,
 		CountriesSelectComponent,

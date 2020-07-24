@@ -15,12 +15,25 @@ export class ApiHalPagerModel{
             }
             //Load page count
             if(json.page_count){
-                this.totalPages = json.page_count;
+                this.totalPages = +json.page_count;
             }
             //Load total items
             if(json.total_items){
-                this.totalItems = json.total_items;
+                this.totalItems = +json.total_items;
             }
         }
-    }
+	}
+
+	public increaseTotalItems(): void {
+		if(this.totalItems > 0){
+			this.totalItems++;
+		}
+	}
+
+	public decreaseTotalItems(): void {
+		if(this.totalItems > 0){
+			this.totalItems--;
+		}
+	}
+	
 }

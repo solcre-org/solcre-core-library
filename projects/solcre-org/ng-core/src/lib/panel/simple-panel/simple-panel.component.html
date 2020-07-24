@@ -65,6 +65,12 @@
 							[skipAdd]="options.disableAdd"
 							(onAdd)="onAddRow()">
 						</ng-solcre-placeholder>
+
+						<div 
+							class="align-m text-right" 
+							*ngIf="apiHalPagerModel.totalItems">
+							<p class="align text">{{ apiHalPagerModel.totalItems | prettyNumber: {digits: 0} }} registros</p>
+						</div>
 					</ng-container>
 				</div>
 			</div>

@@ -71,6 +71,7 @@ export * from './lib/others/countries/country.service';
 export * from './lib/others/countries/country-name/country-name.pipe';
 export * from './lib/others/timezones/timezone.model';
 export * from './lib/others/timezones/timezone.service';
+export * from './lib/others/pipes/pretty-number.pipe';
 
 export * from './lib/ng-core.module';
 export * from './lib/ui-events.service';
