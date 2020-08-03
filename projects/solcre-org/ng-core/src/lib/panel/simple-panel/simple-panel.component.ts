@@ -47,6 +47,7 @@ export class SimplePanelComponent implements OnInit, OnDestroy {
 	// Outputs
 	@Output() onBeforeSave: EventEmitter<any> = new EventEmitter();
 	@Output() onRemoteData: EventEmitter<any> = new EventEmitter();
+	@Output() onFetchRowsEnds: EventEmitter<TableRowModel[]> = new EventEmitter();
 	@Output() onBeforeOpen: EventEmitter<any> = new EventEmitter();
 	@Output() onBeforeSend: EventEmitter<any> = new EventEmitter();
 	@Output() onParseModel: EventEmitter<SimplePanelRowParsingInterface> = new EventEmitter();
@@ -464,6 +465,9 @@ export class SimplePanelComponent implements OnInit, OnDestroy {
 					if (this.activeHeaderSorting instanceof TableHeaderModel) {
 						this.activeHeaderSorting.loading = false;
 					}
+
+					//Emit fetch rows ends
+					this.onFetchRowsEnds.emit(this.tableModel.body);
 				},
 				(error: HttpErrorResponse) => {
 					// Stop all loadings
