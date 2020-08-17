@@ -6,7 +6,8 @@ export class TableRowModel {
 		public id?: number,
 		public reference?: string,
 		public model?: DataBaseModelInterface,
-		public options?: TableRowOptions ) {
+		public options?: TableRowOptions,
+		public disabled?: boolean) {
 			this.options = options ? options : {};
 		}
 }

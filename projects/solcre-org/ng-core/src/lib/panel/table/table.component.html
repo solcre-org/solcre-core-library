@@ -20,7 +20,7 @@
                 </tr>
             </thead>
             <tbody class="body">
-                <tr class="row" *ngFor="let tr of tableModel.body | filter:filteredStatus:'data'">
+                <tr class="row" *ngFor="let tr of tableModel.body | filter:filteredStatus:'data'" [class.is-disabled]="tr.disabled">
                     <td class="cell" *ngFor="let header of tableModel.header">
                         <ng-container *ngTemplateOutlet="customTdTpl ? customTdTpl : defaultTdTpl; context: { field: header.key, model: tr.model }"></ng-container>
                     </td>

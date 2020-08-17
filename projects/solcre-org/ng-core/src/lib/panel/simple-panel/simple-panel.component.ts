@@ -306,6 +306,18 @@ export class SimplePanelComponent implements OnInit, OnDestroy {
 		return queryParams;
 	}
 
+	private resolveHeaders(): any {
+		let headers: any = {
+			'Cache-Control': 'no-cache'
+		};
+
+		//Check options
+		if(this.options.defaultHeaders){
+			headers = Object.assign(headers, this.options.defaultHeaders);
+		}
+		return headers;
+	}
+
 	private addObj(model: any, row: TableRowModel): void {
 		// Chek value
 		if (model) {
@@ -440,9 +452,10 @@ export class SimplePanelComponent implements OnInit, OnDestroy {
 			// Set the query paramaters and uri
 			const queryParams: any = this.resolveQueryParams(params);
 			const uri: string = this.getUri();
+			const headers: any = this.resolveHeaders();
 
 			// Do request
-			this.apiService.fetchData(uri, queryParams).subscribe(
+			this.apiService.fetchData(uri, queryParams, headers).subscribe(
 				(response: ApiResponseModel) => {
 					// Clear body
 					this.tableModel.removeBody();

@@ -1,13 +1,13 @@
 {
-  "name": "@solcre-org/ng-core",
-  "version": "1.0.91",
-  "peerDependencies": {
-    "@angular/common": "^9.1.3",
-    "@angular/core": "^9.1.3",
-    "tslib": "^1.10.0"
-  },
-  "dependencies": {
-    "@ngx-translate/core": "^12.1.2",
-    "@ngx-translate/http-loader": "^4.0.0"
-  }
+	"name": "@solcre-org/ng-core",
+	"version": "1.0.94",
+	"peerDependencies": {
+		"@angular/common": "^9.1.3",
+		"@angular/core": "^9.1.3",
+		"tslib": "^1.10.0"
+	},
+	"dependencies": {
+		"@ngx-translate/core": "^12.1.2",
+		"@ngx-translate/http-loader": "^4.0.0"
+	}
 }
