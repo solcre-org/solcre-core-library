@@ -29,6 +29,10 @@ export class ApiService {
 		this.config = config;
 	}
 
+	public getConfig(key?: string): any {
+		return key ? this.config[key] : this.config;
+	}
+
 	//Fetch
 	public fetchData(
 		uri: string,
