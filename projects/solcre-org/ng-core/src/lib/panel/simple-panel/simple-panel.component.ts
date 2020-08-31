@@ -312,7 +312,7 @@ export class SimplePanelComponent implements OnInit, OnDestroy {
 		};
 
 		//Check options
-		if(this.options.defaultHeaders){
+		if (this.options.defaultHeaders) {
 			headers = Object.assign(headers, this.options.defaultHeaders);
 		}
 		return headers;
@@ -340,10 +340,19 @@ export class SimplePanelComponent implements OnInit, OnDestroy {
 					if (response.hasSingleResponse()) {
 						// Parse json and push or update it
 						this.parseRow(response.data);
-					}
 
-					//Increase count
-					this.apiHalPagerModel.increaseTotalItems();
+						//Increase count
+						this.apiHalPagerModel.increaseTotalItems();
+					} else if (response.hasCollectionResponse()) {
+						// Parse each data 
+						ArrayUtility.each(response.data, (json: any) => {
+							// Parse json and push or update it
+							this.parseRow(json);
+
+							//Increase count
+							this.apiHalPagerModel.increaseTotalItems();
+						});
+					}
 
 					// Call hide modal
 					this.onHideForm(true);
@@ -445,7 +454,7 @@ export class SimplePanelComponent implements OnInit, OnDestroy {
 		// Must pass options
 		if (this.options) {
 			// Start loading
-			if(!ignoreLoader){
+			if (!ignoreLoader) {
 				this.loader.global = true;
 			}
 
@@ -521,7 +530,7 @@ export class SimplePanelComponent implements OnInit, OnDestroy {
 
 						// On complete start fetch
 						this.fetchRows();
-					}, 
+					},
 					() => {
 						// Emit event
 						this.onRemoteData.emit(this.remoteDataService.getData());
