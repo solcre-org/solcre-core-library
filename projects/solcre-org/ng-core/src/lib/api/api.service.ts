@@ -210,8 +210,14 @@ export class ApiService {
 		return this.httpClient.post(url, obj, httpOptions).pipe(
 			//.retry(this.environmentService.getHttpRetryTimes())
 			map((response: any) => {
+				//Detech id in response is single response
+				if (response && response.id) {
+					//Return api response model
+					return this.parseSingleResponse(response);
+				}
+
 				//Return api response model
-				return this.parseSingleResponse(response);
+				return this.parseCollectionResponse(response);
 			})
 		);
 	}
