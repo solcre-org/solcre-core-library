@@ -299,6 +299,13 @@ export class SimplePanelComponent implements OnInit, OnDestroy {
 		// Maybe some overrides??
 		queryParams = Object.assign(queryParams, params);
 
+		//Clear undefined values
+		ArrayUtility.each(queryParams, (value: any, key: string) => {
+			if (value === undefined) {
+				delete queryParams[key];
+			}
+		});
+
 		// Load sorting if all is load correctly
 		if (this.currentKeySorting && this.currentSorting[this.currentKeySorting]) {
 			queryParams["sort[" + this.currentKeySorting + "]"] = this.currentSorting[this.currentKeySorting];
