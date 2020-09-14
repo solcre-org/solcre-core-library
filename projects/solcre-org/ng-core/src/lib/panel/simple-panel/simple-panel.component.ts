@@ -54,6 +54,7 @@ export class SimplePanelComponent implements OnInit, OnDestroy {
 	@Output() onRowChanged: EventEmitter<TableRowModel> = new EventEmitter();
 	@Output() onRowAdded: EventEmitter<TableRowModel> = new EventEmitter();
 	@Output() onRowUpdated: EventEmitter<TableRowModel> = new EventEmitter();
+	@Output() onModalClosed: EventEmitter<void> = new EventEmitter();
 
 	// Models
 	apiHalPagerModel: ApiHalPagerModel = new ApiHalPagerModel(1);
@@ -236,6 +237,9 @@ export class SimplePanelComponent implements OnInit, OnDestroy {
 					// Emit event
 					this.uiEvents.internalModalStateChange.emit(false);
 
+					//Notify
+					this.onModalClosed.emit();
+
 					// Close dialog
 					this.dialogService.close();
 				})
@@ -248,6 +252,9 @@ export class SimplePanelComponent implements OnInit, OnDestroy {
 
 			// Emit event
 			this.uiEvents.internalModalStateChange.emit(false);
+
+			//Notify
+			this.onModalClosed.emit();
 		}
 	}
 
