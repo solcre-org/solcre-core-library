@@ -486,8 +486,6 @@ export class SimplePanelComponent implements OnInit, OnDestroy {
 
 					// Control response
 					if (response.hasCollectionResponse()) {
-						// Notify changes
-						this.onHalPagerChanges.emit(response.pager)
 
 						// Load pager
 						this.apiHalPagerModel = response.pager;
@@ -497,6 +495,9 @@ export class SimplePanelComponent implements OnInit, OnDestroy {
 							// Parse json and push or update it
 							this.parseRow(json);
 						});
+
+						// Notify changes
+						this.onHalPagerChanges.emit(this.apiHalPagerModel);
 					}
 
 					// Stop all loadings
