@@ -25,6 +25,7 @@
 	*ngIf="tableModel" 
 	(onParseModel)="onParseModel($event)"
 	(onRowChanged)="onRowChanged($event)"
+	(onHalPagerChanges)="onHalPagerChanges($event)"
 	[primaryForm]="form"
 	[options]="panelOptions"
 	[tableModel]="tableModel"></ng-solcre-simple-panel>

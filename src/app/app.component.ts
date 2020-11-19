@@ -9,7 +9,8 @@ import {
 	SimplePanelOptions, 
 	SimplePanelService,
 	ApiService,
-	SimplePanelRowParsingInterface
+	SimplePanelRowParsingInterface,
+	ApiHalPagerModel
 } from 'projects/solcre-org/ng-core/src/public-api';
 import { Model } from './model';
 
@@ -86,5 +87,10 @@ export class AppComponent implements OnInit {
 		} else {
 			row.options.actionsVisibility = {};
 		}
+	}
+
+	onHalPagerChanges(event: ApiHalPagerModel): void {
+		//MOdify pager total
+		event.totalItems = 99;
 	}
 }

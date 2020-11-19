@@ -55,6 +55,7 @@ export class SimplePanelComponent implements OnInit, OnDestroy {
 	@Output() onRowAdded: EventEmitter<TableRowModel> = new EventEmitter();
 	@Output() onRowUpdated: EventEmitter<TableRowModel> = new EventEmitter();
 	@Output() onModalClosed: EventEmitter<void> = new EventEmitter();
+	@Output() onHalPagerChanges: EventEmitter<ApiHalPagerModel> = new EventEmitter();
 
 	// Models
 	apiHalPagerModel: ApiHalPagerModel = new ApiHalPagerModel(1);
@@ -485,6 +486,10 @@ export class SimplePanelComponent implements OnInit, OnDestroy {
 
 					// Control response
 					if (response.hasCollectionResponse()) {
+						// Notify changes
+						this.onHalPagerChanges.emit(response.pager)
+
+						// Load pager
 						this.apiHalPagerModel = response.pager;
 
 						// Map 
