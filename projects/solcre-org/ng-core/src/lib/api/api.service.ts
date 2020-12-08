@@ -258,6 +258,41 @@ export class ApiService {
 		);
 	}
 
+	//Update an collection using PUT
+	public updateList(
+		uri: string,
+		obj: any
+	): Observable<ApiResponseModel> {
+		//Header json
+		const headers: any = {};
+
+		//Check access token to add access token header
+		if (this.accessToken) {
+			headers["Authorization"] = "Bearer " + this.accessToken;
+		}
+
+		//Post options
+		const httpOptions = {
+			headers: new HttpHeaders(headers),
+		};
+
+		//Url
+		const url: string = this.config.apiUrl + uri;
+
+		//check form data
+		if (FormUtility.needFormData(obj)) {
+			obj = FormUtility.jsonToFormData(obj);
+		}
+
+		//Do request
+		return this.httpClient.put(url, obj, httpOptions).pipe(
+			map((response: any) => {
+				//Return api response model
+				return this.parseCollectionResponse(response);
+			})
+		);
+	}
+
 	//Parse collection response
 	private parseCollectionResponse(response: any): ApiResponseModel {
 		//Current response
