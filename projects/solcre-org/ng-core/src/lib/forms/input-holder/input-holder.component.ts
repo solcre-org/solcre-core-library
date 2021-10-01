@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { AbstractControl, FormControl } from '@angular/forms';
 
 @Component({
 	selector: 'ng-solcre-input-holder',
@@ -12,7 +12,7 @@ export class InputHolderComponent implements OnInit {
 	@Input() required: boolean;
 	@Input() maxLength: number;
 	@Input() minLength: number;
-	@Input() control: FormControl | null;
+	@Input() control: FormControl | AbstractControl | null;
 
 	constructor() { }
 

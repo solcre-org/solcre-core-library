@@ -1,6 +1,6 @@
 {
 	"name": "@solcre-org/ng-core",
-	"version": "1.12.1",
+	"version": "1.12.2",
 	"peerDependencies": {},
 	"dependencies": {
 		"@ngx-translate/core": "^12.1.2",
