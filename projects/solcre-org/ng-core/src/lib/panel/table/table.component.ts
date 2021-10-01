@@ -7,6 +7,7 @@ import { TableHeaderModel } from './table-header.model';
 import { TableSortEnum } from './table-sort.enum';
 import { TableRowActionModel } from './table-row-action.model';
 import { TableOptions } from './table-options.interface';
+import { TranslationsService } from '../../others/translations/translations.service';
 
 @Component({
 	selector: 'ng-solcre-table',
@@ -29,10 +30,16 @@ export class TableComponent implements OnInit {
 	newprimaryForm: FormGroup;
 	filteredStatus = '';
 	updateGroupForm: FormGroup;
+	translations: any;
 
 	//Sorting
 	sortingDirections: any = TableSortEnum;
 	
+	constructor(
+		private translateService: TranslationsService ){
+		this.translations = this.translateService.get('table');
+	}
+
 	ngOnInit() {
 		// Init sorting
 		if(!this.currentSorting){

@@ -1,12 +1,13 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { AbstractControl, FormControl } from '@angular/forms';
+import { TranslationsService } from '../../others/translations/translations.service';
 
 @Component({
 	selector: 'ng-solcre-input-holder',
 	templateUrl: './input-holder.component.html',
 	styles: ['./input-holder.component.css']
 })
-export class InputHolderComponent implements OnInit {
+export class InputHolderComponent {
 	// Inputs
 	@Input() inputId: string;
 	@Input() required: boolean;
@@ -14,9 +15,10 @@ export class InputHolderComponent implements OnInit {
 	@Input() minLength: number;
 	@Input() control: FormControl | AbstractControl | null;
 
-	constructor() { }
+	//Models
+	translations: any;
 
-	ngOnInit() {
+	constructor(private translationsService: TranslationsService) { 
+		this.translations = this.translationsService.get('inputHolder');
 	}
-
 }

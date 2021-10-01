@@ -10,7 +10,7 @@
                         [class.desc]="currentSorting[th.key] === sortingDirections.DESC"
                         [class.loading]="th.loading"
                         *ngFor="let th of tableModel.header">
-                        <div class="content" [title]="th.display | translate">{{ th.display | translate }}</div>
+                        <div class="content" [title]="th.display">{{ th.display }}</div>
 						<div *ngIf="th.sortable || th.sortable == undefined" class="sort-items">
 							<div class="loader"><div class="spinner"></div></div>
                             <div class="arrows"></div>
@@ -31,7 +31,7 @@
 								*ngIf="!tr.options || !tr.options.actionsVisibility || tr.options.actionsVisibility[action.key] == undefined || tr.options.actionsVisibility[action.key]"
 								type="button" 
 								(click)="onExtraActionRow(tr, action)"
-								[title]="action.description | translate"
+								[title]="action.description"
 								[disabled]="action.disabled || (tr.options && tr.options.actionsDisponibility && tr.options.actionsDisponibility[action.key] != undefined && !tr.options.actionsDisponibility[action.key])"
 								class="action show-on-edit action-btn icon-btn {{ action.status ? 'text-' + action.status : 'text-info' }} {{ action.classes }}"></button>
 						</ng-container>
@@ -40,13 +40,13 @@
 							type="button" 
 							*ngIf="!options.hideEdit && (!tr.options || !tr.options.actionsVisibility || tr.options.actionsVisibility['edit'] == undefined || tr.options.actionsVisibility['edit'])"
                             (click)="onModifiersRow(tr)"							
-                            [title]="'shared.table.modify'| translate"
+                            [title]="translations.modify"
 							class="action show-on-edit action-btn icon-btn icon-edit text-info"></button>
 						<button 
 							type="button" 
 							*ngIf="!options.hideDelete && (!tr.options || !tr.options.actionsVisibility || tr.options.actionsVisibility['delete'] == undefined || tr.options.actionsVisibility['delete'])"
 							(click)="onDeleteRow(tr)"
-							[title]="'shared.table.delete' | translate "
+							[title]="translations.delete "
 							class="action show-on-edit action-btn icon-btn icon-delete text-error"></button>
                     </td>
                 </tr>

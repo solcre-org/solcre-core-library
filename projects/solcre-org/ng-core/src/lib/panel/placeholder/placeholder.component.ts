@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { TranslationsService } from '../../others/translations/translations.service';
 
 @Component({
   selector: 'ng-solcre-placeholder',
@@ -16,8 +17,13 @@ export class PlaceholderComponent implements OnInit {
 	//Outputs
 	@Output() onAdd: EventEmitter<void> = new EventEmitter();
 
+	//Models
+	translations: any
+
 	//Component constructor
-	constructor() { }
+	constructor( private translationsService: TranslationsService) { 
+		this.translations = this.translationsService.get('placeholder');
+	}
 
 	//On component init
 	ngOnInit() {

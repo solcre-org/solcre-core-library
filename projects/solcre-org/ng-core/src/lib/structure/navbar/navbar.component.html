@@ -20,7 +20,7 @@
                 [class.active]="activeMenulevels[0] && parentMenu.id == activeMenulevels[0].id"
                 (click)="onOpenMenuItem(parentMenu, 0)"><!--
                   --><span class="icon {{ parentMenu.icon }}"></span><!--
-                  --><span class="align">{{ parentMenu.display | translate }}</span>
+                  --><span class="align">{{ parentMenu.display }}</span>
               </a>
 		  </li>
 		  
@@ -28,7 +28,7 @@
 			  <a class="link align-m"
                 (click)="onLogout()"><!--
                   --><span class="icon icon-menu-config"></span><!--
-                  --><span class="align">{{ "nav.logout" | translate }}</span>
+                  --><span class="align">Salir</span>
               </a>
           </li>
 	  </ul> <!-- .scrollable -->
@@ -44,7 +44,7 @@
 				(click)="onOpenMenuItem(parentMenu, 0, true)"
                 (mouseenter)="onHoverMenuItem(parentMenu, 0)"><!--
                   --><span class="icon {{ parentMenu.icon }}"></span><!--
-                  --><span class="align">{{ parentMenu.display | translate }}</span>
+                  --><span class="align">{{ parentMenu.display }}</span>
               </a>
 		  </li>
 		  
@@ -52,7 +52,7 @@
 			<a class="link align-m"
 			  (click)="onLogout()"><!--
 				--><span class="icon icon-menu-config"></span><!--
-				--><span class="align">{{ "nav.logout" | translate }}</span>
+				--><span class="align">Salir</span>
 			</a>
 		</li>
 	  </ul> <!-- .scrollable -->
@@ -69,7 +69,7 @@
 					<button type="button" class="back-btn" (click)="onMenuLevelBack(i)"></button>
 					<ul class="list">
 						<li class="item active">
-							{{ level.display | translate }}
+							{{ level.display }}
 						</li>
 					</ul>
 				</div> <!-- .breadcrumb -->
@@ -83,8 +83,7 @@
 					[class.arrow]="!child.canNavigate"
 					[class.active]="activeMenulevels[i + 1] && child.id == activeMenulevels[i + 1].id"
 					(click)="onOpenMenuItem(child, i + 1)">
-					<span *ngIf="!child.skipTranslate">{{ child.display | translate }}</span>
-					<span *ngIf="child.skipTranslate">{{ child.display }}</span>
+					<span>{{ child.display }}</span>
 				</a>
 			</li>
 		</ul> <!-- .scrollable -->
@@ -100,7 +99,7 @@
 						[class.active]="(activeMenulevels[i + 1] && child.id == activeMenulevels[i + 1].id) || (child.id === currentMenuId)"
 						(click)="onOpenMenuItem(child, i, true)"
 						(mouseenter)="onHoverMenuItem(child, i + 1)">
-						<span *ngIf="!child.skipTranslate">{{ child.display | translate }}</span>
+						<span *ngIf="!child.skipTranslate">{{ child.display }}</span>
 						<span *ngIf="child.skipTranslate">{{ child.display }}</span>
 					</a>
 				</li>

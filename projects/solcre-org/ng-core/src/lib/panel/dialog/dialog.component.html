@@ -2,18 +2,18 @@
 	<div class="holder align">
 		<div class="confirm-box">
 			<p *ngIf="model" class="text bold">
-				{{ model.message | translate}} <br class="hidden-mobile">
+				{{ model.message }} <br class="hidden-mobile">
 			</p>
 			<div class="btns margin-t-6">
 				<button class="btn filled-btn"
 					[class.loading]="loading"
 					(click)="onConfirm()">
-					{{ "shared.dialog.accept" | translate }}
+					{{ acceptMsg }}
 				</button>
 				<button class="btn filled-btn error"
 					*ngIf="isCancel" 
 					(click)="onCancel()">
-					{{ "shared.dialog.cancel" | translate }}
+					{{ cancelMsg }}
 				</button>
 			</div>
 		</div>

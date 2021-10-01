@@ -1,7 +1,6 @@
 import { Component, OnInit, Input, EventEmitter, Output, TemplateRef, OnDestroy } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { FormGroup } from '@angular/forms';
-import { TranslateService } from '@ngx-translate/core';
 import { Observable, Subscription } from 'rxjs';
 
 import { TableModel } from '../table/table.model';
@@ -26,6 +25,7 @@ import { SimplePanelOptions } from './simple-panel-options.interface';
 import { SimplePanelService } from './simple-panel.service';
 import { ObjectUtility } from '../../utilities/object.utility';
 import { TableSortEnum } from '../table/table-sort.enum';
+import { TranslationsService } from '../../others/translations/translations.service';
 
 @Component({
 	selector: 'ng-solcre-simple-panel',
@@ -67,6 +67,7 @@ export class SimplePanelComponent implements OnInit, OnDestroy {
 	activeRow: TableRowModel; // Current active row editing
 	activeHeaderSorting: TableHeaderModel;
 	subscribers: Subscription[];
+	translations: any = {};
 
 	// Loaders 
 	loader: SimplePanelLoadersModel;
@@ -76,10 +77,10 @@ export class SimplePanelComponent implements OnInit, OnDestroy {
 		private apiService: ApiService,
 		private dialogService: DialogService,
 		private toastsService: ToastsService,
-		private translateService: TranslateService,
 		private remoteDataService: RemoteDataService,
 		private uiEvents: UiEventsService,
-		private simplePanelService: SimplePanelService) { }
+		private simplePanelService: SimplePanelService,
+		private translateService: TranslationsService) { }
 
 	// On component init
 	ngOnInit(): void {
@@ -87,6 +88,9 @@ export class SimplePanelComponent implements OnInit, OnDestroy {
 		if (!this.options) {
 			this.options = {};
 		}
+
+		//Load translations
+		this.translations = this.translateService.get('simplePanel');
 
 		// Init vars
 		this.loader = new SimplePanelLoadersModel();
@@ -213,7 +217,7 @@ export class SimplePanelComponent implements OnInit, OnDestroy {
 		//Open dialog
 		if (row instanceof TableRowModel) {
 			//get the translate message and save in let
-			let message: string = this.translateService.instant('shared.dialog.message');
+			let message: string = this.translations.deleteMessage;
 
 			// Open dialog
 			this.dialogService.open(new DialogModel(message + row.reference + "?", () => {
@@ -229,7 +233,7 @@ export class SimplePanelComponent implements OnInit, OnDestroy {
 		if (this.primaryForm.dirty && !skpiDirtyCheck) {
 			// Open dialog before close
 			this.dialogService.open(
-				new DialogModel('shared.dialog.warning', () => {
+				new DialogModel(this.translations.warningMessage, () => {
 					// Clear vars
 					this.showForm = false;
 					this.updateMode = false;

@@ -1,4 +1,5 @@
 import { OnInit, Component, Input } from '@angular/core';
+import { TranslationsService } from '../../others/translations/translations.service';
 import { DialogModel } from './dialog.model';
 import { DialogService } from './dialog.service';
 
@@ -12,15 +13,24 @@ export class DialogComponent implements OnInit {
 	//Models
 	model: DialogModel;
 	isCancel: boolean;
+	acceptMsg: string;
+	cancelMsg: string;
+
+	//Inputs
 	@Input() isActive: boolean;
 	@Input() loading: boolean;
+	
 	//Inject services
 	constructor(
-		private dialogService: DialogService
+		private dialogService: DialogService,
+		private translateService: TranslationsService
 	) { }
 
 	//On component init
 	ngOnInit() {
+		this.acceptMsg = this.translateService.get('dialogAcceptBtn');
+		this.cancelMsg = this.translateService.get('dialogCancelBtn');
+		
 		//Watch on open
 		this.dialogService.onOpen.subscribe((model: DialogModel) => {
 			this.model = model;

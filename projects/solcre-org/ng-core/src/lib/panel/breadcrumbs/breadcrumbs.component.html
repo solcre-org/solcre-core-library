@@ -16,14 +16,12 @@
 			<ul class="list">
 				<li class="item" *ngFor="let breadcrumb of breadcrumbs" [class.active]="breadcrumb.active">
 					<ng-container *ngIf="!breadcrumb.state || breadcrumb.state.length === 0">
-						<span *ngIf="!breadcrumb.skipTranslate">{{ breadcrumb.display | translate }}</span>
-						<span *ngIf="breadcrumb.skipTranslate">{{ breadcrumb.display }}</span>
+						<span>{{ breadcrumb.display }}</span>
 					</ng-container>
 					
 					<ng-container *ngIf="breadcrumb.state && breadcrumb.state.length > 0">
 						<a class="dot-link" (click)="onState(breadcrumb.state, breadcrumb.queryParams)">
-							<span *ngIf="!breadcrumb.skipTranslate">{{ breadcrumb.display | translate }}</span>
-							<span *ngIf="breadcrumb.skipTranslate">{{ breadcrumb.display }}</span>
+							<span>{{ breadcrumb.display }}</span>
 						</a>
 					</ng-container>
 				</li>

@@ -33,7 +33,7 @@
 						<p 
 							*ngIf="tableModel.body.length" 
 							class="subtitle display-inline-block margin-r-4">
-							{{ options.title | translate}}
+							{{ options.title }}
 						</p>
 
 						<!-- ADD ITEM -->
@@ -41,7 +41,7 @@
 							*ngIf="tableModel.body.length && !options.disableAdd" 
 							class="bold-link" 
 							(click)="onAddRow()">
-							{{ "shared.simplePanel.add"  | translate}}
+							{{ translations.add }}
 						</a>
 
 						<!-- TABLE -->
@@ -60,7 +60,7 @@
 						<!-- PLACEHOLDER -->
 						<ng-solcre-placeholder 
 							*ngIf="!tableModel.body.length"
-							[text]="'placeholder.empty' | translate" 
+							[text]="translations.placeholder" 
 							[large]="true" 
 							[skipAdd]="options.disableAdd"
 							(onAdd)="onAddRow()">
@@ -118,12 +118,12 @@
 			<div class="modal-head align-m">
 				<div class="align">
 					<button (click)="onHideForm()" type="button" class="link cancel">
-						{{ "shared.simplePanel.cancel"  | translate }}
+						{{ translations.cancel }}
 					</button>
 
 					<p class="text">
-						<span *ngIf="!updateMode">{{ "shared.simplePanel.addNew" | translate }}</span>
-						<span *ngIf="updateMode">{{ "shared.simplePanel.modify" | translate }}</span>
+						<span *ngIf="!updateMode">{{ translations.addNew }}</span>
+						<span *ngIf="updateMode">{{ translations.modify }}</span>
 					</p>
 
 					<button 
@@ -132,14 +132,14 @@
 						[class.loading]="loader.primaryModal" 
 						type="button"
 						(click)="onSave()">
-						{{ "shared.simplePanel.add" | translate }}</button>
+						{{ "shared.simplePanel.add" }}</button>
 					<button 
 						*ngIf="updateMode" 
 						class="link confirm" 
 						[class.loading]="loader.primaryModal" 
 						type="button"
 						(click)="onSave()">
-						{{ "shared.simplePanel.save" | translate }}</button>
+						{{ translations.save }}</button>
 				</div> <!-- align -->
 
 			</div> <!-- modal-head -->

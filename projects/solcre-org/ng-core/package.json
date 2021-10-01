@@ -1,10 +1,8 @@
 {
 	"name": "@solcre-org/ng-core",
-	"version": "1.12.2",
+	"version": "1.12.3",
 	"peerDependencies": {},
 	"dependencies": {
-		"@ngx-translate/core": "^12.1.2",
-		"@ngx-translate/http-loader": "^4.0.0",
 		"tslib": "^2.0.0"
 	}
 }

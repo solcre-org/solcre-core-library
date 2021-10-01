@@ -2,8 +2,6 @@ import { NgModule } from "@angular/core";
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { TranslateModule } from '@ngx-translate/core';
 
 import { PagerComponent } from './api/pager/pager.component';
 import { TableComponent } from './panel/table/table.component';
@@ -29,6 +27,7 @@ import { InputFileComponent } from './forms/input-file/input-file.component';
 import { InputUrlComponent } from './forms/input-url/input-url.component';
 import { TabsComponent } from './structure/tabs/tabs.component';
 import { PrettyNumberPipe } from './others/pipes/pretty-number.pipe';
+import { TranslationsService } from "./others/translations/translations.service";
 
 @NgModule({
     declarations: [
@@ -58,7 +57,6 @@ import { PrettyNumberPipe } from './others/pipes/pretty-number.pipe';
 		TabsComponent
     ],
     imports: [
-        TranslateModule,
         ReactiveFormsModule,
         FormsModule,
         CommonModule,
@@ -93,8 +91,4 @@ import { PrettyNumberPipe } from './others/pipes/pretty-number.pipe';
 })
 export class NgCoreModule {
 
-}
-
-export function HttpLoaderFactory(http: HttpClient) {
-    return new TranslateHttpLoader(http);
 }

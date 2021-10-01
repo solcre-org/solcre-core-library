@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
+import { TranslationsService } from '../../others/translations/translations.service';
 
 import { ApiHalPagerModel } from '../api-hal-pager.model';
 
@@ -20,12 +21,17 @@ export class PagerComponent implements OnInit {
 	last: number;
 	current: number;
 	range: number[];
+	translations: any;
 
 	//Constructor
-	constructor() { }
+	constructor(
+		private translationsService: TranslationsService
+	) { }
 
 	//On init component
 	ngOnInit() {
+		this.translations = this.translationsService.get('pager');
+
 		//Load from pager
 		this.init();
 	}

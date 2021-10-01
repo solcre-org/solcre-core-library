@@ -7,7 +7,7 @@
 		[attr.data-with-icon]="toast.withIcon"
 		[class.show]="toast.show"
 		class="toast">
-		<p class="text">{{ toast.text | translate:toast.params }}</p>
+		<p class="text">{{ toast.text }}</p>
 
 		<button
 			*ngIf="toast.status != 'not-loading' && toast.status != 'success-with-undo'" 
