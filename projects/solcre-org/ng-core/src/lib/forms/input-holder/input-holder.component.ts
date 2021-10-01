@@ -12,7 +12,7 @@ export class InputHolderComponent implements OnInit {
 	@Input() required: boolean;
 	@Input() maxLength: number;
 	@Input() minLength: number;
-	@Input() control: FormControl;
+	@Input() control: FormControl | null;
 
 	constructor() { }
 
