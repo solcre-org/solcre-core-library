@@ -5,7 +5,7 @@ export class ErrorUtility {
 
 	//Parse http error
 	static parseHttpError(error: HttpErrorResponse): ApiErrorModel {
-		let errorMessage: ApiErrorModel = new ApiErrorModel("errors.genericError");
+		let errorMessage: ApiErrorModel = new ApiErrorModel("Ocurrió un error");
 
 		//Check title
 		if (error && error.statusText) {

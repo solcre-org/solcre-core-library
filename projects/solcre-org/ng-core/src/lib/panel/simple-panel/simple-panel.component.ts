@@ -53,6 +53,7 @@ export class SimplePanelComponent implements OnInit, OnDestroy {
 	@Output() onParseModel: EventEmitter<SimplePanelRowParsingInterface> = new EventEmitter();
 	@Output() onRowChanged: EventEmitter<TableRowModel> = new EventEmitter();
 	@Output() onRowAdded: EventEmitter<TableRowModel> = new EventEmitter();
+	@Output() onError: EventEmitter<HttpErrorResponse | string> = new EventEmitter();
 	@Output() onRowUpdated: EventEmitter<TableRowModel> = new EventEmitter();
 	@Output() onModalClosed: EventEmitter<void> = new EventEmitter();
 	@Output() onHalPagerChanges: EventEmitter<ApiHalPagerModel> = new EventEmitter();
@@ -377,8 +378,12 @@ export class SimplePanelComponent implements OnInit, OnDestroy {
 					this.onHideForm(true);
 				},
 				(error: HttpErrorResponse) => {
-					// Display toasts
-					this.toastsService.showHttpError(error);
+					// Display error
+					if(!this.options.preventProcessHttpErrors){
+						this.toastsService.showHttpError(error);
+					} else {
+						this.onError.emit(error);
+					}
 
 					// Stop modal loader
 					this.loader.primaryModal = false;
@@ -429,8 +434,12 @@ export class SimplePanelComponent implements OnInit, OnDestroy {
 					this.loader.clear();
 				},
 				(error: HttpErrorResponse) => {
-					// Display toasts
-					this.toastsService.showHttpError(error);
+					// Display error
+					if(!this.options.preventProcessHttpErrors){
+						this.toastsService.showHttpError(error);
+					} else {
+						this.onError.emit(error);
+					}
 
 					// Stop modal loader
 					this.loader.primaryModal = false;
@@ -463,8 +472,12 @@ export class SimplePanelComponent implements OnInit, OnDestroy {
 				// Stop modal loader
 				this.loader.dialog = false;
 
-				// Display toasts
-				this.toastsService.showHttpError(error);
+				// Display error
+				if(!this.options.preventProcessHttpErrors){
+					this.toastsService.showHttpError(error);
+				} else {
+					this.onError.emit(error);
+				}
 			}
 		);
 	}
@@ -524,8 +537,12 @@ export class SimplePanelComponent implements OnInit, OnDestroy {
 						this.activeHeaderSorting.loading = false;
 					}
 
-					// Display toasts
-					this.toastsService.showHttpError(error);
+					// Display error
+					if(!this.options.preventProcessHttpErrors){
+						this.toastsService.showHttpError(error);
+					} else {
+						this.onError.emit(error);
+					}
 				}
 			);
 		} else {

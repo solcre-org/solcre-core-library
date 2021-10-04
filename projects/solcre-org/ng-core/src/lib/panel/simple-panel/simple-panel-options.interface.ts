@@ -9,4 +9,5 @@ export interface SimplePanelOptions {
 	defaultHeaders?: any;
 	remoteData?: RemoteDataModel[];
 	disableAdd?: boolean;
+	preventProcessHttpErrors?: boolean;
 }
