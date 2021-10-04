@@ -69,7 +69,7 @@ export class NavbarService {
 		if (menuItem.permissions instanceof Array && menuItem.permissions.length > 0){
 			// Calculate permissions
 			// canEnter = this.securityService.hasMenuPermission(m.permissions);
-		} else if (menuItem.permissions === null){
+		} else if (menuItem.permissions === null || (typeof menuItem.permissions === 'boolean' && menuItem.permissions)){
 			// No permission needed
 			canEnter = true;
 		} else {

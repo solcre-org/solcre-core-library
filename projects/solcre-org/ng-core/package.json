@@ -1,6 +1,6 @@
 {
 	"name": "@solcre-org/ng-core",
-	"version": "1.12.3",
+	"version": "1.12.6",
 	"peerDependencies": {},
 	"dependencies": {
 		"tslib": "^2.0.0"

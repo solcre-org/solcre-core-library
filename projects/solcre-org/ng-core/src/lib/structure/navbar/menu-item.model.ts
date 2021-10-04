@@ -13,7 +13,7 @@ export class MenuItemModel {
 		public display: string,
 		public icon: string,
 		public action: string[],
-		public permissions?: string[],
+		public permissions?: any,
 		public childs?: MenuItemModel[],
 		public modal?: string
 	) {
