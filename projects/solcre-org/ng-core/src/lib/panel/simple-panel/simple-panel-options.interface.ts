@@ -10,4 +10,5 @@ export interface SimplePanelOptions {
 	remoteData?: RemoteDataModel[];
 	disableAdd?: boolean;
 	preventProcessHttpErrors?: boolean;
+	keepIdOnUpdate?: boolean;
 }

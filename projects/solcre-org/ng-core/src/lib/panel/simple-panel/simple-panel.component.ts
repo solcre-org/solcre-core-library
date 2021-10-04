@@ -403,7 +403,7 @@ export class SimplePanelComponent implements OnInit, OnDestroy {
 			this.onBeforeSend.emit(json);
 
 			//Remove id from the body
-			delete json.id;
+			if(!this.options.keepIdOnUpdate){ delete json.id; }
 
 			// Start modal loader
 			this.loader.primaryModal = true;
