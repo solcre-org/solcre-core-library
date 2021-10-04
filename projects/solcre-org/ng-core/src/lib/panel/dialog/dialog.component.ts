@@ -13,7 +13,7 @@ export class DialogComponent implements OnInit {
 	//Models
 	model: DialogModel;
 	isCancel: boolean;
-	acceptMsg: string;
+	translations: any;
 	cancelMsg: string;
 
 	//Inputs
@@ -28,8 +28,7 @@ export class DialogComponent implements OnInit {
 
 	//On component init
 	ngOnInit() {
-		this.acceptMsg = this.translateService.get('dialogAcceptBtn');
-		this.cancelMsg = this.translateService.get('dialogCancelBtn');
+		this.translations = this.translateService.get('dialog');
 		
 		//Watch on open
 		this.dialogService.onOpen.subscribe((model: DialogModel) => {

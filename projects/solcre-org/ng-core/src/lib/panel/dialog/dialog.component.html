@@ -8,12 +8,12 @@
 				<button class="btn filled-btn"
 					[class.loading]="loading"
 					(click)="onConfirm()">
-					{{ acceptMsg }}
+					{{ translations.acceptBtn }}
 				</button>
 				<button class="btn filled-btn error"
 					*ngIf="isCancel" 
 					(click)="onCancel()">
-					{{ cancelMsg }}
+					{{ translations.cancelBtn }}
 				</button>
 			</div>
 		</div>
