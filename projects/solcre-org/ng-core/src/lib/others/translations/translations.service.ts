@@ -34,6 +34,7 @@ export class TranslationsService {
             emptyWorkspace: "Debes seleccionar al menos un local.",
             requiredField: "Este campo es requerido.",
             invalidField: "Este campo es invalido.",
+            invalidDate: "La fecha es invalida.",
             minLengthField: "Este campo debe tener un largo mínimo de ",
             maxLengthField: "Este campo debe tener un largo máximo de ",
             passwordConfirmationNotEquals: "La contraseña y la confirmación no son iguales.",
