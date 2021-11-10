@@ -7,7 +7,7 @@ import { DialogService } from './dialog.service';
 @Component({
   selector: 'ng-solcre-dialog',
   templateUrl: './dialog.component.html',
-  styles: ['./dialog.component.css']
+  styleUrls: ['./dialog.component.css']
 })
 export class DialogComponent implements OnInit {
 	//Models

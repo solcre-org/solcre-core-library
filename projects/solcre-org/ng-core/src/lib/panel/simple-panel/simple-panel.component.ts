@@ -30,7 +30,6 @@ import { TranslationsService } from '../../others/translations/translations.serv
 @Component({
 	selector: 'ng-solcre-simple-panel',
 	templateUrl: './simple-panel.component.html',
-	styles: ['./simple-panel.component.css'],
 	providers: [DialogService]
 })
 export class SimplePanelComponent implements OnInit, OnDestroy {

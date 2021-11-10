@@ -4,7 +4,7 @@ import { TranslationsService } from '../../others/translations/translations.serv
 @Component({
   selector: 'ng-solcre-placeholder',
   templateUrl: './placeholder.component.html',
-  styles: ['./placeholder.component.css'],
+  styleUrls: ['./placeholder.component.css'],
   host: {'class': 'component'}
 })
 export class PlaceholderComponent implements OnInit {

@@ -6,7 +6,7 @@ import { ApiHalPagerModel } from '../api-hal-pager.model';
 @Component({
 	selector: 'ng-solcre-pager',
 	templateUrl: './pager.component.html',
-	styles: ['./pager.component.scss']
+	styleUrls: ['./pager.component.scss']
 })
 export class PagerComponent implements OnInit {
 	//Inputs

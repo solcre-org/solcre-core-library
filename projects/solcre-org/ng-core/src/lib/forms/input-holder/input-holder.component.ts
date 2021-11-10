@@ -5,7 +5,7 @@ import { TranslationsService } from '../../others/translations/translations.serv
 @Component({
 	selector: 'ng-solcre-input-holder',
 	templateUrl: './input-holder.component.html',
-	styles: ['./input-holder.component.css']
+	styleUrls: ['./input-holder.component.css']
 })
 export class InputHolderComponent {
 	// Inputs

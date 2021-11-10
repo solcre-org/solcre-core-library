@@ -11,8 +11,7 @@ import { TranslationsService } from '../../others/translations/translations.serv
 
 @Component({
 	selector: 'ng-solcre-table',
-	templateUrl: './table.component.html',
-	styles: ['./table.component.css']
+	templateUrl: './table.component.html'
 })
 export class TableComponent implements OnInit {
 
