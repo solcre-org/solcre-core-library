@@ -49,6 +49,7 @@ export class SimplePanelComponent implements OnInit, OnDestroy {
 	@Output() onFetchRowsEnds: EventEmitter<TableRowModel[]> = new EventEmitter();
 	@Output() onBeforeOpen: EventEmitter<any> = new EventEmitter();
 	@Output() onBeforeSend: EventEmitter<any> = new EventEmitter();
+	@Output() onSaveSuccess: EventEmitter<ApiResponseModel> = new EventEmitter();
 	@Output() onParseModel: EventEmitter<SimplePanelRowParsingInterface> = new EventEmitter();
 	@Output() onRowChanged: EventEmitter<TableRowModel> = new EventEmitter();
 	@Output() onRowAdded: EventEmitter<TableRowModel> = new EventEmitter();
@@ -373,6 +374,9 @@ export class SimplePanelComponent implements OnInit, OnDestroy {
 						});
 					}
 
+					//Trigger on save success
+					this.onSaveSuccess.emit(response)
+
 					// Call hide modal
 					this.onHideForm(true);
 				},
@@ -425,6 +429,9 @@ export class SimplePanelComponent implements OnInit, OnDestroy {
 						// Parse json and push or update it
 						this.parseRow(response.data, true);
 					}
+
+					//Trigger on save success
+					this.onSaveSuccess.emit(response)
 
 					// Close modal
 					this.onHideForm(true);
