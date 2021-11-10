@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
-import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
+import { FormGroup, FormBuilder, FormControl, AbstractControl } from '@angular/forms';
 
 import { StringUtility } from '../../utilities/string.utility';
 import { Subscription } from 'rxjs';
@@ -12,7 +12,7 @@ import { Subscription } from 'rxjs';
 export class InputUrlComponent implements OnInit, OnDestroy {
 	//Inputs
 	@Input() placeholder: string;
-	@Input() control: FormControl;
+	@Input() control: FormControl | AbstractControl | null;
 	@Input() form: FormGroup;
 
 	//Private model

@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, OnChanges } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, AbstractControl } from '@angular/forms';
 
 @Component({
   selector: 'ng-solcre-input-file',
@@ -9,7 +9,7 @@ import { FormGroup, FormControl } from '@angular/forms';
 })
 export class InputFileComponent implements OnChanges{
 	//Inputs
-	@Input() fileControl: FormControl;
+	@Input() fileControl: FormControl | AbstractControl | null;
 	@Input() fileName: string;
 	@Input() accept: string;
 
