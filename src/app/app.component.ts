@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
+import { DateUtility } from '@solcre-org/ng-core';
 import { 
 	TabModel, 
 	TableModel, 
@@ -64,6 +65,9 @@ export class AppComponent implements OnInit {
 			URI: '/assets/db.json',
 			title: "Title"
 		};
+
+		console.log(DateUtility.validate('28/02/2022', 'DD/MM/YYYY'))
+		console.log(DateUtility.validate('50/02/2022', 'DD/MM/YYYY'))
 	}
 
 	onParseModel(arg: SimplePanelRowParsingInterface): void {

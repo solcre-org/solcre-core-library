@@ -7,7 +7,7 @@ import {
     HttpResponse,
 	HttpParams
 } from '@angular/common/http';
-import * as moment from 'moment-timezone';
+import moment from 'moment-timezone';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
