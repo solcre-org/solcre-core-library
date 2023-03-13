@@ -19,6 +19,7 @@
     "@angular/platform-browser": "~13.0.0",
     "@angular/platform-browser-dynamic": "~13.0.0",
     "@angular/router": "~13.0.0",
+    "@solcre-org/ng-core": "^1.12.13",
     "moment-timezone": "^0.5.34",
     "rxjs": "~6.5.4",
     "tslib": "^2.0.0",
