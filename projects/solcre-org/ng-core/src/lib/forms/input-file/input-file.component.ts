@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, OnChanges } from '@angular/core';
-import { FormGroup, FormControl, AbstractControl } from '@angular/forms';
+import { FormGroup, UntypedFormControl, AbstractControl } from '@angular/forms';
 
 @Component({
   selector: 'ng-solcre-input-file',
@@ -9,7 +9,7 @@ import { FormGroup, FormControl, AbstractControl } from '@angular/forms';
 })
 export class InputFileComponent implements OnChanges{
 	//Inputs
-	@Input() fileControl: FormControl | AbstractControl | null;
+	@Input() fileControl: UntypedFormControl | AbstractControl | null;
 	@Input() fileName: string;
 	@Input() accept: string;
 
@@ -51,7 +51,7 @@ export class InputFileComponent implements OnChanges{
 	}
 
 	private applyFileSelected(file: File){
-		if(this.fileControl instanceof FormControl){
+		if(this.fileControl instanceof UntypedFormControl){
 			this.fileControl.patchValue(file);
 		}
 	}

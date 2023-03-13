@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder } from '@angular/forms';
 import { DateUtility } from '@solcre-org/ng-core';
 import { 
 	TabModel, 
@@ -22,7 +22,7 @@ import { Model } from './model';
 	providers: [SimplePanelService]
 })
 export class AppComponent implements OnInit {
-	form: FormGroup;
+	form: UntypedFormGroup;
 	tabs: TabModel[];
 	selected: number = 1;
 	tableModel: TableModel;
@@ -30,7 +30,7 @@ export class AppComponent implements OnInit {
 
 	constructor(
 		private apiService: ApiService,
-		private fb: FormBuilder
+		private fb: UntypedFormBuilder
 	){}
 
 	ngOnInit(){

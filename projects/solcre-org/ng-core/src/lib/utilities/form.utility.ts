@@ -1,4 +1,4 @@
-import { FormGroup, FormControl, AbstractControl } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormControl, AbstractControl } from '@angular/forms';
 import { DateUtility } from './date.utility';
 
 export class FormUtility {
@@ -42,12 +42,12 @@ export class FormUtility {
 	 * Trigger form validations
 	 * @param formGroup
 	 */
-	static validateAllFormFields(formGroup: FormGroup): void {
+	static validateAllFormFields(formGroup: UntypedFormGroup): void {
 		Object.keys(formGroup.controls).forEach((field: string) => {
 			const control = formGroup.get(field);
-			if (control instanceof FormControl) {
+			if (control instanceof UntypedFormControl) {
 				control.markAsTouched({ onlySelf: true });
-			} else if (control instanceof FormGroup) {
+			} else if (control instanceof UntypedFormGroup) {
 				this.validateAllFormFields(control);
 			}
 		});

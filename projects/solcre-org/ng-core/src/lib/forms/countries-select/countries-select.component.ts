@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { UntypedFormGroup } from '@angular/forms';
 
 import { CountryService } from '../../others/countries/country.service';
 import { CountryModel } from '../../others/countries/country.model';
@@ -12,7 +12,7 @@ import { CountryModel } from '../../others/countries/country.model';
 })
 export class CountriesSelectComponent implements OnInit {
 	//Inputs
-	@Input() form: FormGroup;
+	@Input() form: UntypedFormGroup;
 	@Input() placeholder: string;
 	@Input() hasErrors: boolean;
 	@Input() controlName: string;

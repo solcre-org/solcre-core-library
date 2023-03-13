@@ -4,7 +4,7 @@
     "outDir": "../../../out-tsc/lib",
     "allowSyntheticDefaultImports": true,
     "declarationMap": true,
-    "target": "es2015",
+    "target": "es2020",
     "declaration": true,
     "inlineSources": true,
     "types": [],

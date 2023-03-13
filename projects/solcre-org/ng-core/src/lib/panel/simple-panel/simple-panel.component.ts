@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, EventEmitter, Output, TemplateRef, OnDestroy } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
-import { FormGroup } from '@angular/forms';
+import { UntypedFormGroup } from '@angular/forms';
 import { Observable, Subscription } from 'rxjs';
 
 import { TableModel } from '../table/table.model';
@@ -39,7 +39,7 @@ export class SimplePanelComponent implements OnInit, OnDestroy {
 	@Input() tableModel: TableModel;
 	@Input() tableOptions: TableOptions;
 	@Input() options: SimplePanelOptions;
-	@Input() primaryForm: FormGroup;
+	@Input() primaryForm: UntypedFormGroup;
 	@Input() customTableTemplate: TemplateRef<any>;
 	@Input() onGetJSON: (json: any, row: TableRowModel) => any;
 

@@ -141,7 +141,6 @@
       }
     }
   },
-  "defaultProject": "solcre-core-library",
   "cli": {
     "analytics": "754bba71-d3be-4c34-8453-b07d89802f78"
   }

@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { AbstractControl, FormControl } from '@angular/forms';
+import { AbstractControl, UntypedFormControl } from '@angular/forms';
 import { TranslationsService } from '../../others/translations/translations.service';
 
 @Component({
@@ -13,7 +13,7 @@ export class InputHolderComponent {
 	@Input() required: boolean;
 	@Input() maxLength: number;
 	@Input() minLength: number;
-	@Input() control: FormControl | AbstractControl | null;
+	@Input() control: UntypedFormControl | AbstractControl | null;
 
 	//Models
 	translations: any;

@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { UntypedFormGroup } from '@angular/forms';
 
 import { TimezoneService } from '../../others/timezones/timezone.service';
 import { TimezoneModel } from '../../others/timezones/timezone.model';
@@ -11,7 +11,7 @@ import { TimezoneModel } from '../../others/timezones/timezone.model';
 })
 export class TimezonesSelectComponent implements OnInit {
 	//Inputs
-	@Input() form: FormGroup;
+	@Input() form: UntypedFormGroup;
 	@Input() placeholder: string;
 	@Input() hasErrors: boolean;
 	@Input() controlName: string;

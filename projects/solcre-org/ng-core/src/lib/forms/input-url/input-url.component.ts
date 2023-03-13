@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
-import { FormGroup, FormBuilder, FormControl, AbstractControl } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, UntypedFormControl, AbstractControl } from '@angular/forms';
 
 import { StringUtility } from '../../utilities/string.utility';
 import { Subscription } from 'rxjs';
@@ -12,16 +12,16 @@ import { Subscription } from 'rxjs';
 export class InputUrlComponent implements OnInit, OnDestroy {
 	//Inputs
 	@Input() placeholder: string;
-	@Input() control: FormControl | AbstractControl | null;
-	@Input() form: FormGroup;
+	@Input() control: UntypedFormControl | AbstractControl | null;
+	@Input() form: UntypedFormGroup;
 
 	//Private model
-	urlForm: FormGroup;
+	urlForm: UntypedFormGroup;
 	subscription: Subscription;
 
 	//Inject services
 	constructor(
-		private fb: FormBuilder ) { }
+		private fb: UntypedFormBuilder ) { }
 
 	//On component init
 	ngOnInit(): void {
@@ -32,7 +32,7 @@ export class InputUrlComponent implements OnInit, OnDestroy {
 		});
 
 		//Subscribe value changes
-		if(this.control instanceof FormControl) {
+		if(this.control instanceof UntypedFormControl) {
 			//Watch
 			this.subscription = this.control.valueChanges.subscribe(() => {
 				//persis value from control
@@ -71,7 +71,7 @@ export class InputUrlComponent implements OnInit, OnDestroy {
 		});
 
 		//Patch to form
-		if(this.control instanceof FormControl && (this.control.value != urlProcesed)) {
+		if(this.control instanceof UntypedFormControl && (this.control.value != urlProcesed)) {
 			//Control value
 			this.control.patchValue(urlProcesed);
 		}

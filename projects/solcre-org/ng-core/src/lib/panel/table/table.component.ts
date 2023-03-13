@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, EventEmitter, Output, TemplateRef } from '@angular/core';
 import { TableModel } from './table.model';
 import { TableRowModel } from './table-row.model';
-import { FormGroup } from '@angular/forms';
+import { UntypedFormGroup } from '@angular/forms';
 import { DialogModel } from '../dialog/dialog.model';
 import { TableHeaderModel } from './table-header.model';
 import { TableSortEnum } from './table-sort.enum';
@@ -26,9 +26,9 @@ export class TableComponent implements OnInit {
 	@Output() onSort: EventEmitter<any> = new EventEmitter();
 
 	dialog: DialogModel;
-	newprimaryForm: FormGroup;
+	newprimaryForm: UntypedFormGroup;
 	filteredStatus = '';
-	updateGroupForm: FormGroup;
+	updateGroupForm: UntypedFormGroup;
 	translations: any;
 
 	//Sorting

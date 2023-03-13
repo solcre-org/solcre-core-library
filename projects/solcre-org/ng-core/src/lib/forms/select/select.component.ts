@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { UntypedFormGroup } from '@angular/forms';
 
 @Component({
 	selector: 'ng-solcre-select',
@@ -8,7 +8,7 @@ import { FormGroup } from '@angular/forms';
 })
 export class SelectComponent {
 	//Inputs
-	@Input() form: FormGroup;
+	@Input() form: UntypedFormGroup;
 	@Input() placeholder: string;
 	@Input() hasErrors: boolean;
 	@Input() controlName: string;
